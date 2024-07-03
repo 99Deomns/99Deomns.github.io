@@ -6,15 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="第六章 字符串处理我是红色 6.1 字符串输入输出6.1.1 puts函数1int puts(const char *s)；   将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。但是也仅限于输出字符串了。 6.1.2 putchar函数1int putchar(int c); c为0-127之间的一个十进制整型数，ascii码。这个就没有什么换行符了,只能输出到标">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2024/07/03/test/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第六章 字符串处理我是红色 6.1 字符串输入输出6.1.1 puts函数1int puts(const char *s)；   将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。但是也仅限于输出字符串了。 6.1.2 putchar函数1int putchar(int c); c为0-127之间的一个十进制整型数，ascii码。这个就没有什么换行符了,只能输出到标">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/07/03/test/2.png">
+<meta property="og:image" content="http://example.com/2024/07/03/test/3.png">
+<meta property="og:image" content="http://example.com/2024/07/03/test/4.png">
+<meta property="og:image" content="http://example.com/2024/07/03/test/5.png">
+<meta property="og:image" content="http://example.com/2024/07/03/test/6.png">
+<meta property="og:image" content="http://example.com/2024/07/03/test/7.png">
+<meta property="og:image" content="http://example.com/images/2024-07-03-18-37-23.png">
+<meta property="og:image" content="http://example.com/images/2024-07-03-18-45-39.png">
+<meta property="article:published_time" content="2024-07-03T11:08:40.730Z">
+<meta property="article:modified_time" content="2024-07-03T11:20:38.983Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/07/03/test/2.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -144,118 +157,236 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-test" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第六章-字符串处理"><a href="#第六章-字符串处理" class="headerlink" title="第六章 字符串处理"></a>第六章 字符串处理</h1><p><font color="red">我是红色</font></p>
+<h2 id="6-1-字符串输入输出"><a href="#6-1-字符串输入输出" class="headerlink" title="6.1 字符串输入输出"></a>6.1 字符串输入输出</h2><h3 id="6-1-1-puts函数"><a href="#6-1-1-puts函数" class="headerlink" title="6.1.1 puts函数"></a>6.1.1 puts函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">puts</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>；  </span><br></pre></td></tr></table></figure>
+<p>将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。<br>但是也仅限于输出字符串了。</p>
+<h3 id="6-1-2-putchar函数"><a href="#6-1-2-putchar函数" class="headerlink" title="6.1.2 putchar函数"></a>6.1.2 putchar函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">putchar</span><span class="params">(<span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+<p>c为0-127之间的一个十进制整型数，ascii码。<br>这个就没有什么换行符了,只能输出到标准输出设备.</p>
+<h3 id="6-1-3-fputc函数"><a href="#6-1-3-fputc函数" class="headerlink" title="6.1.3 fputc函数"></a>6.1.3 fputc函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">(<span class="type">int</span> c, FILE *stream)</span>;第二个参数为文件指针</span><br></pre></td></tr></table></figure>
+<p>与putchar类似但是可以输出到任意文件中.</p>
+<h2 id="6-1-4-fputs函数"><a href="#6-1-4-fputs函数" class="headerlink" title="6.1.4 fputs函数"></a>6.1.4 fputs函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><center>
+![](./test/1.png)   </center>
+
+<p>如果成功返回指向s的指针,而不是*s，失败则返回null.输入的空格、单引号双引号等都会作为字符串的一部分直到回车。<br>用户从键盘输入的字符串首先存放在输入缓冲区中,该函数从韩冲去读取,并存储到s指向的内存空间中.输入的字符串中就算有空格也可以直接输入字符串输入完成后回车，该函数不检查缓冲区溢出。程序中使用 gets()函数是非常不安全的，可能会出现 bug、出现不可靠性，gets()在某些意外情况下会导致程序陷入不可控状态，所以一般建议大家不要使用这个函数，可以使用后面将给大家介绍的 fgets()代替。</p>
+<h4 id="gets函数与scanf的区别"><a href="#gets函数与scanf的区别" class="headerlink" title="gets函数与scanf的区别"></a>gets函数与scanf的区别</h4><p>gets更加简洁，且空格，tab等都可以作为是scanf的分隔符。<br>gets读取到回车后会将之丢弃，而scanf就不会读取分隔符。 <center><br><img src="/2024/07/03/test/2.png"><br><img src="/2024/07/03/test/3.png">)  </center></p>
+<p>如果使用%c的形式，会把换行符读出来，对于%c来说空格换行符、tab、回车都是正常字符。  <center><br><img src="/2024/07/03/test/4.png">)<br><img src="/2024/07/03/test/5.png">)  </center><br>这里是因为gets读取了回车，但是丢了，所以什么都没有。<br>如果是123空格空格56，后面的空格空格56正常打印，丢回车不丢空格。</p>
+<h3 id="6-1-6-getchar函数"><a href="#6-1-6-getchar函数" class="headerlink" title="6.1.6 getchar函数"></a>6.1.6 getchar函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>从标准输入设备中读取一个字符。注意这里返回值是int，强制无符号char转换为int，错误就返回EOF。可以读取空格tab换行。</p>
+<h3 id="6-1-7-fgets函数"><a href="#6-1-7-fgets函数" class="headerlink" title="6.1.7 fgets函数"></a>6.1.7 fgets函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">fgets</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> size, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>size：要读取的最大字符数。</p>
+<h4 id="与gets的区别"><a href="#与gets的区别" class="headerlink" title="与gets的区别"></a>与gets的区别</h4><ol>
+<li>fgets可以从标准输入设备、文件中读取输入字符串，gets只能从标准输入设备中读取。</li>
+<li>fgets可以设置最大读取字符数。</li>
+<li>gets读取换行符然后丢弃，并替换为’\0’，但是fgets读取之后不丢弃，在最后添加结束字符。</li>
+</ol>
+<h2 id="6-2-字符串长度"><a href="#6-2-字符串长度" class="headerlink" title="6.2 字符串长度"></a>6.2 字符串长度</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">strlen</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>;</span><br></pre></td></tr></table></figure>
+<p>返回值不包含结束字符。<br>与函数sizeof的区别：</p>
+<ol>
+<li>sizeof为c语言内置操作符关键字，strlen是库函数  </li>
+<li>sizeof用于计算数据类型的大小或变量的大小，strlen只接受以结束字符结尾的字符串。  </li>
+<li>编译器在编译时就计算出sizeof 的结果，strlen必须在运行时才能计算出。  </li>
+<li>sizeof 计算数据类型或变量会占用内存的大小，strlen 计算字符串实际长度，如果使用字符串名计算sizeof则是占用空间的大小及数组长度*每个占用字节数，而strlen是字符长度。</li>
+</ol>
+<h2 id="6-3字符串拼接"><a href="#6-3字符串拼接" class="headerlink" title="6.3字符串拼接"></a>6.3字符串拼接</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcat</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src)</span>;<span class="comment">//相当于dest+src，dest末尾的结束字符被覆盖，src末尾的结束字符仍然在。  </span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strncat</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src, <span class="type">size_t</span> n)</span>;<span class="comment">//多了一个最大追加字符  </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-字符串拷贝"><a href="#6-4-字符串拷贝" class="headerlink" title="6.4 字符串拷贝"></a>6.4 字符串拷贝</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcpy</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src)</span>;  </span><br><span class="line"><span class="type">char</span> *<span class="title function_">strncpy</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src, <span class="type">size_t</span> n)</span>;  <span class="comment">//多了一个指定字符数量</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">memset</span><span class="params">(<span class="type">void</span> *s, <span class="type">int</span> c, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>从地址s开始每个字节填充c,一共填充n个字节,尽管这里是int c但是实际上使用该值填充时用的时无符号字符形式,以字节为单位填充.<br>返回值为指向内存空间s的指针.  </p>
+<p>值得注意的时c 的值只能为8位,同时如果最高位为1整体为负数.  <center><br><img src="/2024/07/03/test/6.png"><br><img src="/2024/07/03/test/7.png">  </center><br><font color="red"><br>因为0x80在一个字节中表示负数所以输出成%d就是0xffffff80<br>就是尽管只赋值了一个字节最后打印仍然会打印出4个字节的数字如果最高位是1，则前面统一补1，反之补0；至于为什么是4个字节，和汇编有关。同时如果以这种方式初始化char数组，并写入，读出来数据不一样，不知道是什么问题，但是如果以赋值的形式如char a[]&#x3D;{0x1,0x2…}这种方式读取出来是没问题的。<br></font><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jmh1996/article/details/53884246">https://blog.csdn.net/jmh1996/article/details/53884246</a><br>memset赋值时只能赋值为0？<br>答案肯定不是，比如任意字符都是可以的，初始化成0是最常用的。int类型的一般都是赋值0或-1，其他的值都不行。</p>
+<p>结论<br>为地址str开始的n个字节赋值c，注意：是逐个字节赋值，str开始的n个字节中的每个字节都赋值为c.</p>
+<ol>
+<li>若str指向char型地址，value可为任意字符值；</li>
+<li>若str指向非char型，如int型地址，要想赋值正确，value的值只能是-1或0，因为-1和0转化成二进制后每一位都是一样的，设int型占4个字节，则-1&#x3D;0XFFFFFFFF, 0&#x3D;0X00000000。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;strings.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">bzero</span><span class="params">(<span class="type">void</span> *s, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>将一段内存空间的数据置0;</p>
+<h2 id="6-6字符串比较"><a href="#6-6字符串比较" class="headerlink" title="6.6字符串比较"></a>6.6字符串比较</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1, <span class="type">const</span> <span class="type">char</span> *s2)</span>;<span class="comment">//s1&lt;s2 返回值小于0;</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">strncmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1, <span class="type">const</span> <span class="type">char</span> *s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-7字符串查找"><a href="#6-7字符串查找" class="headerlink" title="6.7字符串查找"></a>6.7字符串查找</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;<span class="comment">//从前往后查找字符c</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strrchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;<span class="comment">//从后往前查找</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strstr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *haystack, <span class="type">const</span> <span class="type">char</span> *needle)</span>;<span class="comment">//从前往后查找字符串needle</span></span><br></pre></td></tr></table></figure>
+
+<p>从字符串中查找一个字符返回其首次出现的地址.  </p>
+<h2 id="6-8字符串与数字互转"><a href="#6-8字符串与数字互转" class="headerlink" title="6.8字符串与数字互转"></a>6.8字符串与数字互转</h2><h3 id="6-8-1-字符串转整型"><a href="#6-8-1-字符串转整型" class="headerlink" title="6.8.1 字符串转整型"></a>6.8.1 字符串转整型</h3><p>分别将字符串转为int,long int,long long int</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">atoi</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="title function_">atol</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">atoll</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="comment">//分别将字符串转为int,long int,long long int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//分别将字符串转为long int,long long int,同时可以指定不同进制数,base是进制范围从2-36,或者特殊值0</span></span><br><span class="line"><span class="comment">//此时如果字符串包含0x就认为是16进制,如果0是前缀,数字为8进制</span></span><br><span class="line"><span class="comment">//如果endptr不为null</span></span><br><span class="line"><span class="type">long</span> <span class="type">int</span> <span class="title function_">strtol</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoll</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="comment">//与上面两个一样,只不过换成unsigned类型,则strtol()或 strtoll()会将字符串中第一个无效字符的地址存储在*endptr 中。如果根本没有数字，strtol()或 strtoll()会将 nptr 的原始值存储在*endptr 中（并返回 0）。也可将参数 endptr 设置为 NULL，表示不接收相应信息。</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoul</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoull</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">8</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;-1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果:<br><img src="/images/2024-07-03-18-37-23.png"></p>
+<h3 id="6-8-2-字符串转浮点型"><a href="#6-8-2-字符串转浮点型" class="headerlink" title="6.8.2 字符串转浮点型"></a>6.8.2 字符串转浮点型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">atof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;<span class="comment">//字符串转double</span></span><br><span class="line"><span class="comment">//endptr与上面的strtol一样,同时没有进制变量.</span></span><br><span class="line"><span class="type">double</span> <span class="title function_">strtod</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">float</span> <span class="title function_">strtof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">double</span> <span class="title function_">strtold</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-8-3-数字转字符串"><a href="#6-8-3-数字转字符串" class="headerlink" title="6.8.3 数字转字符串"></a>6.8.3 数字转字符串</h2><p>使用格式化IO相关库函数,如使用printf()将数字转字符串,并输出到标准输出设备,或者使用sprintf()或者snprintf()将数字转换为字符串并存储在缓冲区中.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%d&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%f&quot;</span>, <span class="number">500.111</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%u&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果:<br><img src="/images/2024-07-03-18-45-39.png"></p>
+<h2 id="6-9-给应用程序传参"><a href="#6-9-给应用程序传参" class="headerlink" title="6.9 给应用程序传参"></a>6.9 给应用程序传参</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-10-正则表达式"><a href="#6-10-正则表达式" class="headerlink" title="6.10 正则表达式"></a>6.10 正则表达式</h2><p>在许多的应用程序当中，通常会有这样的需要：给定一个字符串，检查该字符串是否符合某种条件或规则、或者从给定的字符串中找出符合某种条件或规则的子字符串，将匹配到的字符串提取出来。这种需要在很多的应用程序当中是存在的，例如，很多应用程序都有这种校验功能，譬如检验用户输入的账号或密码是否符合它们定义的规则，如果不符合规则通常会提示用户按照正确的规则输入用户名或密码。</p>
+<h3 id="6-10-1-初识正则表达式"><a href="#6-10-1-初识正则表达式" class="headerlink" title="6.10.1 初识正则表达式"></a>6.10.1 初识正则表达式</h3><p>正则表达式又称规则表达式,通常被用来检索、替换那些符合某个模式（规则）的字符串，正则表达式描述了一种字符串的匹配模式（pattern），<font color="red">可以用来检查一个给定的字符串中是否含有某种子字符串、将匹配的字符串替换或者从某个字符串中取出符合某个条件的子字符串。</font></p>
+<p>linux中通配符可以通过*或?来查找匹配.如data?.txt可以匹配</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">data.dat</span><br><span class="line">data1.dat</span><br><span class="line">data2.dat</span><br><span class="line">datax.dat</span><br><span class="line">dataN.dat</span><br><span class="line">``````  </span><br><span class="line">尽管使用通配符的方法很有用，但它还是很有限，正则表达式则更加强大、更加灵活。  </span><br><span class="line"></span><br><span class="line">许多程序设计语言都支持正则表达式。譬如，在 Perl 中就内建了一个功能强大的正则表达式引擎、Python提供了内置模块 re 用于处理正则表达式，正则表达式这个概念最初是由 Unix 中的工具软件（例如 sed 和 grep）普及开的，使用过 sed 命令的朋友想必对正则表达式并不陌生。同样，在 C 语言函数库中也提供了用于处理正则表达式的接口供程序员使用。  </span><br><span class="line"></span><br><span class="line">## 6.11 c语言中使用正则表达式</span><br><span class="line"></span><br><span class="line">c语言中使用正则表达式一般分为三步:  </span><br><span class="line">1. 编译正则表达式 regcomp()</span><br><span class="line">2. 匹配正则表达式 regexec()</span><br><span class="line">3. 释放正则表达式 regfree()</span><br><span class="line"></span><br><span class="line">``````c</span><br><span class="line">int regcomp (regex_t *compiled, const char *pattern, int cflags) </span><br><span class="line">参数说明：</span><br><span class="line">// 1. regex_t 是一个结构体数据类型，用来存放编译后的正则表达式，它的成员re_nsub 用来存储正则表达式中的子正则表达式的个数，子正则表达式就是用圆括号包起来的部分表达式。</span><br><span class="line">// 2. pattern 是指向我们写好的正则表达式的指针。</span><br><span class="line">// 3. cflags 有如下4个值或者是它们或运算(|)后的值：</span><br><span class="line">// REG_EXTENDED 以功能更加强大的扩展正则表达式的方式进行匹配。</span><br><span class="line">// REG_ICASE 匹配字母时忽略大小写。</span><br><span class="line">// REG_NOSUB 不用存储匹配后的结果。</span><br><span class="line">// REG_NEWLINE 识别换行符，这样’$’就可以从行尾开始匹配，’^’就可以从行的开头开始匹配。</span><br><span class="line">int regexec (regex_t *compiled, char *string, size_t nmatch, regmatch_t matchptr [], int eflags)</span><br><span class="line">// 参数说明：</span><br><span class="line">// 1. compiled 是已经用regcomp函数编译好的正则表达式。</span><br><span class="line">// 2. string 是目标文本串。</span><br><span class="line">// 3. nmatch 是regmatch_t结构体数组的长度。</span><br><span class="line">// 4. matchptr regmatch_t类型的结构体数组，存放匹配文本串的位置信息。</span><br><span class="line">// 5. eflags 有两个值</span><br><span class="line">// REG_NOTBOL 按我的理解是如果指定了这个值，那么’^’就不会从我们的目标串开始匹配。总之我到现在还不是很明白这个参数的意义；</span><br><span class="line">// REG_NOTEOL 和上边那个作用差不多，不过这个指定结束end of line。</span><br><span class="line">void regfree (regex_t *compiled);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/derkampf/article/details/70661551">https://blog.csdn.net/derkampf/article/details/70661551</a><br>这个用到的时候再看吧</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/03/test/" class="archive-article-date">
-  	<time datetime="2024-07-03T11:08:40.730Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/03/test/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/03/1/" class="archive-article-date">
-  	<time datetime="2024-07-03T08:58:05.207Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" class="archive-article-date">
-  	<time datetime="2024-07-03T02:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">初始化博客</a>
-    </h1>
   
+    <a href="/2024/07/03/1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2024-07-03T02:26:42.573Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/">Hello World</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="test" data-title="" data-url="http://example.com/2024/07/03/test/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://example.com/2024/07/03/test/", 
+    sourceId: "test",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-    
+  
+  <div id="SOHUCS" sid="test" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
+  
+
+  
+
+  
+
 
 
           </div>
@@ -279,8 +410,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
