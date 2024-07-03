@@ -160,9 +160,7 @@
 <p>与putchar类似但是可以输出到任意文件中.</p>
 <h2 id="6-1-4-fputs函数"><a href="#6-1-4-fputs函数" class="headerlink" title="6.1.4 fputs函数"></a>6.1.4 fputs函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><center>
-![](./test/1.png)   </center>
-
+<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><p><img src="/2024/07/03/test/1.png"></p>
 <p>如果成功返回指向s的指针,而不是*s，失败则返回null.输入的空格、单引号双引号等都会作为字符串的一部分直到回车。<br>用户从键盘输入的字符串首先存放在输入缓冲区中,该函数从韩冲去读取,并存储到s指向的内存空间中.输入的字符串中就算有空格也可以直接输入字符串输入完成后回车，该函数不检查缓冲区溢出。程序中使用 gets()函数是非常不安全的，可能会出现 bug、出现不可靠性，gets()在某些意外情况下会导致程序陷入不可控状态，所以一般建议大家不要使用这个函数，可以使用后面将给大家介绍的 fgets()代替。</p>
 <h4 id="gets函数与scanf的区别"><a href="#gets函数与scanf的区别" class="headerlink" title="gets函数与scanf的区别"></a>gets函数与scanf的区别</h4><p>gets更加简洁，且空格，tab等都可以作为是scanf的分隔符。<br>gets读取到回车后会将之丢弃，而scanf就不会读取分隔符。 <center><br><img src="/2024/07/03/test/2.png"><br><img src="/2024/07/03/test/3.png">)  </center></p>
 <p>如果使用%c的形式，会把换行符读出来，对于%c来说空格换行符、tab、回车都是正常字符。  <center><br><img src="/2024/07/03/test/4.png">)<br><img src="/2024/07/03/test/5.png">)  </center><br>这里是因为gets读取了回车，但是丢了，所以什么都没有。<br>如果是123空格空格56，后面的空格空格56正常打印，丢回车不丢空格。</p>
