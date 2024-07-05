@@ -11,24 +11,24 @@
   <meta name="description" content="第六章 字符串处理我是红色 6.1 字符串输入输出6.1.1 puts函数1int puts(const char *s)；   将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。但是也仅限于输出字符串了。 6.1.2 putchar函数1int putchar(int c); c为0-127之间的一个十进制整型数，ascii码。这个就没有什么换行符了,只能输出到标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2024/07/03/test/index.html">
+<meta property="og:url" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第六章 字符串处理我是红色 6.1 字符串输入输出6.1.1 puts函数1int puts(const char *s)；   将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。但是也仅限于输出字符串了。 6.1.2 putchar函数1int putchar(int c); c为0-127之间的一个十进制整型数，ascii码。这个就没有什么换行符了,只能输出到标">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/07/03/test/1.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/2.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/3.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/4.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/5.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/6.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/7.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/8.png">
-<meta property="og:image" content="http://example.com/2024/07/03/test/9.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/1.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/2.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/3.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/4.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/5.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/6.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/7.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/8.png">
+<meta property="og:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/9.png">
 <meta property="article:published_time" content="2024-07-03T11:08:40.730Z">
-<meta property="article:modified_time" content="2024-07-03T11:25:49.729Z">
+<meta property="article:modified_time" content="2024-07-05T03:53:42.856Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/07/03/test/1.png">
+<meta name="twitter:image" content="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -74,7 +74,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 3
+			总文章数 4
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -158,7 +158,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-test" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-字符串处理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
@@ -172,10 +172,10 @@
 <p>与putchar类似但是可以输出到任意文件中.</p>
 <h2 id="6-1-4-fputs函数"><a href="#6-1-4-fputs函数" class="headerlink" title="6.1.4 fputs函数"></a>6.1.4 fputs函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><p><img src="/2024/07/03/test/1.png"></p>
+<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><p><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/1.png"></p>
 <p>如果成功返回指向s的指针,而不是*s，失败则返回null.输入的空格、单引号双引号等都会作为字符串的一部分直到回车。<br>用户从键盘输入的字符串首先存放在输入缓冲区中,该函数从韩冲去读取,并存储到s指向的内存空间中.输入的字符串中就算有空格也可以直接输入字符串输入完成后回车，该函数不检查缓冲区溢出。程序中使用 gets()函数是非常不安全的，可能会出现 bug、出现不可靠性，gets()在某些意外情况下会导致程序陷入不可控状态，所以一般建议大家不要使用这个函数，可以使用后面将给大家介绍的 fgets()代替。</p>
-<h4 id="gets函数与scanf的区别"><a href="#gets函数与scanf的区别" class="headerlink" title="gets函数与scanf的区别"></a>gets函数与scanf的区别</h4><p>gets更加简洁，且空格，tab等都可以作为是scanf的分隔符。<br>gets读取到回车后会将之丢弃，而scanf就不会读取分隔符。 <center><br><img src="/2024/07/03/test/2.png"><br><img src="/2024/07/03/test/3.png">)  </center></p>
-<p>如果使用%c的形式，会把换行符读出来，对于%c来说空格换行符、tab、回车都是正常字符。  <center><br><img src="/2024/07/03/test/4.png">)<br><img src="/2024/07/03/test/5.png">)  </center><br>这里是因为gets读取了回车，但是丢了，所以什么都没有。<br>如果是123空格空格56，后面的空格空格56正常打印，丢回车不丢空格。</p>
+<h4 id="gets函数与scanf的区别"><a href="#gets函数与scanf的区别" class="headerlink" title="gets函数与scanf的区别"></a>gets函数与scanf的区别</h4><p>gets更加简洁，且空格，tab等都可以作为是scanf的分隔符。<br>gets读取到回车后会将之丢弃，而scanf就不会读取分隔符。 <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/2.png"><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/3.png">)  </center></p>
+<p>如果使用%c的形式，会把换行符读出来，对于%c来说空格换行符、tab、回车都是正常字符。  <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/4.png">)<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/5.png">)  </center><br>这里是因为gets读取了回车，但是丢了，所以什么都没有。<br>如果是123空格空格56，后面的空格空格56正常打印，丢回车不丢空格。</p>
 <h3 id="6-1-6-getchar函数"><a href="#6-1-6-getchar函数" class="headerlink" title="6.1.6 getchar函数"></a>6.1.6 getchar函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
 
 <p>从标准输入设备中读取一个字符。注意这里返回值是int，强制无符号char转换为int，错误就返回EOF。可以读取空格tab换行。</p>
@@ -202,7 +202,7 @@
 <h2 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">memset</span><span class="params">(<span class="type">void</span> *s, <span class="type">int</span> c, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
 
 <p>从地址s开始每个字节填充c,一共填充n个字节,尽管这里是int c但是实际上使用该值填充时用的时无符号字符形式,以字节为单位填充.<br>返回值为指向内存空间s的指针.  </p>
-<p>值得注意的时c 的值只能为8位,同时如果最高位为1整体为负数.  <center><br><img src="/2024/07/03/test/6.png"><br><img src="/2024/07/03/test/7.png">  </center><br><font color="red"><br>因为0x80在一个字节中表示负数所以输出成%d就是0xffffff80<br>就是尽管只赋值了一个字节最后打印仍然会打印出4个字节的数字如果最高位是1，则前面统一补1，反之补0；至于为什么是4个字节，和汇编有关。同时如果以这种方式初始化char数组，并写入，读出来数据不一样，不知道是什么问题，但是如果以赋值的形式如char a[]&#x3D;{0x1,0x2…}这种方式读取出来是没问题的。<br></font><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jmh1996/article/details/53884246">https://blog.csdn.net/jmh1996/article/details/53884246</a><br>memset赋值时只能赋值为0？<br>答案肯定不是，比如任意字符都是可以的，初始化成0是最常用的。int类型的一般都是赋值0或-1，其他的值都不行。</p>
+<p>值得注意的时c 的值只能为8位,同时如果最高位为1整体为负数.  <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/6.png"><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/7.png">  </center><br><font color="red"><br>因为0x80在一个字节中表示负数所以输出成%d就是0xffffff80<br>就是尽管只赋值了一个字节最后打印仍然会打印出4个字节的数字如果最高位是1，则前面统一补1，反之补0；至于为什么是4个字节，和汇编有关。同时如果以这种方式初始化char数组，并写入，读出来数据不一样，不知道是什么问题，但是如果以赋值的形式如char a[]&#x3D;{0x1,0x2…}这种方式读取出来是没问题的。<br></font><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jmh1996/article/details/53884246">https://blog.csdn.net/jmh1996/article/details/53884246</a><br>memset赋值时只能赋值为0？<br>答案肯定不是，比如任意字符都是可以的，初始化成0是最常用的。int类型的一般都是赋值0或-1，其他的值都不行。</p>
 <p>结论<br>为地址str开始的n个字节赋值c，注意：是逐个字节赋值，str开始的n个字节中的每个字节都赋值为c.</p>
 <ol>
 <li>若str指向char型地址，value可为任意字符值；</li>
@@ -221,13 +221,13 @@
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">8</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;-1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>结果:<br><img src="/2024/07/03/test/8.png"></p>
+<p>结果:<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/8.png"></p>
 <h3 id="6-8-2-字符串转浮点型"><a href="#6-8-2-字符串转浮点型" class="headerlink" title="6.8.2 字符串转浮点型"></a>6.8.2 字符串转浮点型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">atof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;<span class="comment">//字符串转double</span></span><br><span class="line"><span class="comment">//endptr与上面的strtol一样,同时没有进制变量.</span></span><br><span class="line"><span class="type">double</span> <span class="title function_">strtod</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">float</span> <span class="title function_">strtof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">double</span> <span class="title function_">strtold</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="6-8-3-数字转字符串"><a href="#6-8-3-数字转字符串" class="headerlink" title="6.8.3 数字转字符串"></a>6.8.3 数字转字符串</h2><p>使用格式化IO相关库函数,如使用printf()将数字转字符串,并输出到标准输出设备,或者使用sprintf()或者snprintf()将数字转换为字符串并存储在缓冲区中.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%d&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%f&quot;</span>, <span class="number">500.111</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%u&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>结果:<br><img src="/2024/07/03/test/9.png"></p>
+<p>结果:<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/9.png"></p>
 <h2 id="6-9-给应用程序传参"><a href="#6-9-给应用程序传参" class="headerlink" title="6.9 给应用程序传参"></a>6.9 给应用程序传参</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="6-10-正则表达式"><a href="#6-10-正则表达式" class="headerlink" title="6.10 正则表达式"></a>6.10 正则表达式</h2><p>在许多的应用程序当中，通常会有这样的需要：给定一个字符串，检查该字符串是否符合某种条件或规则、或者从给定的字符串中找出符合某种条件或规则的子字符串，将匹配到的字符串提取出来。这种需要在很多的应用程序当中是存在的，例如，很多应用程序都有这种校验功能，譬如检验用户输入的账号或密码是否符合它们定义的规则，如果不符合规则通常会提示用户按照正确的规则输入用户名或密码。</p>
@@ -294,7 +294,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/03/test/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -307,6 +307,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          系统信息与系统资源
+        
+      </div>
+    </a>
   
   
     <a href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" id="article-nav-older" class="article-nav-link-wrap">
@@ -338,7 +347,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="test" data-title="" data-url="http://example.com/2024/07/03/test/"></div>
+	<div class="ds-thread" data-thread-key="字符串处理" data-title="" data-url="http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -361,8 +370,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://example.com/2024/07/03/test/", 
-    sourceId: "test",
+    url: "http://example.com/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/", 
+    sourceId: "字符串处理",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
@@ -371,7 +380,7 @@
   
 
   
-  <div id="SOHUCS" sid="test" ></div> 
+  <div id="SOHUCS" sid="字符串处理" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
