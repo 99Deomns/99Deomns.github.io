@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 6
+			总文章数 7
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -145,6 +145,96 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/07/%E8%BF%9B%E7%A8%8B/">进程</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/07/%E8%BF%9B%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2024-07-07T13:15:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-07</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-进程"><a href="#1-进程" class="headerlink" title="1 进程"></a><center>1 进程</center></h1><h2 id="1-1进程与程序"><a href="#1-1进程与程序" class="headerlink" title="1.1进程与程序"></a>1.1进程与程序</h2><p>在执行main()函数前,需要先执行一段引导代码,这段引导代码又链接器在编译链接时链接到我们的应用程序当中,最终一起构成可执行文件。</p>
+<p>argc 和 argv 传参是如何实现的呢？譬如.&#x2F;app arg1 arg2，这两个参数 arg1 和 arg2 是如何传递给应用程序的 main 函数的呢？当在终端执行程序时，命令行参数（command-line argument）由 shell 进程逐一进行解析，shell 进程会将这些参数传递给加载器，加载器加载应用程序时会将其传递给应用程序引导代码，当引导程序调用 main()函数时，在由它最终传递给 main()函数，如此一来，在我们的应用程序当中便可以获取到命令行参数了。</p>
+<p>程序结束本质上就是进程终止，有以下几种方式：</p>
+<ol>
+<li>return </li>
+<li>exit（）、_exit()</li>
+<li>abort()</li>
+<li>信号如SIGKILL</li>
+</ol>
+<p>每个进程有一个进程号,用于唯一标识系统中某个进程.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getpid</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//获取进程号</span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getppid</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//父进程的进程号</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-环境变量"><a href="#1-2-环境变量" class="headerlink" title="1.2 环境变量"></a>1.2 环境变量</h2><p>每一个进程都有一组与之相关的环境变量,以字符串的形式存储在一个字符串数组列表中,终端下使用env查看.</p>
+<p>export LINUX_APP&#x3D;123456 添加 LINUX_APP 环境变量<br>export -n LINUX_APP     删除</p>
+<h3 id="1-2-1-应用程序中获取环境变量"><a href="#1-2-1-应用程序中获取环境变量" class="headerlink" title="1.2.1 应用程序中获取环境变量"></a>1.2.1 应用程序中获取环境变量</h3><p>环境变量是一个全局变量,需要:</p>
+<p>extern char **environ; &#x2F;&#x2F; 申明外部全局变量 environ  可以通过元素是否为null来判断是否到达末尾</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *<span class="title function_">getenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;<span class="comment">//获取指定环境变量</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">putenv</span><span class="params">(<span class="type">char</span> *<span class="built_in">string</span>)</span>;<span class="comment">//添加一个环境变量,成功0,失败非0</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">setenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">const</span> <span class="type">char</span> *value, <span class="type">int</span> overwrite)</span>;</span><br><span class="line"><span class="comment">//putenv的高级版本,可以修改变量的值,第三个参数overwrite: 若参数 name 标识的环境变量已经存在，在参数 overwrite 为 0 的情况下，setenv()函数将不改变现有环境变量的值，也就是说本次调用没有产生任何影响；如果参数 overwrite 的值为非 0，若参数 name标识的环境变量已经存在，则覆盖，不存在则表示添加新的环境变量。</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">unsetenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;<span class="comment">//移除环境变量</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">clearenv</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//清除</span></span><br><span class="line">environ = <span class="literal">NULL</span>;<span class="comment">//同上</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-进程的内存布局"><a href="#1-3-进程的内存布局" class="headerlink" title="1.3 进程的内存布局"></a>1.3 进程的内存布局</h2><p>历史沿袭至今，C 语言程序一直都是由以下几部分组成的：<br>⚫ 正文段。也可称为代码段，这是 CPU 执行的机器语言指令部分，文本段具有只读属性，以防止程序由于意外而修改其指令；正文段是可以共享的，即使在多个进程间也可同时运行同一段程序。<br>⚫ 初始化数据段。通常将此段称为数据段，包含了显式初始化的全局变量和静态变量，当程序加载到内存中时，从可执行文件中读取这些变量的值。<br>⚫ 未初始化数据段。包含了未进行显式初始化的全局变量和静态变量，通常将此段称为 bss 段，这一名词来源于早期汇编程序中的一个操作符，意思是“由符号开始的块”（block started by symbol），在程序开始执行之前，系统会将本段内所有内存初始化为 0，可执行文件并没有为 bss 段变量分配存储空间，在可执行文件中只需记录 bss 段的位置及其所需大小，直到程序运行时，由加载器来分配这一段内存空间。<br>⚫ 栈。函数内的局部变量以及每次函数调用时所需保存的信息都放在此段中，每次调用函数时，函数传递的实参以及函数返回值等也都存放在栈中。栈是一个动态增长和收缩的段，由栈帧组成，系统会为每个当前调用的函数分配一个栈帧，栈帧中存储了函数的局部变量（所谓自动变量）、实参和返回值。<br>⚫ 堆。可在运行时动态进行内存分配的一块区域，譬如使用 malloc()分配的内存空间，就是从系统堆内存中申请分配的.  </p>
+<p><img src="/2024/07/07/%E8%BF%9B%E7%A8%8B/1.png" alt="Alt text"></p>
+<h2 id="1-4-进程的虚拟空间"><a href="#1-4-进程的虚拟空间" class="headerlink" title="1.4 进程的虚拟空间"></a>1.4 进程的虚拟空间</h2><h3 id="为什么需要引入虚拟地址呢？"><a href="#为什么需要引入虚拟地址呢？" class="headerlink" title="为什么需要引入虚拟地址呢？"></a>为什么需要引入虚拟地址呢？</h3><p>计算机物理内存的大小是固定的，就是计算机的实际物理内存，试想一下，如果操作系统没有虚拟地址机制，所有的应用程序访问的内存地址就是实际的物理地址，所以要将所有应用程序加载到内存中，但是我们实际的物理内存只有 4G，所以就会出现一些问题：<br>⚫ 当多个程序需要运行时，必须保证这些程序用到的内存总量要小于计算机实际的物理内存的大小。<br>⚫ 内存使用效率低。内存空间不足时，就需要将其它程序暂时拷贝到硬盘中，然后将新的程序装入内存。然而由于大量的数据装入装出，内存的使用效率就会非常低。<br>⚫ 进程地址空间不隔离。由于程序是直接访问物理内存的，所以每一个进程都可以修改其它进程的内存数据，甚至修改内核地址空间中的数据，所以有些恶意程序可以随意修改别的进程，就会造成一些破坏，系统不安全、不稳定。<br>⚫ 无法确定程序的链接地址。程序运行时，链接地址和运行地址必须一致，否则程序无法运行！因为程序代码加载到内存的地址是由系统随机分配的，是无法预知的，所以程序的运行地址在编译程序时是无法确认的.  </p>
+<p>虚拟地址机制，程序访问存储器所使用的逻辑地址就是虚拟地址，通过逻辑地址映射到真正的物理内存上。所有应用程序运行在自己的虚拟地址空间中，使得进程的虚拟地址空间和物理地址空间隔离开来，这样做带来了很多的优点：<br>⚫ 进程与进程、进程与内核相互隔离。一个进程不能读取或修改另一个进程或内核的内存数据，这是因为每一个进程的虚拟地址空间映射到了不同的物理地址空间。提高了系统的安全性与稳定性。<br>⚫ 在某些应用场合下，两个或者更多进程能够共享内存。因为每个进程都有自己的映射表，可以让不同进程的虚拟地址空间映射到相同的物理地址空间中。通常，共享内存可用于实现进程间通信。<br>⚫ 便于实现内存保护机制。譬如在多个进程共享内存时，允许每个进程对内存采取不同的保护措施，例如，一个进程可能以只读方式访问内存，而另一进程则能够以可读可写的方式访问。<br>⚫ 编译应用程序时，无需关心链接地址。前面提到了，当程序运行时，要求链接地址与运行地址一致，在引入了虚拟地址机制后，便无需关心这个问题。  </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/07/%E8%BF%9B%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
   
     <article id="post-leecode-回溯算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
