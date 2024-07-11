@@ -6,25 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>leecode-回溯算法 | Hexo</title>
+  <title>通信协议之UART（一） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="回溯算法回溯是递归的副产品，只要有递归就会有回溯。回溯的本质是穷举，想要更加高效就只能剪枝。 回溯法，一般可以解决如下几种问题：  组合问题：N个数里面按一定规则找出k个数的集合 切割问题：一个字符串按一定规则有几种切割方式 子集问题：一个N个数的集合里有多少符合条件的子集 排列问题：N个数按一定规则全排列，有几种排列方式 棋盘问题：N皇后，解数独等等  如何理解回溯算法呢？如下图，纵向就是子集的">
+  <meta name="description" content="通信协议之UART1 UART串口通信协议简介UART（Universal Asynchronous Receiver&#x2F;Transmitter),也就是通用异步收发器,是一种串行,异步,全双工的通信协议,将数据一位接一位的进行传输,在该通信协议中信号线上的状态位高电平为1.低电平为0.通信电路简单,只需要一对传输线就可以实现双向通信,大大降低成本,但是传输速度比较慢. 2 串口传输2.1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leecode-回溯算法">
-<meta property="og:url" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="通信协议之UART（一）">
+<meta property="og:url" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="回溯算法回溯是递归的副产品，只要有递归就会有回溯。回溯的本质是穷举，想要更加高效就只能剪枝。 回溯法，一般可以解决如下几种问题：  组合问题：N个数里面按一定规则找出k个数的集合 切割问题：一个字符串按一定规则有几种切割方式 子集问题：一个N个数的集合里有多少符合条件的子集 排列问题：N个数按一定规则全排列，有几种排列方式 棋盘问题：N皇后，解数独等等  如何理解回溯算法呢？如下图，纵向就是子集的">
+<meta property="og:description" content="通信协议之UART1 UART串口通信协议简介UART（Universal Asynchronous Receiver&#x2F;Transmitter),也就是通用异步收发器,是一种串行,异步,全双工的通信协议,将数据一位接一位的进行传输,在该通信协议中信号线上的状态位高电平为1.低电平为0.通信电路简单,只需要一对传输线就可以实现双向通信,大大降低成本,但是传输速度比较慢. 2 串口传输2.1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/1.png">
-<meta property="og:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/2.png">
-<meta property="og:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/3.png">
-<meta property="og:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/4.png">
-<meta property="og:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/5.png">
-<meta property="article:published_time" content="2024-07-07T02:41:19.000Z">
-<meta property="article:modified_time" content="2024-07-07T05:37:58.976Z">
+<meta property="og:image" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/1.png">
+<meta property="og:image" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/3.jpg">
+<meta property="og:image" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/2.png">
+<meta property="og:image" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/4.png">
+<meta property="article:published_time" content="2024-07-11T13:38:23.000Z">
+<meta property="article:modified_time" content="2024-07-11T14:28:35.022Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/1.png">
+<meta name="twitter:image" content="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,14 +153,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-leecode-回溯算法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-通信协议之UART（一）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      leecode-回溯算法
+      通信协议之UART（一）
     </h1>
   
 
@@ -178,8 +177,8 @@
 		<!--显示阅读次数完毕-->
 
         
-        <a href="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2024-07-07T02:41:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-07</time>
+        <a href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2024-07-11T13:38:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-11</time>
 </a>
         
 	
@@ -187,50 +186,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="回溯算法"><a href="#回溯算法" class="headerlink" title="回溯算法"></a><center>回溯算法</center></h1><p>回溯是递归的副产品，只要有递归就会有回溯。回溯的本质是穷举，想要更加高效就只能剪枝。</p>
-<p>回溯法，一般可以解决如下几种问题：</p>
+        <h1 id="通信协议之UART"><a href="#通信协议之UART" class="headerlink" title="通信协议之UART"></a><center>通信协议之UART</center></h1><h2 id="1-UART串口通信协议简介"><a href="#1-UART串口通信协议简介" class="headerlink" title="1 UART串口通信协议简介"></a>1 UART串口通信协议简介</h2><p>UART（Universal Asynchronous Receiver&#x2F;Transmitter),也就是通用异步收发器,是一种串行,异步,全双工的通信协议,将数据一位接一位的进行传输,在该通信协议中信号线上的状态位高电平为1.低电平为0.通信电路简单,只需要一对传输线就可以实现双向通信,大大降低成本,但是传输速度比较慢.</p>
+<h2 id="2-串口传输"><a href="#2-串口传输" class="headerlink" title="2 串口传输"></a>2 串口传输</h2><h3 id="2-1-数据协议"><a href="#2-1-数据协议" class="headerlink" title="2.1 数据协议"></a>2.1 数据协议</h3><p>在串口通信中,需要关注的有<font color="red">数据流和波特率</font>,一个数据流由10个数据位组成:<font color="yellow">1个起始位,7个有效数据位(这里并不是固定死的,可以是5,6,7,8),1位奇偶校验位(也可以没有),1位停止位(1,1.5,2位均可).</font></p>
+<p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/1.png" alt="Alt text"></p>
 <ol>
-<li>组合问题：N个数里面按一定规则找出k个数的集合</li>
-<li>切割问题：一个字符串按一定规则有几种切割方式</li>
-<li>子集问题：一个N个数的集合里有多少符合条件的子集</li>
-<li>排列问题：N个数按一定规则全排列，有几种排列方式</li>
-<li>棋盘问题：N皇后，解数独等等</li>
+<li>起始位:通信线路空闲时为1,检测到0,数据开始传输;</li>
+<li>有效数据位: 传输的数据,指令或者数据;<br>数据位可以是5、6、7、8、9位等组成一个字符（通常是8位）。如ASCII码（7位）、扩展BCD码（8位）。首先发送最低位，最后发送最高位。</li>
+<li>奇偶校验位: 根据传输数据中1的个数的奇偶数来判断数据的正确性;<br>奇校验：如果数据位中“1”的个数为偶数，则奇偶校验位为“1”，如果“1”的个数为奇数，则奇偶校验位为“0”。<br>偶校验：如果数据中“1”的个数为偶数，则奇偶校验位为“0”，如果数据中“1”的个数为奇数，则奇偶校验位为“1”。</li>
+<li>停止位:数据传输完成,拉高电平(1,1.5,2位均可).<br>停止位不仅表示传输的结束，而且还为计算机提供了纠正时钟的机会。停止位越多，数据传输越稳定，但数据传输速度越慢。</li>
 </ol>
-<h2 id="如何理解回溯算法呢？"><a href="#如何理解回溯算法呢？" class="headerlink" title="如何理解回溯算法呢？"></a>如何理解回溯算法呢？</h2><p>如下图，纵向就是子集的寻找，横向就是同一层改变子集。<br>说的不太清楚举个例子就是，从{1，2，3}中找子集，纵向是1-&gt;2-&gt;3,横向是1-&gt;2到1-&gt;3.</p>
-<p><img src="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/1.png" alt="Alt text"></p>
-<p>回溯算法通常有一套框架:  </p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(参数)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        backtracking(路径，选择列表); <span class="comment">// 递归</span></span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就我刷题而言,有以下几种回溯算法的问题:</p>
+<p>波特率(又称码元率): 描述一秒内传输了多少个码元,也就是两个信道之间的数据传输速度,一般比特率有300，1200，2400，9600，19200，38400，115200. 其中9600 Baud表示一秒传输了9600个码元信息,当一个码元表示1bit时,波特率&#x3D;比特率(每秒钟传输的比特数).</p>
+<p>其中,码元是指在数字通信中常常用时间间隔相同的符号来表示一个二进制数字，这样的时间间隔内的信号称为(二进制）码元,码元是自己定义的<br>通俗点说，可以把一个码元看做一个存放一定信息量的包，如果只存放1bit，那么波特率等于比特率，但是一般不止存放1bit如一串二进制信息为101010101 当一个码元携带的信息量为1bit时，那么就有9个码元，其波特率相当于比特率，如果每三个一组101，010，101，这时就可以使用8种振幅来表示某个码元，这里相当于一个码元就包含了3bit，这里码元的离散取值数目就是8。可以理解为多少bit的数据表示一个数据,如一个数据是16位,这一整个就是码元.<br>下图中,码元为1位时就可以认为1bit数据传输的时间;<br><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/3.jpg" alt="Alt text"></p>
+<h3 id="2-2-整体架构"><a href="#2-2-整体架构" class="headerlink" title="2.2 整体架构"></a>2.2 整体架构</h3><p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/2.png" alt="Alt text"></p>
+<p>RX表示接收,TX表示发送,引脚接法要注意,设备1的发送到设备2的接收.</p>
+<p>这里没有共享时钟线,因为这是异步通信.</p>
+<h3 id="2-3-错误状态"><a href="#2-3-错误状态" class="headerlink" title="2.3 错误状态"></a>2.3 错误状态</h3><p>在使用 UART 时可能遇到的一些错误:</p>
 <ol>
-<li>给定子集的长度,然后满足什么条件:如 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combinations/description/">https://leetcode.cn/problems/combinations/description/</a> 中的题目,其他题目就是在这个条件上做文章 如 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-iii/description/">https://leetcode.cn/problems/combination-sum-iii/description/</a> 中在leecode.77的基础上限定这k个数不能重复</li>
+<li><p>帧错误<br>  UART 状态和控制寄存器将指示各种状态条件，包括与传输相关的错误状态。了解此协议可以更轻松地理解错误状态。其中包括帧错误，<font color="red">当接收器在预期位时间没有看到停止位时就会发生帧错误</font>。如果<font color="red">在预期停止位时数据线未处于预期的高状态（取决于设置 UART 的数据和奇偶校验位的数量）</font>，则 UART 将发出帧错误信号。</p>
+</li>
+<li><p>奇偶校验错误<br> 仅当 UART 处于奇偶校验模式时才会引发奇偶校验错误。在奇偶校验模式下，会发送一个额外位来保存所有传输数据位的奇偶校验（偶数或奇数）。如果数据位有错误（1 代表 0 或 0 代表 1），则奇偶校验位将错误，并且将抛出指定错误的错误。</p>
+</li>
+<li><p>溢出错误<br>  当接收器在下一个字符到达之前不进行处理（从输入缓冲区中删除一个字符）时，就会发生溢出错误。</p>
+</li>
+<li><p>中断条件<br>中断条件不一定是错误。当接收器输入处于逻辑低状态超过一定持续时间（通常超过一个字符时间）时，就会发生这种情况。对于接收者来说，它看起来像是一个带有帧错误的全零字符。这是针对软件复位电路的黑客攻击。在python代码中，可以看到reset是通过发送break来触发的。这会将数据线拉低足够长的时间，以便将 MCLR 拉低并使电路板复位。</p>
+</li>
 </ol>
-<p><img src="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/2.png" alt="Alt text"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> start)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (path.<span class="built_in">size</span>() == k) &#123;<span class="comment">//满足条件放进去,返回上层,否则继续纵向查找</span></span><br><span class="line">            res.<span class="built_in">push_back</span>(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = start; i &lt; n - (k - path.<span class="built_in">size</span>())+<span class="number">1</span>; i++) &#123;<span class="comment">//横向,剪枝如果剩余的数字没有k个剪掉</span></span><br><span class="line">            path.<span class="built_in">push_back</span>(i+<span class="number">1</span>);<span class="comment">//横向从start开始,因为题目要求的是组合,不能有重复的如不可能取&#123;1,1&#125;作为结果</span></span><br><span class="line">            <span class="built_in">backtracking</span>(n, k, i + <span class="number">1</span>);</span><br><span class="line">            path.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">combine</span>(<span class="type">int</span> n, <span class="type">int</span> k) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">backtracking</span>(n, k, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>不给定子集长度,只要符合条件就可以,如给定数组,查找子集 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/description/">https://leetcode.cn/problems/subsets/description/</a> ,或者在此基础上更改给定数组,使得数组的数字可以重复,但是子集不能重复.</li>
-</ol>
-<p><img src="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/3.png" alt="Alt text"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//leecode.90</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backing</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> start)</span> </span>&#123;</span><br><span class="line">        res.<span class="built_in">push_back</span>(path);<span class="comment">//与上面不同的是这里是集合,没有限定子集长度,所以每一次回溯都要放进去,注意不要忘了空集</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = start; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i!=start &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;<span class="comment">//因为数组中可以有重复元素,所以这里确保每次横向遍历是跳过与上次重复的</span></span><br><span class="line">            path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            <span class="built_in">backing</span>(nums, i + <span class="number">1</span>);</span><br><span class="line">            path.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">subsetsWithDup</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="built_in">backing</span>(nums, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations/description/">https://leetcode.cn/problems/permutations/description/</a> 这次的题目直接就顺序都可以是乱的,但细想其实也不是乱的,因为只有第一个元素可以任取,但是有所不同的是每次横向遍历不能传入start开始了,因为并不是按顺序进行扫描的,如横向第二次选中了2,此时不是从2开始纵向遍历,而是从1开始,所以与之前的题目的区别就是:需要判断遍历到的数字是否用过了.最开始其实想的是仅仅判断第一个数是否和遍历到的数字一样,但是归根到底每次遍历时都要从头开始,所以最终还是得创建一个数组判断遍历到的数是否在数组中.</li>
-</ol>
-<p><img src="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/4.png" alt="Alt text"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//leecode.47</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; used;<span class="comment">//放在外面,更多是因为返回答案的个数固定,搭配used.pop_back();判断本次答案是否用过了;</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backing</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (path.<span class="built_in">size</span>() == nums.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>() ; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="built_in">find</span>(used.<span class="built_in">begin</span>(), used.<span class="built_in">end</span>(), i) != used.<span class="built_in">end</span>()))<span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">//与46不同的是,这里数组可以重复此时就要考虑,如果两个数相同,且前面一个数字没有被使用过,也就是重排纵向数字时,此时就是重复的如 112 和112 ,这里的112中两个1分别是数组中第一个和第二个1,第二个112中,此时第一个1是数组中第二个数字,按照我们遍历的顺序第一个112已经写入结果中了,此时这个112就重复了,写代码中发现(find(used.begin(), used.end(), i - 1) == used.end())可以改为!=,虽然没想出是什么逻辑,但其实就是把第一个112去掉取第二个112.同时,这里用了find函数,其实可以创建一个bool数组进行判断</span></span><br><span class="line">            <span class="keyword">if</span> (i &amp;&amp; nums[i] == nums[i - <span class="number">1</span>] &amp;&amp; (<span class="built_in">find</span>(used.<span class="built_in">begin</span>(), used.<span class="built_in">end</span>(), i - <span class="number">1</span>) == used.<span class="built_in">end</span>())) <span class="keyword">continue</span>;</span><br><span class="line">            path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            used.<span class="built_in">push_back</span>(i);</span><br><span class="line">            <span class="built_in">backing</span>(nums);</span><br><span class="line">            used.<span class="built_in">pop_back</span>();</span><br><span class="line">            path.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">permuteUnique</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="built_in">backing</span>(nums);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>与这个题又有所不同,有点麻,脑子不够使</li>
-</ol>
-<p><img src="/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/5.png" alt="Alt text"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="type">int</span> last = INT_MIN;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">backing</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> start)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (path.<span class="built_in">size</span>() &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(path);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt;used;<span class="comment">//放在里面保证的是这个位置上的值不能重复</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = start; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != start &amp;&amp; <span class="built_in">find</span>(used.<span class="built_in">begin</span>(), used.<span class="built_in">end</span>(), nums[i]) != used.<span class="built_in">end</span>()) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (!path.<span class="built_in">empty</span>()) last = path[path.<span class="built_in">size</span>() - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> last = INT_MIN;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt;= last) &#123;</span><br><span class="line">                path.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">                used.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">                <span class="built_in">backing</span>(nums, i + <span class="number">1</span>);</span><br><span class="line">                path.<span class="built_in">pop_back</span>();</span><br><span class="line">                <span class="comment">//used.pop_back();这个不能有啊，此时used记录的是遍历中指定位置不能重复</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">findSubsequences</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="built_in">backing</span>(nums, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>要说两者有什么不同:  </p>
-<ol>
-<li>3中的used全局有效,同时,每次横向遍历的值都重新开始,所以需要在全局范围内判断是否用过,重点是目前的答案path中用没用过;<br>4中保证的是这次遍历中使用过了不能再用了,两者本质上就有区别,所以在本次横向遍历中,使用过的值不用弹出去.两个问题不一样</li>
-<li>能不能用3的方式解决4,感觉不太行?限制太多了感觉还是,以往是通过i!&#x3D;start判断是不是在横向第二次之后,此时used中记录的是是否使用过,如果最后不弹出,肯定不行,不可能说纵向第一次横向第一次使用过1,纵向第二次横向第二次就不使用了;如果弹出,那就没有意义了,横向第一次后续都找完,弹出了第一次的值,后面如果有一个一样的也没有效果.</li>
-</ol>
+<h3 id="2-4-UART-IIC-SPI之间的区别"><a href="#2-4-UART-IIC-SPI之间的区别" class="headerlink" title="2.4 UART,IIC,SPI之间的区别"></a>2.4 UART,IIC,SPI之间的区别</h3><p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/4.png" alt="Alt text"></p>
 
       
 
@@ -289,7 +270,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +284,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2024/07/07/%E8%BF%9B%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          进程
-        
-      </div>
-    </a>
   
-  
-    <a href="/2024/07/05/%E4%BF%A1%E5%8F%B7%EF%BC%9A%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">信号：基础</div>
+    <a href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">leecode：贪心算法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -342,7 +314,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="leecode-回溯算法" data-title="leecode-回溯算法" data-url="http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"></div>
+	<div class="ds-thread" data-thread-key="通信协议之UART（一）" data-title="通信协议之UART（一）" data-url="http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -365,8 +337,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://example.com/2024/07/07/leecode-%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/", 
-    sourceId: "leecode-回溯算法",
+    url: "http://example.com/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/", 
+    sourceId: "通信协议之UART（一）",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
@@ -375,7 +347,7 @@
   
 
   
-  <div id="SOHUCS" sid="leecode-回溯算法" ></div> 
+  <div id="SOHUCS" sid="通信协议之UART（一）" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
