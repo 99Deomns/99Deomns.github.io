@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 9
+			总文章数 10
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,209 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-通信协议之IIC（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/">通信协议之IIC（二）</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2024-07-12T01:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-12</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>仅自己阅读使用,大部分是摘抄<br>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/as480133937/article/details/105366932">https://blog.csdn.net/as480133937/article/details/105366932</a><br>    <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39829913/article/details/104718185">https://blog.csdn.net/qq_39829913/article/details/104718185</a></p>
+<h1 id="通信协议之IIC（二）"><a href="#通信协议之IIC（二）" class="headerlink" title="通信协议之IIC（二）"></a>通信协议之IIC（二）</h1><h2 id="1-1-IIC简介"><a href="#1-1-IIC简介" class="headerlink" title="1.1 IIC简介"></a>1.1 IIC简介</h2><p>IIC(Inter－Integrated Circuit)总线是一种由NXP（原PHILIPS）公司开发的两线式串行总线，用于连接微控制器及其外围设备。多用于<font color="red">主控制器和从器件间的主从通信，在小数据量场合使用，传输距离短，任意时刻只能有一个主机等特性。</font></p>
+<p>IIC是为了与低速设备通信而发明的,其传输速率比不上SPI.在CPU与被控IC,IC与IC之间双向传输,高速IIC总线一般可达400kbps.<br><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/1.png" alt="Alt text"><br>传输过程:  一帧标准的写数据帧<br><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/6.png" alt="Alt text"></p>
+<h2 id="1-2-网络带宽单位转换-MB-s、Mb-s、Mbps、Mbit-s、Kbps"><a href="#1-2-网络带宽单位转换-MB-s、Mb-s、Mbps、Mbit-s、Kbps" class="headerlink" title="1.2 网络带宽单位转换 MB&#x2F;s、Mb&#x2F;s、Mbps、Mbit&#x2F;s、Kbps"></a>1.2 网络带宽单位转换 MB&#x2F;s、Mb&#x2F;s、Mbps、Mbit&#x2F;s、Kbps</h2><ol>
+<li><p>bits和bps(bit per second)是一个意思</p>
+</li>
+<li><p>KB&#x2F;s和Kb&#x2F;s不一样,B是byte,b是bit,他们之间是8倍的关系.</p>
+</li>
+<li><p>1MB&#x2F;s&#x3D;8Mb&#x2F;s&#x3D;1024KB&#x2F;s<br>1M带宽即1Mbps&#x3D;1000Kbps&#x3D;1000&#x2F;8kBps&#x3D;125kBps,其下载速度不会超过125KB&#x2F;s</p>
+</li>
+<li><p>15GB的数据块以10G的速率（省略bps）传送，表明有15* 2^30 <em>8比特的数据块以10</em> 10^9 bit&#x2F;s的速率传送。</p>
+</li>
+</ol>
+<h2 id="1-3-IIC物理层"><a href="#1-3-IIC物理层" class="headerlink" title="1.3 IIC物理层"></a>1.3 IIC物理层</h2><p>两条总线分别为双向串行数据线SDA,串行时钟线SCL:</p>
+<ol>
+<li>SDA(Serial data)</li>
+<li>SCL(Serial clock line):控制时钟线的就是主设备</li>
+</ol>
+<p>所有接到I2C总线设备上的串行数据SDA都接到总线的SDA上，各设备的时钟线SCL接到总线的SCL上。I2C总线上的每个设备都自己一个唯一的地址，来确保不同设备之间访问的准确性。</p>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/2.png" alt="Alt text"></p>
+<h3 id="1-3-1-IIC主要特点"><a href="#1-3-1-IIC主要特点" class="headerlink" title="1.3.1 IIC主要特点"></a>1.3.1 IIC主要特点</h3><ul>
+<li>主设备功能:产生时钟,起始信号,停止信号</li>
+<li>从设备功能:可编程的IIC地址检测,停止位检测</li>
+<li>支持多主控,任何一个能够发送和接收的设备都可以成为总线,主控能够控制信号的传输和时钟频率,任何时间点只能有一个主控.</li>
+<li>支持不同速率的通讯速度,标准速度100kHz,快速400KHz</li>
+<li>两根总线都需要上拉电阻,大小由速度和容性负载一般在3.3k-10k之间,保证数据的稳定性,减少干扰</li>
+<li>IIC是半双工,同一时间只能单向通信</li>
+<li>为了避免总线信号的混乱，<font color="red">要求各设备连接到总线的输出端时必须是漏极开路（OD）输出或集电极开路（OC）输出。</font></li>
+</ul>
+<ol>
+<li>漏极开路（OPEN Drain,OD）即高阻状态,适用于输入\输出,in）即高阻状态，适用于输入&#x2F;输出，可独立输入&#x2F;输出低电平和高阻状态，若需要产生高电平，则需使用外部上拉电阻.</li>
+<li>高阻状态：高阻状态是三态门电路的一种状态。逻辑门的输出除有高、低电平两种状态外，还有第三种状态——高阻状态的门电路。电路分析时高阻态可做开路理解。</li>
+</ol>
+<p>IIC设备都连在一根总线上,进行通信时,往往只有几个设备进行通信,其余设备可能会受到总线干扰,或干扰总线,怎么办?</p>
+<p>IIC器件地址:每个IIC器件都有一个地址,有的器件地址在出厂时就设置好了,且不可更改,如OV7670的地址为0x42,有的器件如EEPROM,前四个地址确定为1010,后三个地址由硬件链接确定,所以同一IIC设备最多连接8个EEPROM芯片.</p>
+<p>IIC物理层:通信原理是通过对SCL和SDA线高低电平时序的控制，来产生I2C总线协议所需要的信号进行数据的传递。在总线空闲状态时，SCL和SDA被上拉电阻Rp拉高，使SDA和SCL线都保持高电平。</p>
+<h2 id="1-4-IIC协议层"><a href="#1-4-IIC协议层" class="headerlink" title="1.4 IIC协议层"></a>1.4 IIC协议层</h2><p>IIC的协议层<br>I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：开始信号、结束信号和应答信号。  </p>
+<ul>
+<li>开始信号：SCL 为高电平时，SDA 由高电平向低电平跳变，开始传送数据。</li>
+<li>结束信号：SCL 为高电平时，SDA 由低电平向高电平跳变，结束传送数据。</li>
+<li>应答信号：接收数据的 IC 在接收到 8bit 数据后，向发送数据的 IC 发出特定的低电平脉冲，表示已收到数据。CPU 向受控单元发出一个信号后，等待受控单元发出一个应答信号，CPU 接收到应答信号后，根据实际情况作出是否继续传递信号的判断。若未收到应答信号，由判断为受控单元出现故障。<br>这些信号中，起始信号是必需的，结束信号和应答信号，都可以不要。</li>
+</ul>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/3.png" alt="Alt text"></p>
+<h3 id="1-4-1-初始空闲状态"><a href="#1-4-1-初始空闲状态" class="headerlink" title="1.4.1 初始空闲状态"></a>1.4.1 初始空闲状态</h3><p>IIC的SCL和SDA都需要连接上拉电阻,保证空闲状态的稳定性.所以在空闲状态时需要将这两条线保持高电平.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">IIC_init</span><span class="params">()</span>       <span class="comment">//IIC初始化</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">       SCL=<span class="number">1</span>; <span class="comment">//首先把时钟线拉高</span></span><br><span class="line"></span><br><span class="line">       delay_us(<span class="number">4</span>);<span class="comment">//延时函数</span></span><br><span class="line"></span><br><span class="line">       SDA=<span class="number">1</span>; <span class="comment">//在SCL为高的情况下把SDA拉高</span></span><br><span class="line"></span><br><span class="line">       delay_us(<span class="number">4</span>); <span class="comment">//延时函数</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-2-开始信号"><a href="#1-4-2-开始信号" class="headerlink" title="1.4.2 开始信号"></a>1.4.2 开始信号</h3><p>SCL保持高电平,SDA由高电平变为低电平后,延时(&gt;4.7us),SCL变为低电平.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//产生IIC起始信号</span></span><br><span class="line"><span class="comment">//1.先拉高SDA，再拉高SCL，空闲状态</span></span><br><span class="line"><span class="comment">//2.拉低SDA</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">IIC_Start</span><span class="params">()</span>         <span class="comment">//启动信号</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">       SDA=<span class="number">1</span>; <span class="comment">//确保SDA线为高电平</span></span><br><span class="line">       delay_us(<span class="number">5</span>);</span><br><span class="line">       SCL=<span class="number">1</span>;  <span class="comment">//确保SCL高电平</span></span><br><span class="line">       delay_us(<span class="number">5</span>);</span><br><span class="line">       SDA=<span class="number">0</span>; <span class="comment">//在SCL为高时拉低SDA线，即为起始信号</span></span><br><span class="line">       delay_us(<span class="number">5</span>);</span><br><span class="line">       SCL=<span class="number">0</span>;   <span class="comment">//钳住I2C总线，准备发送或接收数据 </span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-3-停止信号-SCL保持高电平-SDA由低电平变为高电平"><a href="#1-4-3-停止信号-SCL保持高电平-SDA由低电平变为高电平" class="headerlink" title="1.4.3 停止信号:SCL保持高电平,SDA由低电平变为高电平."></a>1.4.3 停止信号:SCL保持高电平,SDA由低电平变为高电平.</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//产生IIC停止信号</span></span><br><span class="line"><span class="comment">//1.先拉低SDA，再拉低SCL</span></span><br><span class="line"><span class="comment">//2.拉高SCL</span></span><br><span class="line"><span class="comment">//3.拉高SDA</span></span><br><span class="line"><span class="comment">//4.停止接收数据</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">IIC_Stop</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    IIC_SCL=<span class="number">0</span>;</span><br><span class="line">    IIC_SDA=<span class="number">0</span>;    <span class="comment">//STOP:当SCL高时，数据由低变高</span></span><br><span class="line">    delay_us(<span class="number">4</span>);</span><br><span class="line">    IIC_SCL=<span class="number">1</span>; </span><br><span class="line">    IIC_SDA=<span class="number">1</span>;    <span class="comment">//发送I2C总线结束信号</span></span><br><span class="line">    delay_us(<span class="number">4</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在起始条件产生后，总线处于忙状态，由本次数据传输的主从设备独占，其他I2C器件无法访问总线；而在停止条件产生后，本次数据传输的主从设备将释放总线，总线再次处于空闲状态。  </p>
+<p>数据有效性:<br>IIC信号在数据传输过程中，当SCL&#x3D;1高电平时，数据线SDA必须保持稳定状态，不允许有电平跳变，只有在时钟线上的信号为低电平期间，数据线上的高电平或低电平状态才允许变化。</p>
+<p>SCL&#x3D;1时 数据线SDA的任何<font color="red">电平变换</font>会看做是总线的起始信号或者停止信号。<br>高电平时除非是起始或停止信号,否则不允许电平变化.</p>
+<p>也就是在IIC传输数据的过程中，SCL时钟线会频繁的转换电平，以保证数据的传输.</p>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/4.png" alt="Alt text"></p>
+<h3 id="1-4-4-应答信号"><a href="#1-4-4-应答信号" class="headerlink" title="1.4.4 应答信号"></a>1.4.4 应答信号</h3><p>每当主机向从机发送完一个字节的数据，主机总是需要等待从机给出一个应答信号，以确认从机是否成功接收到了数据.  </p>
+<p><font color="red">主机产生数据传输过程中的所有时钟，包括用于应答的第9个时钟。发送器在应答时钟周期内释放对SDA总线的控制，这样接收器可以通过将SDA线拉低告知发送器：数据已被成功接收。</font> </p>
+<p>应答信号：主机SCL拉高，读取从机SDA的电平，为低电平表示产生应答</p>
+<ul>
+<li>应答信号为低电平时，规定为有效应答位（ACK，简称应答位），表示接收器已经成功地接收了该字节；</li>
+<li>应答信号为高电平时，规定为非应答位（NACK），一般表示接收器接收该字节没有成功。</li>
+</ul>
+<p>每发送一个字节（8个bit）在一个字节传输的8个时钟后的第九个时钟期间，接收器接收数据后必须回一个ACK应答信号给发送器，这样才能进行数据传输。</p>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/5.png" alt="Alt text"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从机产生应答信号ACK</span></span><br><span class="line"><span class="comment">//1.先拉低SCL，再拉低SDA</span></span><br><span class="line"><span class="comment">//2.拉高SCL</span></span><br><span class="line"><span class="comment">//3.拉低SCL</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">I2C_Ack</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">   IIC_SCL=<span class="number">0</span>;   <span class="comment">//先拉低SCL，使得SDA数据可以发生改变</span></span><br><span class="line">   IIC_SDA=<span class="number">0</span>;   </span><br><span class="line">   delay_us(<span class="number">2</span>);</span><br><span class="line">   IIC_SCL=<span class="number">1</span>;</span><br><span class="line">   delay_us(<span class="number">5</span>);</span><br><span class="line">   IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//从机不产生应答信号NACK</span></span><br><span class="line"><span class="comment">//1.先拉低SCL，再拉高SDA</span></span><br><span class="line"><span class="comment">//2.拉高SCL</span></span><br><span class="line"><span class="comment">//3.拉低SCL</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">I2C_NAck</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">   IIC_SCL=<span class="number">0</span>;   <span class="comment">//先拉低SCL，使得SDA数据可以发生改变</span></span><br><span class="line">   IIC_SDA=<span class="number">1</span>;   <span class="comment">//拉高SDA，不产生应答信号</span></span><br><span class="line">   delay_us(<span class="number">2</span>);</span><br><span class="line">   IIC_SCL=<span class="number">1</span>;</span><br><span class="line">   delay_us(<span class="number">5</span>);</span><br><span class="line">   IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//等待应答信号到来</span></span><br><span class="line"><span class="comment">//返回值：1，接收应答失败</span></span><br><span class="line"><span class="comment">//        0，接收应答成功</span></span><br><span class="line"><span class="type">char</span> <span class="title function_">IIC_Wait_Ack</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    u8 ucErrTime=<span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">    IIC_SDA=<span class="number">1</span>;</span><br><span class="line">    delay_us(<span class="number">1</span>);</span><br><span class="line">    IIC_SCL=<span class="number">1</span>;</span><br><span class="line">    delay_us(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">while</span>(IIC_SDA)&#123;</span><br><span class="line">        ucErrTime++;</span><br><span class="line">        <span class="keyword">if</span>(ucErrTime&gt;<span class="number">250</span>)&#123;</span><br><span class="line">            IIC_Stop();</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//注意这里1才是失败</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    IIC_SCL=<span class="number">0</span>;<span class="comment">//时钟输出0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-5-IIC数据传输"><a href="#1-4-5-IIC数据传输" class="headerlink" title="1.4.5 IIC数据传输"></a>1.4.5 IIC数据传输</h3><p>SDA线上的数据在SCL时钟“高”期间必须是稳定的，只有当SCL线上的时钟信号为低时，数据线上的“高”或“低”状态才可以改变。输出到SDA线上的每个字节必须是8位，数据传送时，先传送最高位（MSB），每一个被传送的字节后面都必须跟随一位应答位（即一帧共有9位）。  </p>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/7.png" alt="Alt text"><br>起始信号是在SCL为高的情况下拉低SDA信号;首先主机发送地址明确与哪个从机进行通信,方向位是说主机发送数据还是接收数据; 每一帧信号都需要一个应答位.</p>
+<ul>
+<li>0表示主设备向从设备(write)写数据;</li>
+<li>1表示主设备向从设备(read)读数据;</li>
+</ul>
+<p>结束信号是在SCL为高的情况下拉高SDA,正好两个都为高也就是空闲状态.上面的起始信号也就对应了从空闲状态到工作;</p>
+<p>IIC的每一帧数据由9bit组成:</p>
+<p>如果是发送数据，则包含 8bit数据+1bit ACK;<br>如果是设备地址数据，则8bit包含7bit设备地址+1bit方向+1bit ACK;  </p>
+<p>IIC发送一个字节:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回从机有无应答</span></span><br><span class="line"><span class="comment">//1，有应答</span></span><br><span class="line"><span class="comment">//0，无应答            </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//IIC_SCL=0;</span></span><br><span class="line"><span class="comment">//在SCL上升沿时准备好数据，进行传送数据时，拉高拉低SDA，因为传输一个字节，一个SCL脉冲里传输一个位。</span></span><br><span class="line"><span class="comment">//数据传输过程中，数据传输保持稳定（在SCL高电平期间，SDA一直保持稳定，没有跳变）</span></span><br><span class="line"><span class="comment">//只有当SCL被拉低后，SDA才能被改变</span></span><br><span class="line"><span class="comment">//总结：在SCL为高电平期间，发送数据，发送8次数据，数据为1,SDA被拉高，数据为0，SDA被拉低。</span></span><br><span class="line"><span class="comment">//传输期间保持传输稳定，所以数据线仅可以在时钟SCL为低电平时改变。</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">IIC_Send_Byte</span><span class="params">(u8 txd)</span></span><br><span class="line">&#123;                        </span><br><span class="line">    u8 t;   </span><br><span class="line">    SDA_OUT();         </span><br><span class="line">    IIC_SCL=<span class="number">0</span>;<span class="comment">//拉低时钟开始数据传输</span></span><br><span class="line">    <span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;<span class="number">8</span>;t++)</span><br><span class="line">    &#123;              </span><br><span class="line">        <span class="comment">//IIC_SDA=txd&amp;0x80;   //获取最高位</span></span><br><span class="line">        <span class="comment">//获取数据的最高位，然后数据左移一位</span></span><br><span class="line">        <span class="comment">//如果某位为1，则SDA为1，否则相反</span></span><br><span class="line">        <span class="keyword">if</span>(txd&amp;<span class="number">0x80</span>)</span><br><span class="line">            IIC_SDA=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            IIC_SDA=<span class="number">0</span>;</span><br><span class="line">        txd&lt;&lt;=<span class="number">1</span>;       </span><br><span class="line">        delay_us(<span class="number">2</span>);   </span><br><span class="line">        IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        delay_us(<span class="number">2</span>); </span><br><span class="line">        IIC_SCL=<span class="number">0</span>;    </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">    &#125;     </span><br><span class="line">&#125;       </span><br><span class="line">或者：</span><br><span class="line">        <span class="comment">//IIC_SDA=txd&amp;0x80;   //获取最高位</span></span><br><span class="line">        <span class="comment">//获取数据的最高位，然后右移7位,假设为 1000 0000 右移7位为 0000 0001 </span></span><br><span class="line">        <span class="comment">// 假设为 0000 0000 右移7位为 0000 0000 </span></span><br><span class="line">        <span class="comment">//如果某位为1，则SDA为1，否则相反</span></span><br><span class="line">        IIC_SDA=((txd&amp;<span class="number">0x80</span>)&gt;&gt;<span class="number">7</span>);</span><br><span class="line">        txd&lt;&lt;=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>IIC读取一个字节数据：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span></span><br><span class="line">u8 <span class="title function_">IIC_Read_Byte</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> ack)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> i,receive=<span class="number">0</span>;</span><br><span class="line">    SDA_IN();        <span class="comment">//SDA设置为输入</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++ )&#123;</span><br><span class="line">        IIC_SCL=<span class="number">0</span>; </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">        IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        receive&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(READ_SDA)receive++;   </span><br><span class="line">        delay_us(<span class="number">1</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!ack)</span><br><span class="line">        IIC_NAck();        <span class="comment">//发送nACK</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        IIC_Ack();         <span class="comment">//发送ACK   </span></span><br><span class="line">    <span class="keyword">return</span> receive;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主机要向从机写数据时：</p>
+<ol>
+<li>主机首先产生START信号</li>
+<li>然后紧跟着发送一个从机地址，这个地址共有7位，紧接着的第8位是数据方 向位(R&#x2F;W)，0表示主机发送数据(写)，1表示主机接收数据(读)</li>
+<li>主机发送地址时，总线上的每个从机都将这7位地址码与自己的地址进行比较，若相同，则认为自己正在被主机寻址，根据R&#x2F;T位将自己确定为发送器和接收器</li>
+<li>这时候主机等待从机的应答信号(A)</li>
+<li>当主机收到应答信号时，发送要访问从机的那个地址， 继续等待从机的应答信号</li>
+<li>当主机收到应答信号时，发送N个字节的数据，继续等待从机的N次应答信号，</li>
+<li>主机产生停止信号，结束传送过程</li>
+</ol>
+<p>主机要从从机读数据时:</p>
+<ol>
+<li>主机首先产生START信号</li>
+<li>然后紧跟着发送一个从机地址，注意此时该地址的第8位为0，表明是向从机写命令;</li>
+<li>这时候主机等待从机的应答信号(ACK);</li>
+<li>当主机收到应答信号时，发送要访问的地址，继续等待从机的应答信号;</li>
+<li><font color="red">当主机收到应答信号后，主机要改变通信模式(主机将由发送变为接收，从机将由接收变为发送)所以主机重新发送一个开始start信号，然后紧跟着发送一个从机地址，注意此时该地址的第8位为1，表明将主机设 置成接收模式开始读取数据;</font></li>
+<li>这时候主机等待从机的应答信号，当主机收到应答信号时，就可以接收1个字节的数据，当接收完成后，主机发送非应答信号，表示不在接收数据;</li>
+<li>主机进而产生停止信号，结束传送过程。</li>
+</ol>
+<h2 id="以AT24C02为例"><a href="#以AT24C02为例" class="headerlink" title="以AT24C02为例:"></a>以AT24C02为例:</h2><p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/8.png" alt="Alt text"></p>
+<p>24C02是一个2K Bit的串行EEPROM存储器（掉电不丢失），<font color="red">内部含有256个字节</font>。在24C02里面有一个8字节的页写缓冲器。  </p>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/9.png" alt="Alt text"></p>
+<p>芯片的寻址：<br>AT24C设备地址为如下，前四位固定为1010，A2<del>A0为由管脚电平。AT24CXX EEPROM Board模块中默认为接地。A2</del>A0为000，最后一位表示读写操作。所以AT24Cxx的读地址为0xA1,写地址为0xA0.<br>写24C02的时候，从器件地址为10100000（0xA0）；<br>读24C02的时候，从器件地址为10100001（0xA1）。(最后一位是确定方向,读还是写)</p>
+<p>芯片寻址可对内部256B中的任一个进行读&#x2F;写操作，其寻址范围为00~FF，共256个寻址单位。  </p>
+<h3 id="写入操作时序："><a href="#写入操作时序：" class="headerlink" title="写入操作时序："></a>写入操作时序：</h3><ol>
+<li>MCU先发送一个开始信号(START)启动总线</li>
+<li>接着跟上首字节，发送器件写操作地址(DEVICE ADDRESS)+写数据(0xA0)</li>
+<li>等待应答信号(ACK)</li>
+<li>发送数据的存储地址。24C02一共有256个字节的存储空间，地址从0x00~0xFF，想把数据存储&gt;在哪个位置，此刻写的就是哪个地址。</li>
+<li>发送要存储的数据第一字节、第二字节、…注意在写数据的过程中，E2PROM每个字节都会&gt;回应一个“应答位0”，老告诉我们写E2PROM数据成功，如果没有回应答位，说明写入不成功。</li>
+<li>发送结束信号（STOP）停止总线</li>
+</ol>
+<p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/10.png" alt="Alt text"><br><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/13.png" alt="Alt text"></p>
+<p>值得注意的是:每成功写入一个字节,E2PROM的存储空间字节自动加1,加到0xff时再+1,地址溢出变为0x00;</p>
+<p>写数据的时候需要注意，E2PROM是先写到缓冲区，然后再“搬运到”到掉电非易失区。所以这个过程需要一定的时间，AT24C02这个过程是不超过5ms！<br>所以，当我们在写多个字节时，写入一个字节之后，再写入下一个字节之前，必须延时5ms才可以;  </p>
+<h3 id="读指定地址的数据"><a href="#读指定地址的数据" class="headerlink" title="读指定地址的数据"></a>读指定地址的数据</h3><p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/11.png" alt="Alt text"><br><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/14.png" alt="Alt text"><br>可以重新开始或者中断再开始.  </p>
+<ol>
+<li>MCU先发送一个开始信号(START)启动总线</li>
+<li>接着跟上首字节，发送器件写操作地址(DEVICE ADDRESS)+写数据(0xA0)<br>注意：这里写操作是为了要把所要读的数据的存储地址先写进去，告诉E2PROM要读取哪个地址的数据。</li>
+<li>发送要读取内存的地址(WORD ADDRESS)，通知E2PROM读取要哪个地址的信息。</li>
+<li>重新发送开始信号(START)</li>
+<li>发送设备读操作地址(DEVICE ADDRESS)对E2PROM进行读操作 10100001（0xA1）</li>
+<li>E2PROM会自动向主机发送数据，主机读取从器件发回的数据，在读一个字节后，MCU会回应一个应答信号(ACK)后，E2PROM会继续传输下一个地址的数据，MCU不断回应应答信号可以不断读取内存的数据</li>
+<li>如果不想读了，告诉E2PROM不想要数据了，就发送一个“非应答位NAK(1)”。发送结束信号（STOP）停止总线</li>
+</ol>
+<p>从机发送数据，主机读取数据时，ACK信号由主机给出。主机响应ACK表示还需要再接收数据，而当主机接收完想要的数据后，通过发送NACK告诉从机读取数据结束、释放总线。随后主机发送STOP命令，将总线释放，结束读操作。</p>
+<h3 id="连续写数据"><a href="#连续写数据" class="headerlink" title="连续写数据"></a>连续写数据</h3><p><img src="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/12.png" alt="Alt text"></p>
+<h3 id="模拟"><a href="#模拟" class="headerlink" title="模拟"></a>模拟</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//IIC发送数据</span></span><br><span class="line"><span class="comment">//address 要写入的地址</span></span><br><span class="line"><span class="comment">//date 要写入的数据</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">write_add</span><span class="params">(uchar address,uchar date)</span></span><br><span class="line">&#123;</span><br><span class="line">    IIC_Start();</span><br><span class="line">    IIC_Send_Byte(<span class="number">0xA0</span>);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    IIC_Send_Byte(address);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    IIC_Send_Byte(date);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    IIC_Stop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//IIC读取数据</span></span><br><span class="line"><span class="comment">// address 要读取数据的地址</span></span><br><span class="line">uchar <span class="title function_">read_add</span><span class="params">(uchar address)</span>  <span class="comment">//指定地址读一个字节数据</span></span><br><span class="line">&#123;</span><br><span class="line">    uchar add;</span><br><span class="line">    IIC_Start();</span><br><span class="line">    IIC_Send_Byte(<span class="number">0xA0</span>);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    IIC_Send_Byte(address);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    IIC_Start();</span><br><span class="line">    IIC_Send_Byte(<span class="number">0xA1</span>);</span><br><span class="line">    delay(<span class="number">2</span>);</span><br><span class="line">    dd=IIC_Read_Byte();</span><br><span class="line">    IIC_Stop();</span><br><span class="line">    <span class="keyword">return</span> add;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="软件IIC和硬件IIC"><a href="#软件IIC和硬件IIC" class="headerlink" title="软件IIC和硬件IIC"></a>软件IIC和硬件IIC</h2><p>软件IIC：软件IIC通信指的是用单片机的两个I&#x2F;O端口模拟出来的IIC，用软件控制管脚状态以模拟I2C通信波形，软件模拟寄存器的工作方式。  </p>
+<p>硬件IIC：一块硬件电路，硬件I2C对应芯片上的I2C外设，有相应I2C驱动电路，其所使用的I2C管脚也是专用的，硬件（固件）I2C是直接调用内部寄存器进行配置。  </p>
+<p>硬件I2C的效率要远高于软件的，而软件I2C由于不受管脚限制，接口比较灵活。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-通信协议之UART（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -187,11 +390,11 @@
 <p>这里没有共享时钟线,因为这是异步通信.</p>
 <h3 id="2-3-错误状态"><a href="#2-3-错误状态" class="headerlink" title="2.3 错误状态"></a>2.3 错误状态</h3><p>在使用 UART 时可能遇到的一些错误:</p>
 <ol>
-<li><p>帧错误<br>  UART 状态和控制寄存器将指示各种状态条件，包括与传输相关的错误状态。了解此协议可以更轻松地理解错误状态。其中包括帧错误，<font color="red">当接收器在预期位时间没有看到停止位时就会发生帧错误</font>。如果<font color="red">在预期停止位时数据线未处于预期的高状态（取决于设置 UART 的数据和奇偶校验位的数量）</font>，则 UART 将发出帧错误信号。</p>
+<li><p>帧错误<br>UART 状态和控制寄存器将指示各种状态条件，包括与传输相关的错误状态。了解此协议可以更轻松地理解错误状态。其中包括帧错误，<font color="red">当接收器在预期位时间没有看到停止位时就会发生帧错误</font>。如果<font color="red">在预期停止位时数据线未处于预期的高状态（取决于设置 UART 的数据和奇偶校验位的数量）</font>，则 UART 将发出帧错误信号。</p>
 </li>
-<li><p>奇偶校验错误<br> 仅当 UART 处于奇偶校验模式时才会引发奇偶校验错误。在奇偶校验模式下，会发送一个额外位来保存所有传输数据位的奇偶校验（偶数或奇数）。如果数据位有错误（1 代表 0 或 0 代表 1），则奇偶校验位将错误，并且将抛出指定错误的错误。</p>
+<li><p>奇偶校验错误<br>仅当 UART 处于奇偶校验模式时才会引发奇偶校验错误。在奇偶校验模式下，会发送一个额外位来保存所有传输数据位的奇偶校验（偶数或奇数）。如果数据位有错误（1 代表 0 或 0 代表 1），则奇偶校验位将错误，并且将抛出指定错误的错误。</p>
 </li>
-<li><p>溢出错误<br>  当接收器在下一个字符到达之前不进行处理（从输入缓冲区中删除一个字符）时，就会发生溢出错误。</p>
+<li><p>溢出错误<br>当接收器在下一个字符到达之前不进行处理（从输入缓冲区中删除一个字符）时，就会发生溢出错误。</p>
 </li>
 <li><p>中断条件<br>中断条件不一定是错误。当接收器输入处于逻辑低状态超过一定持续时间（通常超过一个字符时间）时，就会发生这种情况。对于接收者来说，它看起来像是一个带有帧错误的全零字符。这是针对软件复位电路的黑客攻击。在python代码中，可以看到reset是通过发送break来触发的。这会将数据线拉低足够长的时间，以便将 MCLR 拉低并使电路板复位。</p>
 </li>
