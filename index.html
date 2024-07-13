@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 10
+			总文章数 11
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -145,6 +145,112 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-通信协议之SPI（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/">通信协议之SPI（三）</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2024-07-13T11:54:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-13</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SPI协议"><a href="#SPI协议" class="headerlink" title="SPI协议"></a><center>SPI协议</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.<br>特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。</p>
+<p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/1.png" alt="Alt text"></p>
+<p>SPI主从模式：一个SPI通讯系统仅有一个主设备，一个或多个从设备。主设备提供时钟，SPI接口的读写操作均由主设备发起。通过片选信号选定进行通讯的从设备。</p>
+<p>SPI是全双工且没有定义速度限制，通常能达到10Mbps以上，且传输的长度没有限制，没有像IIC那样每一字节都需要应答。</p>
+<p>SPI信号线：</p>
+<ol>
+<li>SCK时钟线：串行时钟信号，主设备产生</li>
+<li>MOSI主设备输出，从设备输入引脚（Master output Slave input）：主设备发送数据，从设备接受数据</li>
+<li>MISO主设备输入，从设备输出引脚：  </li>
+<li>CS&#x2F;SS：从设备片选信号，一般低电平有效，具体看手册。</li>
+</ol>
+<p>SPI只有主模式和从模式之分，没有读和写的说法，每次SPI是主从设备在交换数据，发送一个数据也一定会接收到一个数据；接收一个数据也一定要先发送一个数据。在通信过程中，主设备和从设备会产生一个数据链路回环。  </p>
+<h2 id="SPI传输时序"><a href="#SPI传输时序" class="headerlink" title="SPI传输时序"></a>SPI传输时序</h2><p>时钟极性CPOL：当SCLK为空闲时，控制电平高还是低；<br>时钟相位CPHA：控制对应数据采样时在上升沿还是下降沿，0表示第一个边沿，1表示第二个边沿（因为还有CPOL）；</p>
+<ul>
+<li>CPHA&#x3D;0，第一个边沿：当CPOL为0时，空闲时为低电平，第一个边沿就是上升沿；反之下降沿。</li>
+<li>CPHA&#x3D;1，第二个边沿：当CPOL为0时，空闲时为低电平，第二个边沿就是下降沿；</li>
+</ul>
+<p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/2.png" alt="Alt text"></p>
+<p>Bit1是MSB（高），Bit8是LSB（低）。当CPHA&#x3D;CPOL&#x3D;0时，此时在上升沿采样，在下降沿改变数据，是改变，不要被网上的博客误导说是什么发送，其实就是上升沿采样，此时不能改变数值，下降沿数据的值才能改变，以免发生误会。</p>
+<p>此时主设备什么时候发送bit1的呢？  </p>
+<p>实际上是在SCK有效之前，比第一个上升沿还要早半个时钟周期。从设备同样是在时钟的上升沿采样到bit1，在片选信号有效后立刻输出bit1；<font color="yellow">看图得知，bit1在MISO，MOSI出现的时刻在时钟有效前。</font></p>
+<h3 id="举例：主设备向从设备发送5，从设备向主设备发送128"><a href="#举例：主设备向从设备发送5，从设备向主设备发送128" class="headerlink" title="举例：主设备向从设备发送5，从设备向主设备发送128"></a>举例：主设备向从设备发送5，从设备向主设备发送128</h3><p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/3.png" alt="Alt text"><br><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/4.png" alt="Alt text"></p>
+<h2 id="菊花链"><a href="#菊花链" class="headerlink" title="菊花链"></a>菊花链</h2><p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/5.png" alt="Alt text"></p>
+<h2 id="软件模拟SPI"><a href="#软件模拟SPI" class="headerlink" title="软件模拟SPI"></a>软件模拟SPI</h2><p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41448995/article/details/126208644">https://blog.csdn.net/weixin_41448995/article/details/126208644</a></p>
+<p>任何一个GPIO都可以模拟SPI。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_WP_PIN          GPIO_Pin_6</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_WP_PORT         GPIOC</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_CS_PIN          GPIO_Pin_15</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_CS_PORT         GPIOA</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_CLK_PIN         GPIO_Pin_3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_CLK_PORT        GPIOB</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_MOSI_PIN        GPIO_Pin_12</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_MOSI_PORT       GPIOC</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_MISO_PIN        GPIO_Pin_4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_MISO_PORT       GPIOB</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_BASE           SPI3</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_FLASH_CS_LOW()    GPIO_ResetBits(SPI_CS_PORT, SPI_CS_PIN)  <span class="comment">/* Select SPI MEM1: ChipSelect pin low  */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_FLASH_CS_HIGH()   GPIO_SetBits(SPI_CS_PORT, SPI_CS_PIN)    <span class="comment">/* Deselect SPI MEM1: ChipSelect pin high */</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_FLASH_WP_LOW()    GPIO_ResetBits(SPI_WP_PORT, SPI_WP_PIN)  <span class="comment">//PC4</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SPI_FLASH_WP_HIGH()   GPIO_SetBits(SPI_WP_PORT, SPI_WP_PIN)    <span class="comment">//PC4</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>赋值操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模拟MOSI,赋值操作</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">SPI_MOSI</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> Status)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(Status)</span><br><span class="line">        GPIO_WriteBit(SPI_MOSI_PORT,SPI_MOSI_PIN,Bit_SET);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        GPIO_WriteBit(SPI_MOSI_PORT,SPI_MOSI_PIN,Bit_RESET);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//模拟CLK</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">SPI_CLK</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> Status)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(Status)</span><br><span class="line">        GPIO_WriteBit(SPI_CLK_PORT,SPI_CLK_PIN,Bit_SET);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        GPIO_WriteBit(SPI_CLK_PORT,SPI_CLK_PIN,Bit_RESET);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//模拟MISO</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> <span class="title function_">SPI_MISO</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(GPIO_ReadInputDataBit(SPI_MISO_PORT,SPI_MISO_PIN))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SPI初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">gd25qxxInit</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line"> </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI_MOSI_PIN; <span class="comment">//PA5:SCK,PA7:MOSI</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	<span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_Init(SPI_MOSI_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	SPI_MOSI(<span class="number">1</span>);</span><br><span class="line">	</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI_CLK_PIN; <span class="comment">//PA5:SCK,PA7:MOSI</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	<span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_Init(SPI_CLK_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	SPI_CLK(<span class="number">1</span>);</span><br><span class="line"> </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI_MISO_PIN ;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;</span><br><span class="line">	GPIO_Init(SPI_MISO_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI_CS_PIN;                             </span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;</span><br><span class="line">	GPIO_Init(SPI_CS_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	SPI_FLASH_CS_HIGH();</span><br><span class="line"> </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI_WP_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;</span><br><span class="line">	GPIO_Init(SPI_WP_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	SPI_FLASH_WP_HIGH();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SPI数据输入输出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> <span class="title function_">gd25qxxSendByte</span><span class="params">(<span class="type">uint8_t</span> byte)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> i,Result = <span class="number">0</span>;;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(byte &amp; <span class="number">0x80</span>)	SPI_MOSI(<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">else</span> SPI_MOSI(<span class="number">0</span>);</span><br><span class="line">		byte &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">		SPI_CLK(<span class="number">0</span>);</span><br><span class="line">		SPI_CLK(<span class="number">1</span>);</span><br><span class="line">		</span><br><span class="line">		Result &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(SPI_MISO()) Result |= <span class="number">0x01</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	SPI_CLK(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span>(Result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint32_t</span> <span class="title function_">gd25qxxReadID</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">uint32_t</span> Temp = <span class="number">0</span>, Temp0 = <span class="number">0</span>, Temp1 = <span class="number">0</span>, Temp2 = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">/* Select the FLASH: Chip Select low */</span></span><br><span class="line">  SPI_FLASH_CS_LOW();</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* Send &quot;RDID &quot; instruction */</span></span><br><span class="line">  gd25qxxSendByte(<span class="number">0x9F</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* Read a byte from the FLASH */</span></span><br><span class="line">  Temp0 = gd25qxxSendByte(DUMMY_BYTE);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* Read a byte from the FLASH */</span></span><br><span class="line">  Temp1 = gd25qxxSendByte(DUMMY_BYTE);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* Read a byte from the FLASH */</span></span><br><span class="line">  Temp2 = gd25qxxSendByte(DUMMY_BYTE);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* Deselect the FLASH: Chip Select high */</span></span><br><span class="line">  SPI_FLASH_CS_HIGH();</span><br><span class="line"> </span><br><span class="line">  Temp = (Temp0 &lt;&lt; <span class="number">16</span>) | (Temp1 &lt;&lt; <span class="number">8</span>) | Temp2;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> Temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
   
     <article id="post-通信协议之IIC（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1285,87 +1391,10 @@
 
 
   
-    <article id="post-hexo使用方法初始化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/">Hello World</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2024-07-03T02:26:42.573Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
