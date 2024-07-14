@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>通信协议之SPI（三） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SPI协议1 简介SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。  SPI主从模式：一个SPI通讯系统仅有一个主设备，一个或多个从设备。">
+  <meta name="description" content="SPI协议1 简介SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.  IIC的加强版特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。  SPI主从模式：一个SPI通讯系统仅有一个主设备，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通信协议之SPI（三）">
 <meta property="og:url" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="SPI协议1 简介SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。  SPI主从模式：一个SPI通讯系统仅有一个主设备，一个或多个从设备。">
+<meta property="og:description" content="SPI协议1 简介SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.  IIC的加强版特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。  SPI主从模式：一个SPI通讯系统仅有一个主设备，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/1.png">
 <meta property="og:image" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/2.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/4.png">
 <meta property="og:image" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/5.png">
 <meta property="article:published_time" content="2024-07-13T11:54:02.000Z">
-<meta property="article:modified_time" content="2024-07-13T14:23:55.186Z">
+<meta property="article:modified_time" content="2024-07-14T02:11:50.506Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/1.png">
@@ -70,7 +70,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 11
+			总文章数 13
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -187,7 +187,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="SPI协议"><a href="#SPI协议" class="headerlink" title="SPI协议"></a><center>SPI协议</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.<br>特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。</p>
+        <h1 id="SPI协议"><a href="#SPI协议" class="headerlink" title="SPI协议"></a><center>SPI协议</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>SPI 是英语Serial Peripheral interface的缩写，顾名思义就是串行外围设备接口.  IIC的加强版<br>特性就是高速、全双工、同步的通信总线，不同于UART的一对一，IIC的多对多，SPI支持一对多。芯片管脚仅4根线，主要应用在EEPROM、FLASH、实时时钟、AD转换器、数字信号处理器和数字信号解码器。</p>
 <p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/1.png" alt="Alt text"></p>
 <p>SPI主从模式：一个SPI通讯系统仅有一个主设备，一个或多个从设备。主设备提供时钟，SPI接口的读写操作均由主设备发起。通过片选信号选定进行通讯的从设备。</p>
 <p>SPI是全双工且没有定义速度限制，通常能达到10Mbps以上，且传输的长度没有限制，没有像IIC那样每一字节都需要应答。</p>
@@ -207,7 +207,7 @@
 <p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/2.png" alt="Alt text"></p>
 <p>Bit1是MSB（高），Bit8是LSB（低）。当CPHA&#x3D;CPOL&#x3D;0时，此时在上升沿采样，在下降沿改变数据，是改变，不要被网上的博客误导说是什么发送，其实就是上升沿采样，此时不能改变数值，下降沿数据的值才能改变，以免发生误会。</p>
 <p>此时主设备什么时候发送bit1的呢？  </p>
-<p>实际上是在SCK有效之前，比第一个上升沿还要早半个时钟周期。从设备同样是在时钟的上升沿采样到bit1，在片选信号有效后立刻输出bit1；<font color="yellow">看图得知，bit1在MISO，MOSI出现的时刻在时钟有效前。</font></p>
+<p>实际上是在SCK有效之前，比第一个上升沿还要早半个时钟周期。从设备同样是在时钟的上升沿采样到bit1，在片选信号有效后立刻输出bit1；<font color="red">看图得知，bit1在MISO，MOSI出现的时刻在时钟有效前。</font></p>
 <h3 id="举例：主设备向从设备发送5，从设备向主设备发送128"><a href="#举例：主设备向从设备发送5，从设备向主设备发送128" class="headerlink" title="举例：主设备向从设备发送5，从设备向主设备发送128"></a>举例：主设备向从设备发送5，从设备向主设备发送128</h3><p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/3.png" alt="Alt text"><br><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/4.png" alt="Alt text"></p>
 <h2 id="菊花链"><a href="#菊花链" class="headerlink" title="菊花链"></a>菊花链</h2><p><img src="/2024/07/13/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BSPI%EF%BC%88%E4%B8%89%EF%BC%89/5.png" alt="Alt text"></p>
 <h2 id="软件模拟SPI"><a href="#软件模拟SPI" class="headerlink" title="软件模拟SPI"></a>软件模拟SPI</h2><p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41448995/article/details/126208644">https://blog.csdn.net/weixin_41448995/article/details/126208644</a></p>
@@ -296,6 +296,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          通信协议之IIS（四）
+        
+      </div>
+    </a>
   
   
     <a href="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
