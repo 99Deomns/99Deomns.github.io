@@ -33,10 +33,12 @@
 <meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/22.png">
 <meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/16.png">
 <meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/17.png">
+<meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/23.png">
 <meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/18.png">
 <meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/19.png">
+<meta property="og:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/24.png">
 <meta property="article:published_time" content="2024-07-14T03:17:59.000Z">
-<meta property="article:modified_time" content="2024-07-15T15:02:21.630Z">
+<meta property="article:modified_time" content="2024-07-16T02:41:08.817Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/1.png">
@@ -202,7 +204,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35057766/article/details/135580884">https://blog.csdn.net/qq_35057766/article/details/135580884</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
+        <p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35057766/article/details/135580884">https://blog.csdn.net/qq_35057766/article/details/135580884</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
 <h1 id="通信协议之CAN总线协议（五）"><a href="#通信协议之CAN总线协议（五）" class="headerlink" title="通信协议之CAN总线协议（五）"></a><center>通信协议之CAN总线协议（五）</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>CAN（Controller Area Network）控制器局域网,是国际标准化串行通信协议。</p>
 <p>CAN 是一种多主方式的串行通讯总线，基本设计规范要求有高的位速率，高抗电磁干扰性，而且能够检测出产生的任何错误。当信号传输距离达到10Km 时，CAN 仍可提供高达50Kbit&#x2F;s 的数据传输速率。由于 CAN 总线具有很高的实时性能，现在，CAN 的高性能和可靠性已被认同，并被广泛地应用于工业自动化、船舶、医疗设备、工业设备等方面。</p>
 <h2 id="2-总线结构"><a href="#2-总线结构" class="headerlink" title="2 总线结构"></a>2 总线结构</h2><ol>
@@ -233,14 +235,6 @@
 </li>
 </ol>
 <ul>
-<li><p>假设有一根导线，这根导线通过一个阻止较大的电阻（比如4kΩ乃至10kΩ）连接在5V电源上，同时一个三级管的集电极也连在这根导线上，三极管的发射极接地，是0V。三极管的基极由其他电路控制。这个连接该导线和5V电源的电阻就叫上拉电阻。当三极管截止的时候，它的电阻可以视为无穷大，因此5V的电压几乎都施加在了三极管上，上拉电阻虽然很大，比如有10kΩ，但相比截止的三极管来说还是小了，因此没有太多压降，导线上的电压可以粗略地认为还是5V左右，是高电平。而如果三极管导通，它的电阻就非常小了，而且是饱和导通，CE电压一般都在0.3V左右，绝大部分的电压施加在了上拉电阻上，导线此时的电压也就是0.3V左右，可以粗略视为0V，是低电平。</p>
-</li>
-<li><p>上拉电阻因为阻值很大，因此上拉能力很弱，而下拉的三极管导通时阻值非常小，因此导通时下拉能力很强。我们能看到，当输出高电平的时候，需要下拉三极管截止，也就是断开，上拉电阻才能输出高电平；但当输出低电平的时候，在下拉三极管导通的时候，并不需要断开上拉电阻，就能输出低电平。</p>
-</li>
-<li><p>上面说的这个例子也可以颠倒过来，也就是导线通过大阻值电阻接地，而通过三极管接5V电源。那么这时就变成了当三极管截止时通过下拉电阻输出低电平，当三极管导通时通过上拉三极管输出高电平（但与此同时下拉电阻也并没有断开，依旧有电流流过）。</p>
-</li>
-<li><p>我们把三极管截止时通过拉电阻所输出的电平叫「隐性电平」，它是输出线上的默认电平；把三极管导通时输出的那个更强势的电平叫「显性电平」，它不需要让输出隐性电平的拉电阻断开，就能直接“覆盖”掉隐性电平。<br>现在假设有很多设备的输出端都是这样「上拉电阻+下拉三极管」的结构，它们共用同一根导线。当所有设备的下拉三极管都截止，也就是默认状态，导线通过各设备内部的上拉电阻拉成高电平，高电平也是隐性电平。此时，只要有一个设备将输出设置为低电平，那么它的下拉三极管就会导通，输出强势的显性电平，也就是低电平，覆盖掉其他设备靠上拉电阻拉成的高电平。整条导线都会被这个强势的下拉三极管拉成低电平。因此，只要有一个设备设置成输出低电平，不论其他设备设置输出高电平还是低电平，导线都会是低电平。只有所有的设备都设置成高电平，导线才会回到高电平的状态。这就叫「线与」。</p>
-</li>
 <li><p>现在假设每个设备都有一个优先级码，数值越小则优先级越高。数值越小，则从高位向低位看过去，会比数值更大的更早出现0（比如7、5和3，7的二进制是111，5是101，3是011，从高位往低位，7没有0，而5的第二位就出现了0，3则是第一位就出现了0。而如果是4，也就是100，它的前两位和5相同，但最后一位出现了0，而5是1），或者说从高位往低位逐位看，两个二进制数第一次出现不同的时候，那一位是0的那个数更小，是1的那个数更大。而我们规定了数越小代表优先级越高。</p>
 </li>
 <li><p>此时，这些有着不同优先级的设备都使用我们上面提到的「上拉电阻+下拉三极管」的模式挂接在同一条总线上，它们高电平代表1，低电平代表0。它们在发送数据的时候会先发送自己的优先级码，从高位到地位依次发送。每发送一位的同时它们同时也检测一下那根总线上的电平，看看和自己设置的输出电平是否相同。此时如果有两个设备同时开始发送，那么当两个设备的识别码从高位到低位发送的时候，在某一位出现了不同，那么这一位发送0的那个设备的优先级码更小，优先级更高，发送1的那个设备的优先级码更大，优先级更低。因为我们前面所说的那些特性，作为显性电平的低电平会覆盖掉作为隐性电平的高电平，因此整条总线此时是低电平，也就是0。此时两个设备都检测总线上的电平是否是自己设置要输出的那个，优先级高、优先级码小的那个设备本身就要输出0，检测到总线也是0，因此继续发送；而优先级低、优先级码大的那个设备设置的输出是1，但因为1被0覆盖，它检测到总线上是0，和自己设置的1不符，因此知道同时有一个优先级更高的设备也要发送数据了，它就会停止发送数据，转为接收模式，等着看看这个数据帧是不是发给自己的。等到那个高优先级的设备发完数据，发送了明确的帧结束标志提示发送结束后，这个低优先级的设备再尝试占用总线发送自己要发送的数据。这就是靠优先级码完成的仲裁。</p>
@@ -309,12 +303,28 @@
 <ol start="2">
 <li><p>遥控帧（Remote frame,也有说是远程帧的）：节点向网络上的其他节点发出的某个ID的数据请求，发送节点收到遥控帧后就可以发送相应ID的数据帧；也就是节点1需要数据，发送遥控帧给节点2，节点2接收到后给节点1发送数据。<br>与数据帧不同的是没有数据场,同时RTR为隐性电平.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/10.png" alt="Alt text"></p>
 </li>
-<li><p>错误帧（Error frame）：节点检测出错误时，向其他节点发送的通知错误的帧；<br>错误类型有以下几种:<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/20.png" alt="Alt text"><br>错误界定符为8为隐性;错误标志叠加位是,同时接收到两个错误;<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/11.png" alt="Alt text"><br>主动错误和被动错误就是:错个几次主动报错,也就是主动错误,连续6个显性位,此时会覆盖总线上的其他位信号(线与),这样之前传输的报文就会被破坏,相当于发现错误的节点主动认错,让其他节点接收了丢弃就行了;错误计数超过127时,总线认为错误次数太多了,此时是6个隐性位,总线上的信号都不会受到影响,此时处于被动错误状态,发送错误,但是不被接收了;超过255次时该节点直接离线.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/21.png" alt="Alt text"></p>
+<li><p>错误帧（Error frame）：节点检测出错误时，向其他节点发送的通知错误的帧；<br>错误类型有以下几种:<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/20.png" alt="Alt text"><br><font color="orange">除CRC错误在ACK界定符后的下一位输出错误标志外，其余四种错误在检测出错误后的下一位开始输出错误标志。</font></p>
 </li>
-<li><p>过载帧（Overload frame）：接收单元未做好接收数据的准备时发送的帧，发送节点收到过载帧后可以暂缓发送数据帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/12.png" alt="Alt text"></p>
+</ol>
+<ul>
+<li>关于位错误：<ul>
+<li><p>位错误由向总线上输出数据帧、遥控帧、错误帧、过载帧的单元和输出 ACK 的单元、输出错误的单元来检测。</p>
 </li>
-<li><p>帧间空间（Inter-frame space）：用于将数据帧、遥控帧与前后的帧分隔开的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/13.png" alt="Alt text"></p>
+<li><p><font color="orange">在仲裁段输出隐性电平，但检测出显性电平时，将被视为仲裁失利，而不是位错误。毕竟有多个CAN设备在竞争。</font></p>
 </li>
+<li><p><font color="red">在仲裁段作为填充位输出隐性电平时，但检测出显性电平时，将不视为位错误，而是填充错误。</font></p>
+</li>
+<li><p><font color="orange">发送单元在 ACK 段输出隐性电平，但检测到显性电平时，将被判断为其它单元的 ACK 应答，而非位错误。</font></p>
+</li>
+<li><p><font color="red">输出被动错误标志（6 个位隐性位）但检测出显性电平时，将遵从错误标志的结束条件，等待检测出连续相同 6 个位的值（显性或隐性），并不视为位错误。</font></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>错误界定符为8为隐性;错误标志叠加位是,同时接收到两个错误;<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/11.png" alt="Alt text"><br>主动错误和被动错误就是:错个几次主动报错,也就是主动错误,连续6个显性位,此时会覆盖总线上的其他位信号(线与),这样之前传输的报文就会被破坏,相当于发现错误的节点主动认错,让其他节点接收了丢弃就行了;错误计数超过127时,总线认为错误次数太多了,此时是6个隐性位,总线上的信号都不会受到影响,此时处于被动错误状态,发送错误,但是不被接收了;超过255次时该节点直接离线.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/21.png" alt="Alt text"></p>
+<ol start="4">
+<li>过载帧（Overload frame）：接收单元未做好接收数据的准备时发送的帧，发送节点收到过载帧后可以暂缓发送数据帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/12.png" alt="Alt text"></li>
+<li>帧间空间（Inter-frame space）：用于将数据帧、遥控帧与前后的帧分隔开的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/13.png" alt="Alt text"></li>
 </ol>
 <p>另外，数据帧和遥控帧有标准格式和扩展格式两种格式。标准格式有 11 个位的标识符（Identifier: 以下称 ID），扩展格式有 29 个位的 ID。标准帧用的比较多。</p>
 <h3 id="非破坏性仲裁"><a href="#非破坏性仲裁" class="headerlink" title="非破坏性仲裁"></a>非破坏性仲裁</h3><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/15.png" alt="Alt text"></p>
@@ -322,16 +332,23 @@
 <p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/22.png" alt="Alt text"><br>另一方面,数据帧和遥控帧的竞争,不同ID的好说,哪个重要就哪个,但是相同ID,此时前面提到仲裁段的RTR,遥控帧的RTR为隐性,数据帧的RTR为显性,所以总线电平为为数据帧.</p>
 <h3 id="位填充机制"><a href="#位填充机制" class="headerlink" title="位填充机制"></a>位填充机制</h3><p>CAN总线规定信号的跳变沿即为同步信号,所以只要信号发生变化了,节点时钟就会被同步,但是如果有连续相同信号发送,时钟误差就会越来越大,从而导致信号异常,所以规定有连续5个相同信号时插入一个补码,插入区间为SOF-CRC之间,因为CRC之后为固定格式,不允许填充.</p>
 <p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/16.png" alt="Alt text"></p>
-<h3 id="位时序及同步"><a href="#位时序及同步" class="headerlink" title="位时序及同步"></a>位时序及同步</h3><p>位定时是指CAN总线上,一个数据位的持续时间,主要用于CAN总线上波特率的设置,同一总线上波特率相同.</p>
+<h3 id="位时序及同步"><a href="#位时序及同步" class="headerlink" title="位时序及同步"></a>位时序及同步</h3><p>位定时是指CAN总线上,一个数据位的持续时间,主要用于CAN总线上波特率的设置,同一总线上波特率相同.每一个位并不是最小时间单位，每个位被分为4个段，这些段又由最小时间单位Time Quantum（以下称为 Tq）构成。</p>
 <p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/17.png" alt="Alt text"></p>
-<p>CAN通信没有时钟线,所以随着时间的推移信号的误差积累就会变大.<br>CAN总线上一个位数据可以被分为以上四个部分:</p>
-<ol>
-<li>同步段用于同步总线上不同的节点,需要有跳变沿;</li>
-<li>传播段用于补偿CAN网络上的物理延迟;</li>
-<li>相位缓冲段用于补偿相位误差.</li>
-</ol>
-<p>在SOF有一个跳变沿,发送节点与接收节点的SOF的下降沿之间不同步时,会有一个硬同步.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/18.png" alt="Alt text"></p>
-<p>重同步:<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/19.png" alt="Alt text"></p>
+<h4 id="位时序分解："><a href="#位时序分解：" class="headerlink" title="位时序分解："></a>位时序分解：</h4><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/23.png" alt="Alt text"></p>
+<p>• SS 段 (SYNC SEG)，SS 译为同步段，若通讯节点检测到总线上信号的跳变沿被包含在 SS 段的范围之内，则表示节点与总线的时序是同步的，当节点与总线同步时，采样点采集到的总线电平即可被确定为该位的电平。SS 段的大小固定为 1Tq。</p>
+<p>• PTS 段 (PROP SEG)，PTS 译为传播时间段，这个时间段是用于补偿网络的物理延时时间。是总线上输入比较器延时和输出驱动器延时总和的两倍。PTS 段的大小可以为 1~8Tq。</p>
+<p>• PBS1 段 (PHASE SEG1)，PBS1 译为相位缓冲段，主要用来补偿边沿阶段的误差，它的时间长度在重新同步的时候可以加长。PBS1 段的初始大小可以为 1~8Tq。</p>
+<p>• PBS2 段 (PHASE SEG2)，PBS2 这是另一个相位缓冲段，也是用来补偿边沿阶段误差的，它的时间长度在重新同步时可以缩短。PBS2 段的初始大小可以为 2~8Tq。</p>
+<p>该图中表示的 CAN 通讯信号每一个数据位的长度为 19Tq，其中 SS 段占 1Tq， PTS 段占 6Tq， PBS1段占 5Tq， PBS2 段占 7Tq。信号的采样点位于 PBS1 段与 PBS2 段之间，通过控制各段的长度，可以对采样点的位置进行偏移，以便准确地采样。</p>
+<h4 id="通讯的波特率"><a href="#通讯的波特率" class="headerlink" title="通讯的波特率"></a>通讯的波特率</h4><p>总线上的各个通讯节点只要约定好 1 个 Tq 的时间长度以及每一个数据位占据多少个 Tq，就可以确定 CAN 通讯的波特率。</p>
+<p><font color="red">例如，1Tq&#x3D;1us，而每个数据位由 19 个 Tq 组成，则传输一位数据需要时间 T1bit&#x3D;19us，从而每秒可以传输的数据位个数为：10的6次方&#x2F;19 &#x3D; 52631.6 (bps)</font></p>
+<p>这个每秒可传输的数据位的个数即为通讯中的波特率。</p>
+<h4 id="同步分析过程"><a href="#同步分析过程" class="headerlink" title="同步分析过程"></a>同步分析过程</h4><p>CAN通信没有时钟线,所以随着时间的推移信号的误差积累就会变大.</p>
+<p>硬同步：若某个 CAN 节点通过总线发送数据时，它会发送一个表示通讯起始的信号 (即下一小节介绍的帧起始信号)，该信号是一个由高变低的下降沿。而挂载到 CAN 总线上的通讯节点在不发送数据时，会时刻检测总线上的信号。见图 ，可以看到当总线出现帧起始信号时，某节点检测到总线的帧起始信号不在节点内部时序的 SS 段范围，所以判断它自己的内部时序与总线不同步，因而这个状态的采样点采集得的数据是不正确的。所以节点以硬同步的方式调整，把自己的位时序中的 SS 段平移至总线出现下降沿的部分，获得同步，同步后采样点就可以采集得正确数据了。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/18.png" alt="Alt text"></p>
+<p>重同步:<br>前面的硬同步只是当存在帧起始信号时才起作用，如果在一帧很长的数据内，节点信号与总线信号相位有偏移时，这种同步方式就无能为力了。因而需要引入重新同步方式，它利用普通数据位的高至低电平的跳变沿来同步 (帧起始信号是特殊的跳变沿)。重新同步与硬同步方式相似的地方是它们都使用 SS 段来进行检测，同步的目的都是使节点内的 SS 段把跳变沿包含起来。重新同步的方式分为超前和滞后两种情况，以总线跳变沿与 SS 段的相对位置进行区分。<font color="orange">第一种相位超前的情况如图 ，节点从总线的边沿跳变中，检测到它内部的时序比总线的时序相对超前 2Tq，这时控制器在下一个位时序中的 PBS1 段增加 2Tq 的时间长度，使得节点与总线时序重新同步。<br></font><br>SS是节点的段，相对于总线超前。<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/19.png" alt="Alt text"></p>
+<p>第二种相位滞后的情况如图 ，节点从总线的边沿跳变中，检测到它的时序比总线的时序相对滞后 2Tq，这时控制器在前一个位时序中的 PBS2 段减少 2Tq 的时间长度，获得同步。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/24.png" alt="Alt text"></p>
 
       
 
