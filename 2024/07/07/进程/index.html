@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://example.com/2024/07/07/%E8%BF%9B%E7%A8%8B/1.png">
 <meta property="og:image" content="http://example.com/2024/07/07/%E8%BF%9B%E7%A8%8B/2.png">
 <meta property="article:published_time" content="2024-07-07T13:15:52.000Z">
-<meta property="article:modified_time" content="2024-07-09T02:34:43.953Z">
+<meta property="article:modified_time" content="2024-07-18T11:20:42.095Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/07/%E8%BF%9B%E7%A8%8B/1.png">
@@ -67,7 +67,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 14
+			总文章数 15
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -244,6 +244,27 @@
 子进程使用_exit()退出程序不会刷新stdio缓冲区对应还是上述代码也就不会再打印一边.
 
 <p>exit()函数由_exit实现会执行的动作如下：<br>⚫ 如果程序中注册了进程终止处理函数，那么会调用终止处理函数。<br>⚫ 刷新 stdio 流缓冲区。关于 stdio 流缓冲区的问题，稍后编写一个简单地测试程序进行说明；<br>⚫ 执行_exit()系统调用<br></p></font><p></p>
+<h2 id="1-9-监视子进程"><a href="#1-9-监视子进程" class="headerlink" title="1.9 监视子进程"></a>1.9 监视子进程</h2><p>在一些情况中，父进程需要知道子进程何时被终止，以及终止信息（如何终止。。。），也就是对子进程进行监视，主要是使用wait函数及其变体。</p>
+<h3 id="1-9-1-wait-函数"><a href="#1-9-1-wait-函数" class="headerlink" title="1.9.1 wait()函数"></a>1.9.1 wait()函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">wait</span><span class="params">(<span class="type">int</span> *status)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>status：参数 status 用于存放子进程终止时的状态信息，参数 status 可以为 NULL，表示不接收子进程<br>终止时的状态信息。<br>返回值：若成功则返回终止的子进程对应的进程号；失败则返回-1。</p>
+<p>系统调用 wait()将执行如下动作：  </p>
+<ul>
+<li><p>调用 wait()函数，如果其所有子进程都还在运行，则 wait()会一直阻塞等待，直到某一个子进程终<br>止；</p>
+</li>
+<li><p>如果进程调用 wait()，但是该进程并没有子进程，也就意味着该进程并没有需要等待的子进程，那<br>么 wait()将返回错误，也就是返回-1、并且会将 errno 设置为 ECHILD.</p>
+</li>
+<li><p>如果进程调用 wait()之前，它的子进程当中已经有一个或多个子进程已经终止了，那么调用 wait()<br>也不会阻塞。<font color="red">wait函数不仅有监视的作用,还能回收子进程的资源.如果子进程已经终止了,wait函数会直接回收该子进程的资源,然后返回正常的程序流程中,一次函数只能处理一次.</font></p>
+</li>
+</ul>
+<p>可以通过以下宏来检查 status 参数：</p>
+<ul>
+<li>WIFEXITED(status)：如果子进程正常终止，则返回 true；</li>
+<li>EXITSTATUS(status)：返回子进程退出状态，是一个数值，其实就是<font color="red">子进程调用_exit()或 exit()时指定的退出状态</font>；wait()获取得到的 status 参数并不是调用_exit()或 exit()时指定的状态，可通过WEXITSTATUS 宏转换；</li>
+<li>WIFSIGNALED(status)：如果子进程被信号终止，则返回 true；</li>
+<li>WTERMSIG(status)：返回导致子进程终止的信号编号。如果子进程是被信号所终止，则可以通过<br>此宏获取终止子进程的信号；</li>
+<li>WCOREDUMP(status)：如果子进程终止时产生了核心转储文件，则返回 true；</li>
+</ul>
 
       
 
