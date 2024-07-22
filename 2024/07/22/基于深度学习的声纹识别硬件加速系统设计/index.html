@@ -6,19 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hello World | Hexo</title>
+  <title>基于深度学习的声纹识别硬件加速系统设计 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="基于深度学习的声纹识别硬件加速系统设计训练过程前期准备：训练数据使用6464的语谱图，zynq采样点取32768&#x3D;51264，使用短时傅里叶变换，帧长512，偏移512，最终得到64*64的语谱图。由于需要兼顾后续在zynq的ps端的处理，PL端传来的是32768个采样点的数据，也需要转变为语谱图的形式，这里不使用python内置函数，后续需要自己写一个语谱图转换形式。 训练集：45组每">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:title" content="基于深度学习的声纹识别硬件加速系统设计">
+<meta property="og:url" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="基于深度学习的声纹识别硬件加速系统设计训练过程前期准备：训练数据使用6464的语谱图，zynq采样点取32768&#x3D;51264，使用短时傅里叶变换，帧长512，偏移512，最终得到64*64的语谱图。由于需要兼顾后续在zynq的ps端的处理，PL端传来的是32768个采样点的数据，也需要转变为语谱图的形式，这里不使用python内置函数，后续需要自己写一个语谱图转换形式。 训练集：45组每">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-07-03T02:26:42.573Z">
-<meta property="article:modified_time" content="2024-07-03T02:26:42.573Z">
+<meta property="og:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png">
+<meta property="og:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png">
+<meta property="og:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png">
+<meta property="og:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png">
+<meta property="og:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png">
+<meta property="article:published_time" content="2024-07-22T01:39:43.000Z">
+<meta property="article:modified_time" content="2024-07-22T15:24:19.540Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -148,14 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hexo使用方法初始化" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-基于深度学习的声纹识别硬件加速系统设计" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      基于深度学习的声纹识别硬件加速系统设计
     </h1>
   
 
@@ -172,8 +178,8 @@
 		<!--显示阅读次数完毕-->
 
         
-        <a href="/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2024-07-03T02:26:42.573Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
+        <a href="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
+  	<time datetime="2024-07-22T01:39:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-22</time>
 </a>
         
 	
@@ -181,19 +187,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <h1 id="基于深度学习的声纹识别硬件加速系统设计"><a href="#基于深度学习的声纹识别硬件加速系统设计" class="headerlink" title="基于深度学习的声纹识别硬件加速系统设计"></a>基于深度学习的声纹识别硬件加速系统设计</h1><h2 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h2><p>前期准备：训练数据使用64<em>64的语谱图，zynq采样点取32768&#x3D;512</em>64，使用短时傅里叶变换，帧长512，偏移512，最终得到64*64的语谱图。由于需要兼顾后续在zynq的ps端的处理，PL端传来的是32768个采样点的数据，也需要转变为语谱图的形式，这里不使用python内置函数，后续需要自己写一个语谱图转换形式。</p>
+<p>训练集：45组每组300多个；<br>验证集：45组每组30多个；<br>迭代100次。</p>
+<p>训练时要兼顾后续部署在fpga需要考虑资源的问题,我对lenet5的参数进行调整,准备了多套网络模型,最终选定了如下的模型,识别准确率为87%.</p>
+<p><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"></p>
+<p>输入1<em>64</em>64的语谱图-&gt;卷积层1(3<em>5</em>5) + RELU层-&gt; pool1池化层-&gt;输出3<em>30</em>30-&gt;卷积层2(6<em>3</em>5<em>5) + RELU层-&gt;pool2池化层-&gt;输出6</em>3<em>13</em>13-&gt;全连接层fc1(输出120)-&gt;fc2(输出84)-&gt;fc3(输出45)-&gt;推理</p>
+<h2 id="推理过程"><a href="#推理过程" class="headerlink" title="推理过程"></a>推理过程</h2><h3 id="PS端"><a href="#PS端" class="headerlink" title="PS端"></a>PS端</h3><p>首先部署在zynq的ps端，使用axi-dma将32768个数据传输至linux端，将数据保存并处理成txt文件，使用qt完成对模型的参数的读取，然后就是一步一步地进行前向推理过程。</p>
+<p>首先是语谱图的实现，不用生成图片，语谱图其实就是64*64的一个矩阵。</p>
+<ol>
+<li>分帧，一个for循环，循环64次，每次取一帧，并进行FFT操作；</li>
+<li>加窗，汉宁窗，防止泄露，参考  <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&mid=2247484164&idx=1&sn=fdaf2164306a9ca4166c2aa8713cacc5&scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&amp;mid=2247484164&amp;idx=1&amp;sn=fdaf2164306a9ca4166c2aa8713cacc5&amp;scene=21#wechat_redirect</a><br>因为采样得到的数据基本不是周期信号，就算是周期信号，分出来的这一帧也很大可能是非周期截断，可能会有拖尾的现象发生，即峰值处的频率与原始信号的频率相近，但并不相等。另一方面，峰值处的幅值已不再等于原始信号的幅值，为原始信号幅值的64%（矩形窗的影响）。而幅值的其他部分（36%幅值）则分布在整个频带的其他谱线上。为了将泄露误差减小到最小程度，需要使用加权函数——窗。使信号似乎更好地满足FFT处理地周期性要求，减少泄露。周期截断，频谱为单一谱线；非周期截断产生很严重地泄露，对非周期截断×窗函数，使得信号开始与结束的时候为0，则在这个时间长度内，信号为周期信号，但是只有一个周期，泄露明显改善。<center><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"></center>  </li>
+<li>FFT，根据公式计算fft的结果，只取一半。<br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"></li>
+</ol>
+<p>以3*30*30-&gt;6*3*13*13为例，3*30*30经过6组3*5*5（每一组数据三个26*26叠加得到一个26*26）最终得到6*26*26，进行RELU，去除小于0的元素，最后进入池化层，相邻四个元素取最大的那个，步长为2最终得到6*13*13。最后将数据处理成1行得到（6*13*13)*1与全连接层fc1的120*1014进行相乘。得到120*1在进入后续的全连接层。</p>
+<h3 id="fpga端"><a href="#fpga端" class="headerlink" title="fpga端"></a>fpga端</h3><p>数据采样后直接进行处理，完成前向推理过程。主要是如何计算的，比如这个5*5的卷积核怎么和64*64的灰度图进行卷积操作。</p>
+<p>首先是64*64的数据与卷积核5*5怎么进行卷积：</p>
+<ol>
+<li>首先是权重，一共是3<em>5</em>5个数据，使用coe文件进行存放，每25个数据为一个卷积核，依次存放3个卷积核的数据。使用ram读取的时候依次读取75个时钟有75个数据，每个数据16位，但是由于weight没有那么大可以进行截位节省资源。等到这75个时钟结束后就可以就同时有75个16位数据，这时直接对这个这些数据进行处理得到时间为25个时钟的一直在变化的权重,每个时钟的数据都是由{卷积核1的第i个权重,卷积核2的第i个权重,卷积核3的第i个权重}构成.这里这么做的原因是,语谱图数据是同时出来的,三个卷积核的时间也必须同步,而不能前后,所以卷积核的数据存储从线性的75个数据再到同时存在的75个数据,然后进行读取得到三个卷积核并行的数据,传出到conv后就可以兵分三路得到三个60*60了,传入乘加模块后再读取25个时钟得到25个并行的卷积核数据(也是下面这种方式).</li>
+</ol>
+<p><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png" alt="Alt text"></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span>    [<span class="number">16</span>-<span class="number">1</span> : <span class="number">0</span>]    weight[<span class="number">0</span>:<span class="number">75</span>-<span class="number">1</span>];<span class="comment">//75个16位数据</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<ol start="2">
+<li>怎么运算通过64*64得到60*60:首先是数据的初始化,数据的保存也是线性的64*64个数据,但是每次卷积操作都需要5*5的数据,并不是线性的.通过建立5个缓存buffer,可以将数据的每5行同步到一起,此时再使用5倍频去读取数据,也就是一个时钟50M下有5个数据,这样5个时钟就有25个数据,但是要记得此时的顺序并不是一行一行的,因为在前面将五行数据同步了,所以每个时钟读到的数据读到的是一列一列的,毕竟卷积区域的遍历是按照列来的,每次往右挪动一列.接下来就是对这个25个数据进行处理了,由于卷积核是并行的25个数据,所以这里处理就没那么难只要保证某一时刻有25个数据存在就行了,但是还是按照一行一行进行计算,因为卷积核的25个数据也是按照这个数据串联在一起的.此时设定一个25个数据,每个数据16位的变量(上面那个式子),此时每5个作为一组,以之前5个buffer的方式,每个五倍频时钟读入一个数据,然后逐级传递,如data[4]接收第一个时钟的数据,data[9]接收第二个数据…,这样一轮下来就是一列数据,而data[4]接着读取第一行第二个数据,并逐级传递,最终5个时钟(每个时钟包含5个五倍频时钟)之后,data[0]到data[4]就是第一行的5个数据.最终第6个时钟就存在25个数据都并行且按照一行一行的数据的情况,此时就可以将25个数据和卷积核进行卷积操作,设定26个32位数字并行的参数进行存储,第26个参数为偏置,然后设定14个32位(视情况而定,没有溢出就可以删减)进行存储,然后是8个32位,4个32位,2个32位,最终输出32位数据,其中没有的数据补0,如26个数据中data[0]+data[0+13],data[1]+data[1+13]…从而得到13个数,补一个0变成14个数再进行后续的操作,同时这里还可以附带的进行RELU操作,即小于0的变成0;</li>
+</ol>
 
       
 
@@ -252,7 +269,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -266,15 +283,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          初始化博客
-        
-      </div>
-    </a>
   
+    <a href="/2024/07/19/8%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">8种排序算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -300,7 +313,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hexo使用方法初始化" data-title="Hello World" data-url="http://example.com/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/"></div>
+	<div class="ds-thread" data-thread-key="基于深度学习的声纹识别硬件加速系统设计" data-title="基于深度学习的声纹识别硬件加速系统设计" data-url="http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -323,8 +336,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://example.com/2024/07/03/hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96/", 
-    sourceId: "hexo使用方法初始化",
+    url: "http://example.com/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/", 
+    sourceId: "基于深度学习的声纹识别硬件加速系统设计",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
@@ -333,7 +346,7 @@
   
 
   
-  <div id="SOHUCS" sid="hexo使用方法初始化" ></div> 
+  <div id="SOHUCS" sid="基于深度学习的声纹识别硬件加速系统设计" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
