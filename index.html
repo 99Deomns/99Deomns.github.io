@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 16
+			总文章数 18
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,171 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-基于FPGA-树莓派的声源定位系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">基于FPGA+树莓派的声源定位系统设计</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
+  	<time datetime="2024-07-23T02:41:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-23</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基于FPGA-树莓派的声源定位与声纹识别系统设计"><a href="#基于FPGA-树莓派的声源定位与声纹识别系统设计" class="headerlink" title="基于FPGA+树莓派的声源定位与声纹识别系统设计"></a>基于FPGA+树莓派的声源定位与声纹识别系统设计</h1><p>组成部分：八臂式螺旋麦克风阵列、FPGA、树莓派，由于需要使用较多的麦克风，所以引脚资源以及后续还原PDM信号所需的资源需要注意，如果使用IIS接口，引脚资源爆炸，使用FPGA还原PDM信号，不仅速度快，而且引脚资源占用少，然后通过千兆网口将数据传输至树莓派，树莓派作为上位机完成网络助手、声源定位、声纹识别</p>
+<h2 id="八臂式螺旋麦克风阵列"><a href="#八臂式螺旋麦克风阵列" class="headerlink" title="八臂式螺旋麦克风阵列"></a>八臂式螺旋麦克风阵列</h2><p>风车式，八臂，每个臂8个麦克风，采用MEMS型麦克风，PDM接口，时钟线和数据线，其中数据线在每个时钟的上升沿和下降沿分别为麦克风的的左右声道数据，在硬件原理图上由麦克风的一个引脚决定，低电平代表数据在上升沿，反之下降沿。</p>
+<h2 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h2><h3 id="PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原"><a href="#PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原" class="headerlink" title="PDM（脉冲密度调制，Pulse Density Modulation）数据还原"></a>PDM（脉冲密度调制，Pulse Density Modulation）数据还原</h3><p>是一种使用二进制数0,1表示模拟信号的调制方式。在PDM信号中，模拟信号的幅值使用输出脉冲对应区域的密度表示。PWM波是PDM波转换频率固定的一种特例，对于一个使用8位长表示的电压信号而言，峰值的1&#x2F;2处会高低电平各持续一半，即128个时钟周期。在PDM信号中，会在1,0之间每个时钟周期都切换。两种波形的平均值都是50%，但是PDM波切换的更加频繁。对于100%和0的电平信号，两种方式的输出相同。</p>
+<p><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"></p>
+<p>数据还原在FPGA中进行，方法主要有低通滤波器和下图中的方式两种。<br>滤波器（数字、模拟）公式：y(k)&#x3D;(1−a)⋅y(k−1)+a⋅x(k)<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42887190/article/details/125749509">https://blog.csdn.net/weixin_42887190/article/details/125749509</a><br>但是通过物理电路低通滤波器还原出来的信号每一个信号都占至少8位的位宽，同时16个麦克风同时工作，所以使用该种方法不现实，如果使用FPGA对其进行处理，可以有效减少引脚资源占用。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"><br>如上图所示，PDM信号的频率位2.304MHz，工作频率说明书推荐的，这个频率相对于一般的采样频率48k、44.1kHz较高，同时也较为冗余，可以通过CIC抽取滤波器抽取降采样12倍，通过两个HB半带滤波器分别降采样2倍，最终2.304MhZ降采样48倍得到48kHz的采样率。（完全包含可听声，且相比于44.1kHz留有更多的余量，也更好通过分频得到）。</p>
+<p>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><h4 id="传输方式"><a href="#传输方式" class="headerlink" title="传输方式"></a>传输方式</h4><p>网线的几种接口：</p>
+<ol>
+<li>MII接口：25M的时钟，4bit数据线，100M</li>
+<li>GMII接口：125M的时钟，8bit的数据线，1000M</li>
+<li>RGMII接口：125M的时钟，4bit的数据线，但是时钟上升沿和下降沿都有数据，那就是125*4*2&#x3D;1000M</li>
+</ol>
+<p>对于16个麦克风的数据要求是并行的，每次采样1024个数据，每个数据16位，重要的是并行，所以这里我选择将数据串联在一起，通过fifo传出去，16个16位麦克风数据就是256位，经过观察发现，完全不需要占用16位，裁剪成8位，最后合并的数据就是128位，但是128位数据输入到fifo中最多只能输出16位数据，这与预期的千兆网8位的数据位不符。</p>
+<p>理论上，一个UDP包最大可以达到65535-20-8(65507，IP首部20个字节，UDP首部8个字节)个字节,<br>但是许多平台实际的限制是8192个字节（8KB）。<br>另外由于链路层要将数据进行分组，比如以太网的MTU为1500字节，<br>因此在实际的设计时，包长的选择还要尽量减少链路层的分组，这样才能达到最大的传输速度。因此我们UDP包应该在1024个字节之内。</p>
+<p>解决方案：首先确定一点，以太网数据帧的长度在46-1500字节，这是由以太网的物理特性决定的.这个1500字节被称为链路层的MTU(最大传输单元). 但这并不是指链路层的长度被限制在1500字节,其实这这个MTU指的是链路层的数据区.并不包括链路层的首部和尾部的18个字节.所以,事实上,这个1500字节就是网络层IP数据报的长度限制.<br>因为IP数据报的首部为20字节,所以IP数据报的数据区长度最大为1480字节.<br>而这个1480字节就是用来放TCP传来的TCP报文段或UDP传来的UDP数据报的.<br>又因为UDP数据报的首部8字节,所以UDP数据报的数据区最大长度为1472字节.<br>这个<font color="red">1472字节</font>就是我们可以使用的字节数。<br><font color="red">注：下图中的前导码那些并不属于以太网数据帧1500字节，属于TX_ETH_HEADER，在这1500字节中有TX_IP_HEADER，20字节 ，TX_UDP_HEADER，8个字节，一共28个字节，所以数据就只有1472个字节。</font><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png" alt="Alt text"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/cainv89/article/details/50676670">https://blog.csdn.net/cainv89/article/details/50676670</a><br>上图中就显示了udp首部的格式，但是这个伪首部是在IP首部中的，同时这个0，17，udp长度我没有写。<br>以太网报头：mac地址之类的东西<br>IP报头：IP协议版本，。。。。之类的东西，最后8个字节是两个ip地址<br>udp报头：两个端口号（4bytes），udp数据长度（2bytes），校验和（2bytes）</p>
+<h4 id="传输协议实现"><a href="#传输协议实现" class="headerlink" title="传输协议实现"></a>传输协议实现</h4><h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-基于stm32的超声测厚系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/23/%E5%9F%BA%E4%BA%8Estm32%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B5%8B%E5%8E%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">基于stm32的超声测厚系统设计</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/23/%E5%9F%BA%E4%BA%8Estm32%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B5%8B%E5%8E%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
+  	<time datetime="2024-07-23T02:41:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-23</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基于stm32的超声测厚系统设计"><a href="#基于stm32的超声测厚系统设计" class="headerlink" title="基于stm32的超声测厚系统设计"></a>基于stm32的超声测厚系统设计</h1><h2 id="硬件电路设计"><a href="#硬件电路设计" class="headerlink" title="硬件电路设计"></a>硬件电路设计</h2><ol>
+<li><p>stm32最小系统及相应外设电路设计,主要有电源电路,由于后面还需要超声探头驱动电路,所以电源使用V电池供电,同时使用LM2596s进行降压得到5V电压给后续芯片供电,然后使用AMS1117降压至3.3V给单片机供电.<font color="red">STM32的最小系统的硬件组成主要有：电源电路、复位电路、时钟电路、调试接口电路、启动电路。</font>还有一个spi协议的屏幕进行显示.降噪主要是磁珠,四层板,以及数字地和模拟地之间的隔离.  </p>
+</li>
+<li><p>信号驱动电路,单片机的电压以及功率无法驱动超声探头,所以采用了非门+MOS管+变压器来对超声探头进行驱动.</p>
+<ul>
+<li>由于MCU引脚直接输出能力较弱，而且STM32的电源VDD&#x3D;3.3V，导致引脚直接驱动场效应管时场效应管的沟道不能完全开启,所以使用一个非门,使得3.3V的PWM信号后转变为5V的反相PWM信号.</li>
+<li>然后通过变压器将电压放大至60V,驱动超声探头产生2.5MHz超声波.</li>
+</ul>
+</li>
+<li><p>信号接收电路与信号处理电路,虑到输入到超声波换能器的电压很容易超过2V，给之后的信号处理带来了麻烦。因此，需要在超声波换能器处连接两个极性相反的二极管来把电压限制到±0.7~0.8V(二极管的正向导通电压)。因为输入信号不是一直输入而是一段方波,这里限幅是为了保护电路.然后就是几个放大电路,将信号放大,并滤波减少噪声的影响.最后使用对数检波电路进行解调,因为回波信号也是2.5MHz的信号,所以仅仅使用单片机引脚去进行处理不太行,所以使用解调电路,这里应该是高电平相当于毕竟还是2.5MHZ的信号回来,不会有频率上的改变.</p>
+</li>
+</ol>
+<p><img src="/2024/07/23/%E5%9F%BA%E4%BA%8Estm32%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B5%8B%E5%8E%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"></p>
+<h2 id="软件设计"><a href="#软件设计" class="headerlink" title="软件设计"></a>软件设计</h2><p>定时器计算时间.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/23/%E5%9F%BA%E4%BA%8Estm32%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B5%8B%E5%8E%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-基于深度学习的声纹识别硬件加速系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -175,12 +340,12 @@
 <p>训练集：45组每组300多个；<br>验证集：45组每组30多个；<br>迭代100次。</p>
 <p>训练时要兼顾后续部署在fpga需要考虑资源的问题,我对lenet5的参数进行调整,准备了多套网络模型,最终选定了如下的模型,识别准确率为87%.</p>
 <p><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"></p>
-<p>输入1<em>64</em>64的语谱图-&gt;卷积层1(3<em>5</em>5) + RELU层-&gt; pool1池化层-&gt;输出3<em>30</em>30-&gt;卷积层2(6<em>3</em>5<em>5) + RELU层-&gt;pool2池化层-&gt;输出6</em>3<em>13</em>13-&gt;全连接层fc1(输出120)-&gt;fc2(输出84)-&gt;fc3(输出45)-&gt;推理</p>
+<p>输入1*64*64的语谱图-&gt;卷积层1(3*5*5) + RELU层-&gt; pool1池化层-&gt;输出3*30*30-&gt;卷积层2(6*3*5*5) + RELU层-&gt;pool2池化层-&gt;输出6*3*13*13-&gt;全连接层fc1(输出120)-&gt;fc2(输出84)-&gt;fc3(输出45)-&gt;推理</p>
 <h2 id="推理过程"><a href="#推理过程" class="headerlink" title="推理过程"></a>推理过程</h2><h3 id="PS端"><a href="#PS端" class="headerlink" title="PS端"></a>PS端</h3><p>首先部署在zynq的ps端，使用axi-dma将32768个数据传输至linux端，将数据保存并处理成txt文件，使用qt完成对模型的参数的读取，然后就是一步一步地进行前向推理过程。</p>
 <p>首先是语谱图的实现，不用生成图片，语谱图其实就是64*64的一个矩阵。</p>
 <ol>
 <li>分帧，一个for循环，循环64次，每次取一帧，并进行FFT操作；</li>
-<li>加窗，汉宁窗，防止泄露，参考  <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&mid=2247484164&idx=1&sn=fdaf2164306a9ca4166c2aa8713cacc5&scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&amp;mid=2247484164&amp;idx=1&amp;sn=fdaf2164306a9ca4166c2aa8713cacc5&amp;scene=21#wechat_redirect</a><br>因为采样得到的数据基本不是周期信号，就算是周期信号，分出来的这一帧也很大可能是非周期截断，可能会有拖尾的现象发生，即峰值处的频率与原始信号的频率相近，但并不相等。另一方面，峰值处的幅值已不再等于原始信号的幅值，为原始信号幅值的64%（矩形窗的影响）。而幅值的其他部分（36%幅值）则分布在整个频带的其他谱线上。为了将泄露误差减小到最小程度，需要使用加权函数——窗。使信号似乎更好地满足FFT处理地周期性要求，减少泄露。周期截断，频谱为单一谱线；非周期截断产生很严重地泄露，对非周期截断×窗函数，使得信号开始与结束的时候为0，则在这个时间长度内，信号为周期信号，但是只有一个周期，泄露明显改善。<center><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"></center>  </li>
+<li>加窗，汉宁窗，防止泄露，参考 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&mid=2247484164&idx=1&sn=fdaf2164306a9ca4166c2aa8713cacc5&scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzI5NTM0MTQwNA==&amp;mid=2247484164&amp;idx=1&amp;sn=fdaf2164306a9ca4166c2aa8713cacc5&amp;scene=21#wechat_redirect</a><br>因为采样得到的数据基本不是周期信号，就算是周期信号，分出来的这一帧也很大可能是非周期截断，可能会有拖尾的现象发生，即峰值处的频率与原始信号的频率相近，但并不相等。另一方面，峰值处的幅值已不再等于原始信号的幅值，为原始信号幅值的64%（矩形窗的影响）。而幅值的其他部分（36%幅值）则分布在整个频带的其他谱线上。为了将泄露误差减小到最小程度，需要使用加权函数——窗。使信号似乎更好地满足FFT处理地周期性要求，减少泄露。周期截断，频谱为单一谱线；非周期截断产生很严重地泄露，对非周期截断×窗函数，使得信号开始与结束的时候为0，则在这个时间长度内，信号为周期信号，但是只有一个周期，泄露明显改善。<center><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"><br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"></center>  </li>
 <li>FFT，根据公式计算fft的结果，只取一半。<br><img src="/2024/07/22/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"></li>
 </ol>
 <p>以3*30*30-&gt;6*3*13*13为例，3*30*30经过6组3*5*5（每一组数据三个26*26叠加得到一个26*26）最终得到6*26*26，进行RELU，去除小于0的元素，最后进入池化层，相邻四个元素取最大的那个，步长为2最终得到6*13*13。最后将数据处理成1行得到（6*13*13)*1与全连接层fc1的120*1014进行相乘。得到120*1在进入后续的全连接层。</p>
@@ -193,7 +358,17 @@
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span>    [<span class="number">16</span>-<span class="number">1</span> : <span class="number">0</span>]    weight[<span class="number">0</span>:<span class="number">75</span>-<span class="number">1</span>];<span class="comment">//75个16位数据</span></span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>怎么运算通过64*64得到60*60:首先是数据的初始化,数据的保存也是线性的64*64个数据,但是每次卷积操作都需要5*5的数据,并不是线性的.通过建立5个缓存buffer,可以将数据的每5行同步到一起,此时再使用5倍频去读取数据,也就是一个时钟50M下有5个数据,这样5个时钟就有25个数据,但是要记得此时的顺序并不是一行一行的,因为在前面将五行数据同步了,所以每个时钟读到的数据读到的是一列一列的,毕竟卷积区域的遍历是按照列来的,每次往右挪动一列.接下来就是对这个25个数据进行处理了,由于卷积核是并行的25个数据,所以这里处理就没那么难只要保证某一时刻有25个数据存在就行了,但是还是按照一行一行进行计算,因为卷积核的25个数据也是按照这个数据串联在一起的.此时设定一个25个数据,每个数据16位的变量(上面那个式子),此时每5个作为一组,以之前5个buffer的方式,每个五倍频时钟读入一个数据,然后逐级传递,如data[4]接收第一个时钟的数据,data[9]接收第二个数据…,这样一轮下来就是一列数据,而data[4]接着读取第一行第二个数据,并逐级传递,最终5个时钟(每个时钟包含5个五倍频时钟)之后,data[0]到data[4]就是第一行的5个数据.最终第6个时钟就存在25个数据都并行且按照一行一行的数据的情况,此时就可以将25个数据和卷积核进行卷积操作,设定26个32位数字并行的参数进行存储,第26个参数为偏置,然后设定14个32位(视情况而定,没有溢出就可以删减)进行存储,然后是8个32位,4个32位,2个32位,最终输出32位数据,其中没有的数据补0,如26个数据中data[0]+data[0+13],data[1]+data[1+13]…从而得到13个数,补一个0变成14个数再进行后续的操作,同时这里还可以附带的进行RELU操作,即小于0的变成0;</li>
+<li><p>怎么运算通过64*64得到60*60:首先是数据的初始化,数据的保存也是线性的64*64个数据,但是每次卷积操作都需要5*5的数据,并不是线性的.通过建立5个缓存buffer,可以将数据的每5行同步到一起,此时再使用5倍频去读取数据,也就是一个时钟50M下有5个数据,这样5个时钟就有25个数据,但是要记得此时的顺序并不是一行一行的,因为在前面将五行数据同步了,所以每个时钟读到的数据读到的是一列一列的,毕竟卷积区域的遍历是按照列来的,每次往右挪动一列.接下来就是对这个25个数据进行处理了,由于卷积核是并行的25个数据,所以这里处理就没那么难只要保证某一时刻有25个数据存在就行了,但是还是按照一行一行进行计算,因为卷积核的25个数据也是按照这个数据串联在一起的.此时设定一个25个数据,每个数据16位的变量(上面那个式子),此时每5个作为一组,以之前5个buffer的方式,每个五倍频时钟读入一个数据,然后逐级传递,如data[4]接收第一个时钟的数据,data[9]接收第二个数据…,这样一轮下来就是一列数据,而data[4]接着读取第一行第二个数据,并逐级传递,最终5个时钟(每个时钟包含5个五倍频时钟)之后,data[0]到data[4]就是第一行的5个数据.最终第6个时钟就存在25个数据都并行且按照一行一行的数据的情况,此时就可以将25个数据和卷积核进行卷积操作,设定26个32位数字并行的参数进行存储,第26个参数为偏置,然后设定14个32位(视情况而定,没有溢出就可以删减)进行存储,然后是8个32位,4个32位,2个32位,最终输出32位数据,其中没有的数据补0,如26个数据中data[0]+data[0+13],data[1]+data[1+13]…从而得到13个数,补一个0变成14个数再进行后续的操作,同时这里还可以附带的进行RELU操作,即小于0的变成0;</p>
+</li>
+<li><p>池化层，也是通过上面的buffer的形式，定义两个buffer来缓存两行两列的数据，然后依次进行大小比较。</p>
+</li>
+<li><p>全连接层，主要是权重是1014*120数据量有点多,只能先将1014个数据并行,然后以1014个数据为一个周期进行计算.计算120次得到120个输出数据.</p>
+</li>
+</ol>
+<p>这个项目中最大的收获是：</p>
+<ol>
+<li>锻炼了FPGA的编程能力与并行的思维，因为在该项目中每个时钟都有数据，不管是使用ram读取数据，还是每一层的计算都出现了很多问题，比如ram少读一个数据，计算数据与预期不符（尤其是少算了非常正常），跨时钟域数据，数据位问题（写完之后发现不是正确答案，原因是中间数据越位了，但是我没发现导致最大的值被忽略，答案自然错误），要不停地调整，每次调整还有可能连锁出现别的问题。</li>
+<li>然后是对神经网络具体来说是这个模型比较熟悉了，从使用pytorch进行训练，部署到linux上，再到最后实现这个硬件加速系统，FPGA具体到每一个数据怎么变化，所以对其中的运算比较熟悉，同时在使用fpga进行运算时，也经常用到python去辅助验证。</li>
 </ol>
 
       
@@ -1114,239 +1289,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-leecode：贪心算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">leecode：贪心算法</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2024-07-09T02:40:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-09</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法 "></a><center>贪心算法 </center></h1><p>记录：这部分也没啥好说的，没有固定的套路，就是从局部最优到全局最优，举不出反例就可以，然后就是关于两个维度的题目：<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/submissions/545873492/">https://leetcode.cn/problems/queue-reconstruction-by-height/submissions/545873492/</a>  </p>
-<p><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1.png" alt="Alt text"></p>
-<p>这种题就先确定一个维度，然后再修改另外一个维度，比如这里如果按照身高作为第一个维度，那么后面再修改第二个维度就行了；但是反过来说人数作为第一维度就成了四不像。</p>
-<p>又或者这道题：<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/candy/description/">https://leetcode.cn/problems/candy/description/</a><br><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/2.png" alt="Alt text"></p>
-<p>从左到右是一个维度，从右到左又是一个维度，如果兼顾，最后啥也不是。</p>
-<h1 id="在贪心算法过程中碰到的关于vector的insert操作和list的insert操作"><a href="#在贪心算法过程中碰到的关于vector的insert操作和list的insert操作" class="headerlink" title="在贪心算法过程中碰到的关于vector的insert操作和list的insert操作"></a>在贪心算法过程中碰到的关于vector的insert操作和list的insert操作</h1><p>首先vector分为普通数组和动态数组：</p>
-<ol>
-<li>静态数组定义好了大小就不能改变了；</li>
-<li>动态数组可以随时随意往里面放数据，关键在于动态数组的底层实现；</li>
-</ol>
-<p>vector的大小有两个维度一个是size一个是capicity，size是大小，而capicity是vector底层数组（就是普通数组）的大小，capicity可不一定就是size。  </p>
-<p>当insert数据的时候，如果已经大于capicity，capicity会成倍扩容，但对外暴漏的size其实仅仅是+1。</p>
-<p><font color="red">那么既然vector底层实现是普通数组，怎么扩容的？</font></p>
-<p>就是重新申请一个二倍于原数组大小的数组，然后把数据都拷贝过去，并释放原数组内存。（对，就是这么原始粗暴的方法！）</p>
-<p><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/3.png" alt="Alt text"></p>
-<p>所以说在使用动态数组插入数据的过程中，做了很多次动态扩容以及拷贝操作，如果使用链表将会好很多。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/07/%E8%BF%9B%E7%A8%8B/">进程</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/07/%E8%BF%9B%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2024-07-07T13:15:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-07</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-进程"><a href="#1-进程" class="headerlink" title="1 进程"></a><center>1 进程</center></h1><h2 id="1-1进程与程序"><a href="#1-1进程与程序" class="headerlink" title="1.1进程与程序"></a>1.1进程与程序</h2><p>在执行main()函数前,需要先执行一段引导代码,这段引导代码又链接器在编译链接时链接到我们的应用程序当中,最终一起构成可执行文件。</p>
-<p>argc 和 argv 传参是如何实现的呢？譬如.&#x2F;app arg1 arg2，这两个参数 arg1 和 arg2 是如何传递给应用程序的 main 函数的呢？当在终端执行程序时，命令行参数（command-line argument）由 shell 进程逐一进行解析，shell 进程会将这些参数传递给加载器，加载器加载应用程序时会将其传递给应用程序引导代码，当引导程序调用 main()函数时，在由它最终传递给 main()函数，如此一来，在我们的应用程序当中便可以获取到命令行参数了。</p>
-<p>程序结束本质上就是进程终止，有以下几种方式：</p>
-<ol>
-<li>return </li>
-<li>exit（）、_exit()</li>
-<li>abort()</li>
-<li>信号如SIGKILL</li>
-</ol>
-<p>每个进程有一个进程号,用于唯一标识系统中某个进程.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getpid</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//获取进程号</span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getppid</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//父进程的进程号</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="1-2-环境变量"><a href="#1-2-环境变量" class="headerlink" title="1.2 环境变量"></a>1.2 环境变量</h2><p>每一个进程都有一组与之相关的环境变量,以字符串的形式存储在一个字符串数组列表中,终端下使用env查看.</p>
-<p>export LINUX_APP&#x3D;123456 添加 LINUX_APP 环境变量<br>export -n LINUX_APP     删除</p>
-<h3 id="1-2-1-应用程序中获取环境变量"><a href="#1-2-1-应用程序中获取环境变量" class="headerlink" title="1.2.1 应用程序中获取环境变量"></a>1.2.1 应用程序中获取环境变量</h3><p>环境变量是一个全局变量,需要:</p>
-<p>extern char **environ; &#x2F;&#x2F; 申明外部全局变量 environ  可以通过元素是否为null来判断是否到达末尾</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *<span class="title function_">getenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;<span class="comment">//获取指定环境变量</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">putenv</span><span class="params">(<span class="type">char</span> *<span class="built_in">string</span>)</span>;<span class="comment">//添加一个环境变量,成功0,失败非0</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">setenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">const</span> <span class="type">char</span> *value, <span class="type">int</span> overwrite)</span>;</span><br><span class="line"><span class="comment">//putenv的高级版本,可以修改变量的值,第三个参数overwrite: 若参数 name 标识的环境变量已经存在，在参数 overwrite 为 0 的情况下，setenv()函数将不改变现有环境变量的值，也就是说本次调用没有产生任何影响；如果参数 overwrite 的值为非 0，若参数 name标识的环境变量已经存在，则覆盖，不存在则表示添加新的环境变量。</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">unsetenv</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;<span class="comment">//移除环境变量</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">clearenv</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//清除</span></span><br><span class="line">environ = <span class="literal">NULL</span>;<span class="comment">//同上</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="1-3-进程的内存布局"><a href="#1-3-进程的内存布局" class="headerlink" title="1.3 进程的内存布局"></a>1.3 进程的内存布局</h2><p>历史沿袭至今，C 语言程序一直都是由以下几部分组成的：<br>⚫ 正文段。也可称为代码段，这是 CPU 执行的机器语言指令部分，文本段具有只读属性，以防止程序由于意外而修改其指令；正文段是可以共享的，即使在多个进程间也可同时运行同一段程序。<br>⚫ 初始化数据段。通常将此段称为数据段，包含了显式初始化的全局变量和静态变量，当程序加载到内存中时，从可执行文件中读取这些变量的值。<br>⚫ 未初始化数据段。包含了未进行显式初始化的全局变量和静态变量，通常将此段称为 bss 段，这一名词来源于早期汇编程序中的一个操作符，意思是“由符号开始的块”（block started by symbol），在程序开始执行之前，系统会将本段内所有内存初始化为 0，可执行文件并没有为 bss 段变量分配存储空间，在可执行文件中只需记录 bss 段的位置及其所需大小，直到程序运行时，由加载器来分配这一段内存空间。<br>⚫ 栈。函数内的局部变量以及每次函数调用时所需保存的信息都放在此段中，每次调用函数时，函数传递的实参以及函数返回值等也都存放在栈中。栈是一个动态增长和收缩的段，由栈帧组成，系统会为每个当前调用的函数分配一个栈帧，栈帧中存储了函数的局部变量（所谓自动变量）、实参和返回值。<br>⚫ 堆。可在运行时动态进行内存分配的一块区域，譬如使用 malloc()分配的内存空间，就是从系统堆内存中申请分配的.  </p>
-<p><img src="/2024/07/07/%E8%BF%9B%E7%A8%8B/1.png" alt="Alt text"></p>
-<h2 id="1-4-进程的虚拟空间"><a href="#1-4-进程的虚拟空间" class="headerlink" title="1.4 进程的虚拟空间"></a>1.4 进程的虚拟空间</h2><h3 id="为什么需要引入虚拟地址呢？"><a href="#为什么需要引入虚拟地址呢？" class="headerlink" title="为什么需要引入虚拟地址呢？"></a>为什么需要引入虚拟地址呢？</h3><p>计算机物理内存的大小是固定的，就是计算机的实际物理内存，试想一下，如果操作系统没有虚拟地址机制，所有的应用程序访问的内存地址就是实际的物理地址，所以要将所有应用程序加载到内存中，但是我们实际的物理内存只有 4G，所以就会出现一些问题：<br>⚫ 当多个程序需要运行时，必须保证这些程序用到的内存总量要小于计算机实际的物理内存的大小。<br>⚫ 内存使用效率低。内存空间不足时，就需要将其它程序暂时拷贝到硬盘中，然后将新的程序装入内存。然而由于大量的数据装入装出，内存的使用效率就会非常低。<br>⚫ 进程地址空间不隔离。由于程序是直接访问物理内存的，所以每一个进程都可以修改其它进程的内存数据，甚至修改内核地址空间中的数据，所以有些恶意程序可以随意修改别的进程，就会造成一些破坏，系统不安全、不稳定。<br>⚫ 无法确定程序的链接地址。程序运行时，链接地址和运行地址必须一致，否则程序无法运行！因为程序代码加载到内存的地址是由系统随机分配的，是无法预知的，所以程序的运行地址在编译程序时是无法确认的.  </p>
-<p>虚拟地址机制，程序访问存储器所使用的逻辑地址就是虚拟地址，通过逻辑地址映射到真正的物理内存上。所有应用程序运行在自己的虚拟地址空间中，使得进程的虚拟地址空间和物理地址空间隔离开来，这样做带来了很多的优点：<br>⚫ 进程与进程、进程与内核相互隔离。一个进程不能读取或修改另一个进程或内核的内存数据，这是因为每一个进程的虚拟地址空间映射到了不同的物理地址空间。提高了系统的安全性与稳定性。<br>⚫ 在某些应用场合下，两个或者更多进程能够共享内存。因为每个进程都有自己的映射表，可以让不同进程的虚拟地址空间映射到相同的物理地址空间中。通常，共享内存可用于实现进程间通信。<br>⚫ 便于实现内存保护机制。譬如在多个进程共享内存时，允许每个进程对内存采取不同的保护措施，例如，一个进程可能以只读方式访问内存，而另一进程则能够以可读可写的方式访问。<br>⚫ 编译应用程序时，无需关心链接地址。前面提到了，当程序运行时，要求链接地址与运行地址一致，在引入了虚拟地址机制后，便无需关心这个问题。  </p>
-<h2 id="1-5-fork-创建子进程"><a href="#1-5-fork-创建子进程" class="headerlink" title="1.5 fork()创建子进程"></a>1.5 fork()创建子进程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">fork</span><span class="params">(<span class="type">void</span>)</span>;<span class="comment">//创建一个新进程,也就是调用该函数的进程的子进程</span></span><br></pre></td></tr></table></figure>
-
-<p>fork()系统调用完成后,将存在两个进程,原进程与子进程,每个进程都会从该函数的返回处继续执行,fork()会返回两次值,两个进程都会返回,可以通过返回值来区分是哪个进程.</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>父进程会返回子进程的PID,子进程返回0;调用失败,父进程返回-1,不创建子进程并设置errno.</p>
-<p>fork()调用成功后，子进程和父进程会继续执行 fork()调用之后的指令，子进程、父进程各自在自己的进程空间中运行。事实上，子进程是父进程的一个副本，譬如子进程拷贝了父进程的数据段、堆、栈以及继承了父进程打开的文件描述符，父进程与子进程并不共享这些存储空间，这是子进程对父进程相应部分存储空间的完全复制，执行 fork()之后，<font color="red">每个进程均可修改各自的栈数据以及堆段中的变量，而并不影响另一个进程。  </font><br>虽然子进程是父进程的一个副本，但是对于程序代码段（文本段）来说，两个进程执行相同的代码段，<br>因为代码段是只读的，也就是说父子进程共享代码段，在内存中只存在一份代码段数据。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    pid = fork();<span class="comment">//两个进程都从这句之后开始执行</span></span><br><span class="line">    <span class="keyword">switch</span> (pid) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">        perror(<span class="string">&quot;fork error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;这是子进程打印信息&lt;pid: %d, 父进程 pid: %d&gt;\n&quot;</span>,getpid(), getppid());</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;这是子进程的pid: %d\n&quot;</span>,pid);</span><br><span class="line">        _exit(<span class="number">0</span>); <span class="comment">//子进程使用_exit()退出</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;这是父进程打印信息&lt;pid: %d, 子进程 pid: %d&gt;\n&quot;</span>,getpid(), pid);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;这是父进程的pid: %d\n&quot;</span>,pid);<span class="comment">//两次pid不一样,对应各自fork函数的返回值</span></span><br><span class="line">        <span class="comment">// exit(0);/执行 exit()会执行一些清理工作，最后调用_exit()函数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>fork()函数调用完成之后，父进程、子进程会各自继续执行 fork()之后的指令，它们共享代码段，但并不共享数据段、堆、栈等，而是子进程拥有父进程数据段、堆、栈等副本，所以对于同一个局部变量，它们打印出来的值是不相同的，因为 fork()调用返回值不同，在父、子进程中赋予了 pid 不同的值。</p>
-<h2 id="1-6-父、子进程间的文件共享"><a href="#1-6-父、子进程间的文件共享" class="headerlink" title="1.6 父、子进程间的文件共享"></a>1.6 父、子进程间的文件共享</h2><p>调用 fork()函数之后，子进程会获得父进程所有文件描述符的副本，这些副本的创建方式类似于 dup()，这也意味着父、子进程对应的文件描述符均指向相同的文件表.</p>
-<p><img src="/2024/07/07/%E8%BF%9B%E7%A8%8B/2.png" alt="Alt text"></p>
-<p>子进程拷贝了父进程的文件描述符表，使得父、子进程中对应的文件描述符指向了相同的文件表，也意味着父、子进程中对应的文件描述符指向了磁盘中相同的文件，因而这些文件在父、子进程间实现了共享，譬如，<font color="red"> 如果子进程更新了文件偏移量，那么这个改变也会影响到父进程中相应文件描述符的位置偏移量。</font>  </p>
-<p>如果在fork之前打开文件,那么父子进程的文件偏移量是同一个,父子进程改变了位置偏移量会作用到另一个进程.如父进程输入ABCD,子进程输入1234,最后会输出ABCD1234</p>
-<p>如果在父子进程内分别打开一个文件,这样往里面写入数据就会出现错误.  </p>
-<p>fork()函数有以下两种用法：<br>⚫ 父进程希望子进程复制自己，使父进程和子进程同时执行不同的代码段。这在网络服务进程中是常见的，父进程等待客户端的服务请求，当接收到客户端发送的请求事件后，调用 fork()创建一个子进程，使子进程去处理此请求、而父进程可以继续等待下一个服务请求。<br>⚫ 一个进程要执行不同的程序。譬如在程序 app1 中调用 fork()函数创建了子进程，此时子进程是要去执行另一个程序 app2，也就是子进程需要执行的代码是 app2 程序对应的代码，子进程将从 app2程序的 main 函数开始运行。这种情况，通常在子进程从 fork()函数返回之后立即调用 exec 族函数来实现，关于 exec 函数将在后面内容向大家介绍。 </p>
-<p>但实际上，fork系统调用代价很大，他复制了父进程数据段与堆栈段中绝大部分的内容，效率低下，浪费资源，但是fork之后的子进程会调用exex函数不再执行父进程的代码段，从新的main函数开始执行，并为新程序重新初始化其数据段、堆段、栈段；</p>
-<p>vfork函数与fork函数的区别：  </p>
-<ol>
-<li>都创建了子进程，但是vfork函数不会将父进程的地址空间完全复制到子进程中，因为子进程会立刻调用exec或_exit函数，也就不会应用改地址空间的数据。但是在子进程调用exec或_exit之前,它会在父进程的空间中运行,子进程共享父进程的内存.(有点莫名其妙,感觉最主要的还是必须要调用那两个函数以及优先子进程运行)也就说子进程中修改父进程的变量也会影响到父进程.</li>
-<li>vfork保证子进程优先运行,子进程调用exec之后父进程才可以被调度运行.</li>
-</ol>
-<p>&lt;&#x2F;font color&#x3D;red&gt;用 vfork() 创建进程，子进程里一定要调用 exec（进程替换） 或 exit（退出进程），否则，程序会出问题，没有意义。  </p>
-<p>一般不用vfork因为fork后面也会会调用exec.</p>
-<h2 id="1-7-fork之后的竞争条件"><a href="#1-7-fork之后的竞争条件" class="headerlink" title="1.7 fork之后的竞争条件"></a>1.7 fork之后的竞争条件</h2><p>fork函数调用后绝大部分情况下,都是父进程先执行,但是也不排除子进程先被的可能.有些时候对执行顺序有要求该怎么办?<br>比如要让子进程先运行,可以使得父进程被阻塞,等子进程来唤醒他.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">sig_handler</span><span class="params">(<span class="type">int</span> sig)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;接收到信号\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sig</span> =</span> &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">sigset_t</span> wait_mask;</span><br><span class="line"><span class="comment">/* 初始化信号集 */</span></span><br><span class="line">    sigemptyset(&amp;wait_mask);</span><br><span class="line"><span class="comment">/* 设置信号处理方式 */</span></span><br><span class="line">    sig.sa_handler = sig_handler;</span><br><span class="line">    sig.sa_flags = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="number">-1</span> == sigaction(SIGUSR1, &amp;sig, <span class="literal">NULL</span>)) &#123;</span><br><span class="line">        perror(<span class="string">&quot;sigaction error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (fork()) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">        perror(<span class="string">&quot;fork error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line"><span class="comment">/* 子进程 */</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;子进程开始执行\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;子进程打印信息\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;~~~~~~~~~~~~~~~\n&quot;</span>);</span><br><span class="line">        sleep(<span class="number">2</span>);</span><br><span class="line">        kill(getppid(), SIGUSR1); <span class="comment">//发送信号给父进程、唤醒它</span></span><br><span class="line">        _exit(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line"><span class="comment">/* 父进程 */</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">-1</span> != sigsuspend(&amp;wait_mask))<span class="comment">//挂起、阻塞,此时wait_mask为空,不阻塞任何信号,有信号传进来时就进入信号处理函数,唤醒父进程,没有的话父进程会一直保持阻塞状态.</span></span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;父进程开始执行\n&quot;</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;父进程打印信息\n&quot;</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-8-进程的诞生与终止"><a href="#1-8-进程的诞生与终止" class="headerlink" title="1.8 进程的诞生与终止"></a>1.8 进程的诞生与终止</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">sig_handler</span><span class="params">(<span class="type">int</span> sig)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;received signal: %d&quot;</span>,sig);<span class="comment">//少了个换行符就用不了了？？少了个换行符整体都在缓冲区，所以不打印直至缓冲区满。确实是这样的只需要在函数中添加fflush（stdout）函数就可以刷新缓冲区。</span></span><br><span class="line">    <span class="comment">//缓冲区是为了减少对磁盘的读写次数</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sig</span>=</span>&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    sig.sa_flags=<span class="number">0</span>;</span><br><span class="line">    sig.sa_handler=sig_handler;</span><br><span class="line">    ret = sigaction(SIGINT,&amp;sig,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret==<span class="number">-1</span>)&#123;</span><br><span class="line">        perror(<span class="string">&quot;signal error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ( ; ; ) &#123; fflush(<span class="built_in">stdout</span>);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello World!&quot;</span>);<span class="comment">//这里没有换行符所以没有直接打印而是进入缓冲区(标准输出设备使用的时行缓冲,检测到\n会自动显示字符串),直至满或者程序因为各种原因刷新了缓冲区才会输出.</span></span><br><span class="line">    <span class="keyword">switch</span> (fork()) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">        perror(<span class="string">&quot;fork error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">    <span class="comment">/* 子进程 */</span></span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line"><span class="comment">/* 父进程 */</span></span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//fork函数会复制缓冲区,如果printf语句中没加换行符,子进程会复制缓冲区,子进程结束后会输出字符串,父进程也会输出,所以会看到输出了两遍.</span></span><br></pre></td></tr></table></figure>
-
-<p>为了避免上述问题:</p>
-<ol>
-<li>对于行缓冲设备,加换行符,puts函数会自动添加.</li>
-<li>fork之前使用fflush刷新stdio缓冲区,或者使用setvbuff和setbuf关闭stdio的缓冲功能.</li>
-</ol>
-<font color="red">
-子进程使用_exit()退出程序不会刷新stdio缓冲区对应还是上述代码也就不会再打印一边.
-
-<p>exit()函数由_exit实现会执行的动作如下：<br>⚫ 如果程序中注册了进程终止处理函数，那么会调用终止处理函数。<br>⚫ 刷新 stdio 流缓冲区。关于 stdio 流缓冲区的问题，稍后编写一个简单地测试程序进行说明；<br>⚫ 执行_exit()系统调用<br></p></font><p></p>
-<h2 id="1-9-监视子进程"><a href="#1-9-监视子进程" class="headerlink" title="1.9 监视子进程"></a>1.9 监视子进程</h2><p>在一些情况中，父进程需要知道子进程何时被终止，以及终止信息（如何终止。。。），也就是对子进程进行监视，主要是使用wait函数及其变体。</p>
-<h3 id="1-9-1-wait-函数"><a href="#1-9-1-wait-函数" class="headerlink" title="1.9.1 wait()函数"></a>1.9.1 wait()函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">wait</span><span class="params">(<span class="type">int</span> *status)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>status：参数 status 用于存放子进程终止时的状态信息，参数 status 可以为 NULL，表示不接收子进程<br>终止时的状态信息。<br>返回值：若成功则返回终止的子进程对应的进程号；失败则返回-1。</p>
-<p>系统调用 wait()将执行如下动作：  </p>
-<ul>
-<li><p>调用 wait()函数，如果其所有子进程都还在运行，则 wait()会一直阻塞等待，直到某一个子进程终<br>止；</p>
-</li>
-<li><p>如果进程调用 wait()，但是该进程并没有子进程，也就意味着该进程并没有需要等待的子进程，那<br>么 wait()将返回错误，也就是返回-1、并且会将 errno 设置为 ECHILD.</p>
-</li>
-<li><p>如果进程调用 wait()之前，它的子进程当中已经有一个或多个子进程已经终止了，那么调用 wait()<br>也不会阻塞。<font color="red">wait函数不仅有监视的作用,还能回收子进程的资源.如果子进程已经终止了,wait函数会直接回收该子进程的资源,然后返回正常的程序流程中,一次函数只能处理一次.</font></p>
-</li>
-</ul>
-<p>可以通过以下宏来检查 status 参数：</p>
-<ul>
-<li>WIFEXITED(status)：如果子进程正常终止，则返回 true；</li>
-<li>EXITSTATUS(status)：返回子进程退出状态，是一个数值，其实就是<font color="red">子进程调用_exit()或 exit()时指定的退出状态</font>；wait()获取得到的 status 参数并不是调用_exit()或 exit()时指定的状态，可通过WEXITSTATUS 宏转换；</li>
-<li>WIFSIGNALED(status)：如果子进程被信号终止，则返回 true；</li>
-<li>WTERMSIG(status)：返回导致子进程终止的信号编号。如果子进程是被信号所终止，则可以通过<br>此宏获取终止子进程的信号；</li>
-<li>WCOREDUMP(status)：如果子进程终止时产生了核心转储文件，则返回 true；</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/07/%E8%BF%9B%E7%A8%8B/">展开全文 >></a>
         </p>
       
 
