@@ -20,8 +20,9 @@
 <meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png">
 <meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png">
 <meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png">
+<meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/6.png">
 <meta property="article:published_time" content="2024-07-23T02:41:28.000Z">
-<meta property="article:modified_time" content="2024-07-24T03:51:01.532Z">
+<meta property="article:modified_time" content="2024-07-24T09:46:03.524Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png">
@@ -70,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 18
+			总文章数 19
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -192,7 +193,7 @@
 <h2 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h2><h3 id="PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原"><a href="#PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原" class="headerlink" title="PDM（脉冲密度调制，Pulse Density Modulation）数据还原"></a>PDM（脉冲密度调制，Pulse Density Modulation）数据还原</h3><p>是一种使用二进制数0,1表示模拟信号的调制方式。在PDM信号中，模拟信号的幅值使用输出脉冲对应区域的密度表示。PWM波是PDM波转换频率固定的一种特例，对于一个使用8位长表示的电压信号而言，峰值的1&#x2F;2处会高低电平各持续一半，即128个时钟周期。在PDM信号中，会在1,0之间每个时钟周期都切换。两种波形的平均值都是50%，但是PDM波切换的更加频繁。对于100%和0的电平信号，两种方式的输出相同。</p>
 <p><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"></p>
 <p>数据还原在FPGA中进行，方法主要有低通滤波器和下图中的方式两种。<br>滤波器（数字、模拟）公式：y(k)&#x3D;(1−a)⋅y(k−1)+a⋅x(k)<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42887190/article/details/125749509">https://blog.csdn.net/weixin_42887190/article/details/125749509</a><br>但是通过物理电路低通滤波器还原出来的信号每一个信号都占至少8位的位宽，同时16个麦克风同时工作，所以使用该种方法不现实，如果使用FPGA对其进行处理，可以有效减少引脚资源占用。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"><br>如上图所示，PDM信号的频率位2.304MHz，工作频率说明书推荐的，这个频率相对于一般的采样频率48k、44.1kHz较高，同时也较为冗余，可以通过CIC抽取滤波器抽取降采样12倍，通过两个HB半带滤波器分别降采样2倍，最终2.304MhZ降采样48倍得到48kHz的采样率。（完全包含可听声，且相比于44.1kHz留有更多的余量，也更好通过分频得到）。</p>
-<p>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
+<p>最开始通过IDDR原语将时钟上下沿的数据分出来，以前是分别以上升沿和下降沿作为触发信号，这样会导致数据有半个时钟的误差。<br>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
 <h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><h4 id="传输方式"><a href="#传输方式" class="headerlink" title="传输方式"></a>传输方式</h4><p>网线的几种接口：</p>
 <ol>
 <li>MII接口：25M的时钟，4bit数据线，100M</li>
@@ -202,7 +203,26 @@
 <p>对于16个麦克风的数据要求是并行的，每次采样1024个数据，每个数据16位，重要的是并行，所以这里我选择将数据串联在一起，通过fifo传出去，16个16位麦克风数据就是256位，经过观察发现，完全不需要占用16位，裁剪成8位，最后合并的数据就是128位，但是128位数据输入到fifo中最多只能输出16位数据，这与预期的千兆网8位的数据位不符。</p>
 <p>理论上，一个UDP包最大可以达到65535-20-8(65507，IP首部20个字节，UDP首部8个字节)个字节,<br>但是许多平台实际的限制是8192个字节（8KB）。<br>另外由于链路层要将数据进行分组，比如以太网的MTU为1500字节，<br>因此在实际的设计时，包长的选择还要尽量减少链路层的分组，这样才能达到最大的传输速度。因此我们UDP包应该在1024个字节之内。</p>
 <p>解决方案：首先确定一点，以太网数据帧的长度在46-1500字节，这是由以太网的物理特性决定的.这个1500字节被称为链路层的MTU(最大传输单元). 但这并不是指链路层的长度被限制在1500字节,其实这这个MTU指的是链路层的数据区.并不包括链路层的首部和尾部的18个字节.所以,事实上,这个1500字节就是网络层IP数据报的长度限制.<br>因为IP数据报的首部为20字节,所以IP数据报的数据区长度最大为1480字节.<br>而这个1480字节就是用来放TCP传来的TCP报文段或UDP传来的UDP数据报的.<br>又因为UDP数据报的首部8字节,所以UDP数据报的数据区最大长度为1472字节.<br>这个<font color="red">1472字节</font>就是我们可以使用的字节数。<br><font color="red">注：下图中的前导码那些并不属于以太网数据帧1500字节，属于TX_ETH_HEADER，在这1500字节中有TX_IP_HEADER，20字节 ，TX_UDP_HEADER，8个字节，一共28个字节，所以数据就只有1472个字节。</font><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png" alt="Alt text"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/cainv89/article/details/50676670">https://blog.csdn.net/cainv89/article/details/50676670</a><br>上图中就显示了udp首部的格式，但是这个伪首部是在IP首部中的，同时这个0，17，udp长度我没有写。<br>以太网报头：mac地址之类的东西<br>IP报头：IP协议版本，。。。。之类的东西，最后8个字节是两个ip地址<br>udp报头：两个端口号（4bytes），udp数据长度（2bytes），校验和（2bytes）</p>
-<h4 id="传输协议实现"><a href="#传输协议实现" class="headerlink" title="传输协议实现"></a>传输协议实现</h4><h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2>
+<p>设置以下八个状态：IDLE、TX_PREAMBLE（前导码，帧开始符7+1个字节，对应8个时钟）、TX_ETH_HEADER（一对mac地址和长度，6+6+2个字节，对应14个时钟）、TX_IP_HEADER（IP报头20个字节）、TX_UDP_HEADER（UDP报头8个字节）、TX_DATA、TX_FILL_DATA、TX_CRC输出指定的数据。</p>
+<p>16位数据时钟和8位输出时钟都是125M，通过fifo的rd_en来控制fifo什么时候刷新数据，这样就避免了跨时钟数据的不同步问题，如下图。因为我最开始想到的是125M分频给fifo，但是跨时钟需要进行同步，这其中牵扯太多了，最后通过下图这种方式控制数据的读取，这样数据就可以按照125M时钟进入GMII了，最后通过ODDR原语将数据分别放到上升沿和下降沿中。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/6.png" alt="Alt text"></p>
+<p>然后是数据的快拍数，一般是1024，512这种数字，但是为了后续处理方便，尽量得到整数个包，一个包1472个字节，那就将快拍设定为1472个这样就有1472<em>16</em>1个字节，从而最后有16个包需要发送。</p>
+<p>大致需要设计以下几个IP核：</p>
+<ol>
+<li>控制多个包传输（对应工程中的eth_send_ctrl），因为一次性会有16个包，所以每次传输都需要判断剩余的数据量，以便进行新一个包的传输。</li>
+<li>控制一个包传输（对应工程的eth_udp_tx_gmii），一个包有1500个字节+前导码那一堆东西，这个ip用来发送这些，并传输数据。</li>
+<li>gmii_to_rgmii，两个接口的转换，将8位压缩至4位。</li>
+<li>按键开关，为了便于调试，以及fifo的写入，按下按键传输数据1472次，也就是1472个8位*16个.</li>
+</ol>
+<p>期间遇到的问题：  </p>
+<ol>
+<li>eth的reset没有加上，导致以太网一直处于复位的状态；</li>
+<li>使用时没接网线，导致fpga时钟为默认时钟，接上网线之后才是125M；</li>
+<li>前面说到的PDM脉冲密度调制，还原出来的数据一直不符，结果是时钟问题；</li>
+<li>跨时钟域处理，一定要同步，否则在一些数据上就会出错；</li>
+<li>fifo真好用；</li>
+<li>CRC校验<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></li>
+</ol>
+<h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2><h3 id="udp助手"><a href="#udp助手" class="headerlink" title="udp助手"></a>udp助手</h3><h3 id="声源定位软件"><a href="#声源定位软件" class="headerlink" title="声源定位软件"></a>声源定位软件</h3>
       
 
       
@@ -273,6 +293,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2024/07/24/OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E3%80%81TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OSI七层模型、TCP/IP四层模型
+        
+      </div>
+    </a>
   
   
     <a href="/2024/07/23/%E5%9F%BA%E4%BA%8Estm32%E7%9A%84%E8%B6%85%E5%A3%B0%E6%B5%8B%E5%8E%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" id="article-nav-older" class="article-nav-link-wrap">

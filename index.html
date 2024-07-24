@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 18
+			总文章数 19
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,74 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-OSI七层模型、TCP-IP四层模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/24/OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E3%80%81TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B/">OSI七层模型、TCP/IP四层模型</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/24/OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E3%80%81TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2024-07-24T09:46:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-24</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/24/OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E3%80%81TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-基于FPGA-树莓派的声源定位系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -176,7 +244,7 @@
 <h2 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h2><h3 id="PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原"><a href="#PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原" class="headerlink" title="PDM（脉冲密度调制，Pulse Density Modulation）数据还原"></a>PDM（脉冲密度调制，Pulse Density Modulation）数据还原</h3><p>是一种使用二进制数0,1表示模拟信号的调制方式。在PDM信号中，模拟信号的幅值使用输出脉冲对应区域的密度表示。PWM波是PDM波转换频率固定的一种特例，对于一个使用8位长表示的电压信号而言，峰值的1&#x2F;2处会高低电平各持续一半，即128个时钟周期。在PDM信号中，会在1,0之间每个时钟周期都切换。两种波形的平均值都是50%，但是PDM波切换的更加频繁。对于100%和0的电平信号，两种方式的输出相同。</p>
 <p><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"></p>
 <p>数据还原在FPGA中进行，方法主要有低通滤波器和下图中的方式两种。<br>滤波器（数字、模拟）公式：y(k)&#x3D;(1−a)⋅y(k−1)+a⋅x(k)<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42887190/article/details/125749509">https://blog.csdn.net/weixin_42887190/article/details/125749509</a><br>但是通过物理电路低通滤波器还原出来的信号每一个信号都占至少8位的位宽，同时16个麦克风同时工作，所以使用该种方法不现实，如果使用FPGA对其进行处理，可以有效减少引脚资源占用。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"><br>如上图所示，PDM信号的频率位2.304MHz，工作频率说明书推荐的，这个频率相对于一般的采样频率48k、44.1kHz较高，同时也较为冗余，可以通过CIC抽取滤波器抽取降采样12倍，通过两个HB半带滤波器分别降采样2倍，最终2.304MhZ降采样48倍得到48kHz的采样率。（完全包含可听声，且相比于44.1kHz留有更多的余量，也更好通过分频得到）。</p>
-<p>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
+<p>最开始通过IDDR原语将时钟上下沿的数据分出来，以前是分别以上升沿和下降沿作为触发信号，这样会导致数据有半个时钟的误差。<br>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
 <h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><h4 id="传输方式"><a href="#传输方式" class="headerlink" title="传输方式"></a>传输方式</h4><p>网线的几种接口：</p>
 <ol>
 <li>MII接口：25M的时钟，4bit数据线，100M</li>
@@ -186,7 +254,26 @@
 <p>对于16个麦克风的数据要求是并行的，每次采样1024个数据，每个数据16位，重要的是并行，所以这里我选择将数据串联在一起，通过fifo传出去，16个16位麦克风数据就是256位，经过观察发现，完全不需要占用16位，裁剪成8位，最后合并的数据就是128位，但是128位数据输入到fifo中最多只能输出16位数据，这与预期的千兆网8位的数据位不符。</p>
 <p>理论上，一个UDP包最大可以达到65535-20-8(65507，IP首部20个字节，UDP首部8个字节)个字节,<br>但是许多平台实际的限制是8192个字节（8KB）。<br>另外由于链路层要将数据进行分组，比如以太网的MTU为1500字节，<br>因此在实际的设计时，包长的选择还要尽量减少链路层的分组，这样才能达到最大的传输速度。因此我们UDP包应该在1024个字节之内。</p>
 <p>解决方案：首先确定一点，以太网数据帧的长度在46-1500字节，这是由以太网的物理特性决定的.这个1500字节被称为链路层的MTU(最大传输单元). 但这并不是指链路层的长度被限制在1500字节,其实这这个MTU指的是链路层的数据区.并不包括链路层的首部和尾部的18个字节.所以,事实上,这个1500字节就是网络层IP数据报的长度限制.<br>因为IP数据报的首部为20字节,所以IP数据报的数据区长度最大为1480字节.<br>而这个1480字节就是用来放TCP传来的TCP报文段或UDP传来的UDP数据报的.<br>又因为UDP数据报的首部8字节,所以UDP数据报的数据区最大长度为1472字节.<br>这个<font color="red">1472字节</font>就是我们可以使用的字节数。<br><font color="red">注：下图中的前导码那些并不属于以太网数据帧1500字节，属于TX_ETH_HEADER，在这1500字节中有TX_IP_HEADER，20字节 ，TX_UDP_HEADER，8个字节，一共28个字节，所以数据就只有1472个字节。</font><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png" alt="Alt text"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/cainv89/article/details/50676670">https://blog.csdn.net/cainv89/article/details/50676670</a><br>上图中就显示了udp首部的格式，但是这个伪首部是在IP首部中的，同时这个0，17，udp长度我没有写。<br>以太网报头：mac地址之类的东西<br>IP报头：IP协议版本，。。。。之类的东西，最后8个字节是两个ip地址<br>udp报头：两个端口号（4bytes），udp数据长度（2bytes），校验和（2bytes）</p>
-<h4 id="传输协议实现"><a href="#传输协议实现" class="headerlink" title="传输协议实现"></a>传输协议实现</h4><h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2>
+<p>设置以下八个状态：IDLE、TX_PREAMBLE（前导码，帧开始符7+1个字节，对应8个时钟）、TX_ETH_HEADER（一对mac地址和长度，6+6+2个字节，对应14个时钟）、TX_IP_HEADER（IP报头20个字节）、TX_UDP_HEADER（UDP报头8个字节）、TX_DATA、TX_FILL_DATA、TX_CRC输出指定的数据。</p>
+<p>16位数据时钟和8位输出时钟都是125M，通过fifo的rd_en来控制fifo什么时候刷新数据，这样就避免了跨时钟数据的不同步问题，如下图。因为我最开始想到的是125M分频给fifo，但是跨时钟需要进行同步，这其中牵扯太多了，最后通过下图这种方式控制数据的读取，这样数据就可以按照125M时钟进入GMII了，最后通过ODDR原语将数据分别放到上升沿和下降沿中。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/6.png" alt="Alt text"></p>
+<p>然后是数据的快拍数，一般是1024，512这种数字，但是为了后续处理方便，尽量得到整数个包，一个包1472个字节，那就将快拍设定为1472个这样就有1472<em>16</em>1个字节，从而最后有16个包需要发送。</p>
+<p>大致需要设计以下几个IP核：</p>
+<ol>
+<li>控制多个包传输（对应工程中的eth_send_ctrl），因为一次性会有16个包，所以每次传输都需要判断剩余的数据量，以便进行新一个包的传输。</li>
+<li>控制一个包传输（对应工程的eth_udp_tx_gmii），一个包有1500个字节+前导码那一堆东西，这个ip用来发送这些，并传输数据。</li>
+<li>gmii_to_rgmii，两个接口的转换，将8位压缩至4位。</li>
+<li>按键开关，为了便于调试，以及fifo的写入，按下按键传输数据1472次，也就是1472个8位*16个.</li>
+</ol>
+<p>期间遇到的问题：  </p>
+<ol>
+<li>eth的reset没有加上，导致以太网一直处于复位的状态；</li>
+<li>使用时没接网线，导致fpga时钟为默认时钟，接上网线之后才是125M；</li>
+<li>前面说到的PDM脉冲密度调制，还原出来的数据一直不符，结果是时钟问题；</li>
+<li>跨时钟域处理，一定要同步，否则在一些数据上就会出错；</li>
+<li>fifo真好用；</li>
+<li>CRC校验<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></li>
+</ol>
+<h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2><h3 id="udp助手"><a href="#udp助手" class="headerlink" title="udp助手"></a>udp助手</h3><h3 id="声源定位软件"><a href="#声源定位软件" class="headerlink" title="声源定位软件"></a>声源定位软件</h3>
       
 
       
@@ -1195,100 +1282,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/12/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIC%EF%BC%88%E4%BA%8C%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-通信协议之UART（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/">通信协议之UART（一）</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2024-07-11T13:38:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-11</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="通信协议之UART"><a href="#通信协议之UART" class="headerlink" title="通信协议之UART"></a><center>通信协议之UART</center></h1><h2 id="1-UART串口通信协议简介"><a href="#1-UART串口通信协议简介" class="headerlink" title="1 UART串口通信协议简介"></a>1 UART串口通信协议简介</h2><p>UART（Universal Asynchronous Receiver&#x2F;Transmitter),也就是通用异步收发器,是一种串行,异步,全双工的通信协议,将数据一位接一位的进行传输,在该通信协议中信号线上的状态位高电平为1.低电平为0.通信电路简单,只需要一对传输线就可以实现双向通信,大大降低成本,但是传输速度比较慢.</p>
-<h2 id="2-串口传输"><a href="#2-串口传输" class="headerlink" title="2 串口传输"></a>2 串口传输</h2><h3 id="2-1-数据协议"><a href="#2-1-数据协议" class="headerlink" title="2.1 数据协议"></a>2.1 数据协议</h3><p>在串口通信中,需要关注的有<font color="red">数据流和波特率</font>,一个数据流由10个数据位组成:<font color="yellow">1个起始位,7个有效数据位(这里并不是固定死的,可以是5,6,7,8),1位奇偶校验位(也可以没有),1位停止位(1,1.5,2位均可).</font></p>
-<p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/1.png" alt="Alt text"></p>
-<ol>
-<li>起始位:通信线路空闲时为1,检测到0,数据开始传输;</li>
-<li>有效数据位: 传输的数据,指令或者数据;<br>数据位可以是5、6、7、8、9位等组成一个字符（通常是8位）。如ASCII码（7位）、扩展BCD码（8位）。首先发送最低位，最后发送最高位。</li>
-<li>奇偶校验位: 根据传输数据中1的个数的奇偶数来判断数据的正确性;<br>奇校验：如果数据位中“1”的个数为偶数，则奇偶校验位为“1”，如果“1”的个数为奇数，则奇偶校验位为“0”。<br>偶校验：如果数据中“1”的个数为偶数，则奇偶校验位为“0”，如果数据中“1”的个数为奇数，则奇偶校验位为“1”。</li>
-<li>停止位:数据传输完成,拉高电平(1,1.5,2位均可).<br>停止位不仅表示传输的结束，而且还为计算机提供了纠正时钟的机会。停止位越多，数据传输越稳定，但数据传输速度越慢。</li>
-</ol>
-<p>波特率(又称码元率): 描述一秒内传输了多少个码元,也就是两个信道之间的数据传输速度,一般比特率有300，1200，2400，9600，19200，38400，115200. 其中9600 Baud表示一秒传输了9600个码元信息,当一个码元表示1bit时,波特率&#x3D;比特率(每秒钟传输的比特数).</p>
-<p>其中,码元是指在数字通信中常常用时间间隔相同的符号来表示一个二进制数字，这样的时间间隔内的信号称为(二进制）码元,码元是自己定义的<br>通俗点说，可以把一个码元看做一个存放一定信息量的包，如果只存放1bit，那么波特率等于比特率，但是一般不止存放1bit如一串二进制信息为101010101 当一个码元携带的信息量为1bit时，那么就有9个码元，其波特率相当于比特率，如果每三个一组101，010，101，这时就可以使用8种振幅来表示某个码元，这里相当于一个码元就包含了3bit，这里码元的离散取值数目就是8。可以理解为多少bit的数据表示一个数据,如一个数据是16位,这一整个就是码元.<br>下图中,码元为1位时就可以认为1bit数据传输的时间;<br><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/3.jpg" alt="Alt text"></p>
-<h3 id="2-2-整体架构"><a href="#2-2-整体架构" class="headerlink" title="2.2 整体架构"></a>2.2 整体架构</h3><p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/2.png" alt="Alt text"></p>
-<p>RX表示接收,TX表示发送,引脚接法要注意,设备1的发送到设备2的接收.</p>
-<p>这里没有共享时钟线,因为这是异步通信.</p>
-<h3 id="2-3-错误状态"><a href="#2-3-错误状态" class="headerlink" title="2.3 错误状态"></a>2.3 错误状态</h3><p>在使用 UART 时可能遇到的一些错误:</p>
-<ol>
-<li><p>帧错误<br>UART 状态和控制寄存器将指示各种状态条件，包括与传输相关的错误状态。了解此协议可以更轻松地理解错误状态。其中包括帧错误，<font color="red">当接收器在预期位时间没有看到停止位时就会发生帧错误</font>。如果<font color="red">在预期停止位时数据线未处于预期的高状态（取决于设置 UART 的数据和奇偶校验位的数量）</font>，则 UART 将发出帧错误信号。</p>
-</li>
-<li><p>奇偶校验错误<br>仅当 UART 处于奇偶校验模式时才会引发奇偶校验错误。在奇偶校验模式下，会发送一个额外位来保存所有传输数据位的奇偶校验（偶数或奇数）。如果数据位有错误（1 代表 0 或 0 代表 1），则奇偶校验位将错误，并且将抛出指定错误的错误。</p>
-</li>
-<li><p>溢出错误<br>当接收器在下一个字符到达之前不进行处理（从输入缓冲区中删除一个字符）时，就会发生溢出错误。</p>
-</li>
-<li><p>中断条件<br>中断条件不一定是错误。当接收器输入处于逻辑低状态超过一定持续时间（通常超过一个字符时间）时，就会发生这种情况。对于接收者来说，它看起来像是一个带有帧错误的全零字符。这是针对软件复位电路的黑客攻击。在python代码中，可以看到reset是通过发送break来触发的。这会将数据线拉低足够长的时间，以便将 MCLR 拉低并使电路板复位。</p>
-</li>
-</ol>
-<h3 id="2-4-UART-IIC-SPI之间的区别"><a href="#2-4-UART-IIC-SPI之间的区别" class="headerlink" title="2.4 UART,IIC,SPI之间的区别"></a>2.4 UART,IIC,SPI之间的区别</h3><p><img src="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/4.png" alt="Alt text"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
         </p>
       
 
