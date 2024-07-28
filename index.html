@@ -171,61 +171,43 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p>堆和栈的区别<br>答：栈由系统自动分配，堆需要人为开辟；栈空间小，速度快，堆空间大速度慢；栈是连续的空间，堆不是。</p>
-</li>
-<li><p>什么是野指针，产生的原因是什么？<br>答：野指针是指指向位置随机的、不正确的指针。产生原因有：创建指针时没有初始化，从而指针指向随机位置；释放指针指向的内存后，指针没有指向null。</p>
-</li>
-<li><p>DMA有什么作用<br>答：DMA是在专门的硬件（ DMA）控制下，实现高速外设和主存储器之间自动成批交换数据尽量减少CPU干预的输入&#x2F;输出操作方式，主要作用就是减少CPU的负担，CPU只在开始和结束的时候干预。</p>
-</li>
-<li><p>进程间的通讯方式<br>答：</p>
-</li>
-<li><p>程序中的内存分配方法<br>答：1、连续分配方式；2、基本分页存储管理方式；3、基本分段存储管理方式 ；4、段页式存储管理方式；</p>
-</li>
-<li><p>malloc、calloc、realloc及new的区别</p>
+        <p>1.堆和栈的区别<br>答：栈由系统自动分配，堆需要人为开辟；栈空间小，速度快，堆空间大速度慢；栈是连续的空间，堆不是。</p>
+<p>2.什么是野指针，产生的原因是什么？<br>答：野指针是指指向位置随机的、不正确的指针。产生原因有：创建指针时没有初始化，从而指针指向随机位置；释放指针指向的内存后，指针没有指向null。</p>
+<p>3.DMA有什么作用<br>答：DMA是在专门的硬件（ DMA）控制下，实现高速外设和主存储器之间自动成批交换数据尽量减少CPU干预的输入&#x2F;输出操作方式，主要作用就是减少CPU的负担，CPU只在开始和结束的时候干预。</p>
+<p>4.进程间的通讯方式<br>答：</p>
+<p>5.程序中的内存分配方法<br>答：1、连续分配方式；2、基本分页存储管理方式；3、基本分段存储管理方式 ；4、段页式存储管理方式；</p>
+<p>6.malloc、calloc、realloc及new的区别</p>
 <ul>
 <li>申请的内存所在位置不同。new操作符从自由存储区上为对象动态分配内存空间，malloc函数从堆上动态分配内存。</li>
 <li>返回类型安全性不同。new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。malloc内存分配成功则是返回void <em>，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</li>
 <li>内存分配失败时的返回值不同。new内存分配失败时，会抛出bac_alloc异常，它不会返回NULL。malloc分配内存失败时返回NULL。</li>
 <li>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根S据类型信息自行计算。malloc则需要显式地指出所需内存的尺寸。</li>
 </ul>
-</li>
-<li><p>Socket通信流程</p>
+<p>7.Socket通信流程</p>
 <ul>
-<li>socket是一组API，对TCP&#x2F;IP协议封装的API。</li>
-</ul>
-</li>
-</ol>
-<p>  <img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png" alt="Alt text"></p>
-<ul>
+<li>socket是一组API，对TCP&#x2F;IP协议封装的API。<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png" alt="Alt text"></li>
 <li>服务端这边首先创建一个Socket（Socket()），然后绑定IP地址和端口号（Bind()），之后注册监听（Listen()），这样服务端就可以监听指定的Socket地址了；</li>
 <li>客户端这边也创建一个Socket（Socket()）并打开，然后根据服务器IP地址和端口号向服务器Socket发送连接请求（Connect()）；</li>
 <li>服务器Socket监听到客户端Socket发来的连接请求之后，被动打开，并调用Accept()函数接收请求，这样客户端和服务器之间的连接就建立好了；</li>
 <li>数据交互；</li>
 <li>客户端关闭，服务端捕捉到异常，关闭服务端。</li>
 </ul>
-<ol start="8">
-<li><p>为什么局部变量没有赋值时，每次初始化的结果不一样？</p>
+<p>8.为什么局部变量没有赋值时，每次初始化的结果不一样？</p>
 <ul>
 <li>定义局部变量，其实就是在栈中通过移动栈指针来给程序提供一个内存空间和这个局部变量名绑定。因为这段内存空间在栈上，而栈内存是反复使用的，上次用完没清零的，所以说使用栈来实现的局部变量定义时如果不显式初始化，值就是脏的，是不确定的。</li>
 </ul>
-</li>
-<li><p>c语言volatile作用和用法</p>
+<p>9.c语言volatile作用和用法</p>
 <ul>
 <li>在C语言中，volatile关键字可以用来提醒编译器它后面所定义的变量随时有可能改变，因此编译后的程序每次需要存储或读取这个变量的时候，都会直接从变量地址中读取数据。如果没有volatile关键字，则编译器可能优化读取和存储，可能暂时使用寄存器中的值，如果这个变量由别的程序更新了的话，将出现不一致的现象。</li>
 <li>告诉编译器不要优化volatile修饰的变量；</li>
 <li>用途：多进程共享变量、硬件寄存器（状态寄存器）</li>
 </ul>
-</li>
-<li><p><font color="red">编译</font>有几个阶段，每个阶段做什么事情？GCC呢？</p>
+<p>10.<font color="red">编译</font>有几个阶段，每个阶段做什么事情？GCC呢？</p>
 <ul>
-<li>首先，这两个是不同的概念。</li>
-<li>GCC是预处理、<font color="red">编译</font>、汇编、链接。预处理宏定义展开、变量替换、文件包含等；编译过程检查源文件语法，同时将源文件编译为汇编文件。汇编过程将汇编文件转为二进制文件，即机器语言。链接过程是将不同的二进制文件链接在一起，做成可执行文件。gcc是预处理，编译，汇编，执行.</li>
-</ul>
+<li><p>首先，这两个是不同的概念。</p>
 </li>
-</ol>
-<p>源程序经过预处理、编译、汇编、链接等多个步骤之后才能生成在机器上可以直接运行的可执行程序。<br>.cpp文件预处理后得到.i文件经过编译器之后得到.s文件,经过汇编器之后得到.o文件通过链接器得到可执行程序.exe文件.  </p>
-<ul>
+<li><p>GCC是预处理、<font color="red">编译</font>、汇编、链接。预处理宏定义展开、变量替换、文件包含等；编译过程检查源文件语法，同时将源文件编译为汇编文件。汇编过程将汇编文件转为二进制文件，即机器语言。链接过程是将不同的二进制文件链接在一起，做成可执行文件。gcc是预处理，编译，汇编，执行.<br>源程序经过预处理、编译、汇编、链接等多个步骤之后才能生成在机器上可以直接运行的可执行程序。<br>.cpp文件预处理后得到.i文件经过编译器之后得到.s文件,经过汇编器之后得到.o文件通过链接器得到可执行程序.exe文件.  </p>
+</li>
 <li><p>预处理:</p>
 <ul>
 <li>其中以#开头的<font color="red">#include,#define,#ifdef,#other</font>等都属于预处理的范畴.</li>
@@ -245,38 +227,37 @@
 </ul>
 </li>
 </ul>
-<ol start="11">
-<li>#include&lt;&gt;和#include””有什么区别?</li>
-</ol>
+<p>11.#include&lt;&gt;和#include””有什么区别?</p>
 <p>答:&lt;&gt;从编译器指定的路径进行搜索,如果没有就直接报错,因此系统提供的头文件一般使用&lt;&gt;;<br>“”首先在程序当前目录搜多,然后再从编译器指定的路径搜索,所以系统文件的就没必要用””,否则会进行无用的搜索.</p>
-<ol start="12">
-<li><p>define宏定义<br>宏定义中的#可以将后面的宏参数进行完整的字符串替换如:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ABC(x) cout&lt;&lt;#x&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z1(x,y) cout&lt;&lt;x##y&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z2(x,y) cout&lt;&lt;#x###y&lt;&lt;endl;</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="type">int</span> x = <span class="number">1</span>,y = <span class="number">1</span>;</span><br><span class="line">	ABC(x);<span class="comment">//x</span></span><br><span class="line">	ABC(<span class="number">1</span>);<span class="comment">//1</span></span><br><span class="line">  Z1(x,y);<span class="comment">//报错</span></span><br><span class="line">  Z1(<span class="string">&quot;C&quot;</span>,<span class="string">&quot;++&quot;</span>);<span class="comment">//C++</span></span><br><span class="line">  Z2(x,y);<span class="comment">//xy</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>12.define宏定义<br>宏定义中的#可以将后面的宏参数进行完整的字符串替换如:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ABC(x) cout&lt;&lt;#x&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z1(x,y) cout&lt;&lt;x##y&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z2(x,y) cout&lt;&lt;#x###y&lt;&lt;endl;</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="type">int</span> x = <span class="number">1</span>,y = <span class="number">1</span>;</span><br><span class="line"> ABC(x);<span class="comment">//x</span></span><br><span class="line"> ABC(<span class="number">1</span>);<span class="comment">//1</span></span><br><span class="line">  Z1(x,y);<span class="comment">//报错</span></span><br><span class="line">  Z1(<span class="string">&quot;C&quot;</span>,<span class="string">&quot;++&quot;</span>);<span class="comment">//C++</span></span><br><span class="line">  Z2(x,y);<span class="comment">//xy</span></span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>总之就是#将后面的参数转换为字符串；##将前后的参数进行字符串连接，同时此时传入的值不能是变量，除非在在变量前面再加#。</p>
-</li>
-<li><p>简述assert断言的概念<br>答：主要用来进行程序的调试，他是一个带参数的宏，并非一个函数，可以在assert.h中找到其定义;assert()中的表达式为假表示检测失败,程序向标准错误流输出错误信息,同时调用abort()函数终止程序;频繁调用assert会影响程序性能,在调试结束后可以使用#define NDEBUG禁用assert宏.同时assert中的表达式尽量不要用&amp;&amp;,||这些,因为无法判断到底是哪个问题导致的错误,一半就是拆开写;同时注意不要再assert内部修改变量,因为assert仅存在与DEBUG版本,RELEASE版本会被忽略; </p>
-</li>
-<li><p>关于i++与++i</p>
+<p>13.简述assert断言的概念<br>答：主要用来进行程序的调试，他是一个带参数的宏，并非一个函数，可以在assert.h中找到其定义;assert()中的表达式为假表示检测失败,程序向标准错误流输出错误信息,同时调用abort()函数终止程序;频繁调用assert会影响程序性能,在调试结束后可以使用#define NDEBUG禁用assert宏.同时assert中的表达式尽量不要用&amp;&amp;,||这些,因为无法判断到底是哪个问题导致的错误,一半就是拆开写;同时注意不要再assert内部修改变量,因为assert仅存在与DEBUG版本,RELEASE版本会被忽略;</p>
+<p>14.关于i++与++i</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">10</span>,b=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> m=(i++)+(i++)+(i++);<span class="comment">//i=13,m=39没什么好争论的</span></span><br><span class="line"><span class="type">int</span> n=(++i)+(++i)+(++i);<span class="comment">//VC编译器中n=39,GCC编译器中n=37</span></span><br><span class="line"><span class="comment">//这是因为VC编译器中要等三次自增完成之后,才进行相加操作,而在GCC中只要有两个完整的操作数就会执行加法运算,自然也会进行自增操作所以是12+12+13=37</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>简述静态全局变量的概念<br>答:全局变量前加static,不能使用extern将静态变量导出,其作用域仅限于静态全局变量所在的文件内部.普通全局变量就可以使用extern关键字在别的文件中打开了.</p>
-</li>
-<li><p>简述内联函数和宏定义的区别<br>答:两者都可以节省频繁的函数调用过程中产生的时间和空间的开销,提高程序的执行效率.都是通过将函数调用替换为 完整的函数体.但是两者还是存在一些区别:</p>
-</li>
-</ol>
+
+<p>15.简述静态全局变量的概念<br>答:全局变量前加static,不能使用extern将静态变量导出,其作用域仅限于静态全局变量所在的文件内部.普通全局变量就可以使用extern关键字在别的文件中打开了.</p>
+<p>16.简述内联函数和宏定义的区别<br>答:两者都可以节省频繁的函数调用过程中产生的时间和空间的开销,提高程序的执行效率.都是通过将函数调用替换为 完整的函数体.但是两者还是存在一些区别:</p>
 <ul>
 <li>宏定义仅仅只是字符串的替换,内联函数是个函数,可以像普通函数一样调试.</li>
 <li>二者代码展开发生在不同的阶段,宏定义的展开发生在预处理阶段,内联函数的宅开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动类型转换.</li>
 <li>宏定义存在缺陷所以就有了内联函数.<ul>
-<li>宏的优势：<ol>
+<li><p>宏的优势：</p>
+<ol>
 <li>提高了程序的可读性，同时也方便进行修改；</li>
 <li>提高程序的运行效率：使用带参的宏定义既可完成函数调用的功能，又能避免函数的出栈与入栈操作，减少系统开销，提高运行效率；</li>
 <li>宏是由预处理器处理的，通过字符串操作可以完成很多编译器无法实现的功能。比如##连接符。</li>
 </ol>
 </li>
-<li>宏的缺点：<ol>
+<li><p>宏的缺点：</p>
+<ol>
 <li>由于是直接嵌入的，所以代码可能相对多一点；</li>
-<li>嵌套定义过多可能会影响程序的可读性，而且很容易出错；<br>关于出错:<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MUL(a,b) a*b</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> max(a,b) ...</span></span><br><span class="line"><span class="type">int</span> x=<span class="number">4</span>,y=<span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> a=MUL(x,y+<span class="number">3</span>);<span class="comment">//4*2+3=11与本意不符,可以通过加括号的形式改变</span></span><br><span class="line"><span class="type">int</span> b=max(x++,y);<span class="comment">//这样会导致x自增两次</span></span><br></pre></td></tr></table></figure></li>
+<li>嵌套定义过多可能会影响程序的可读性，而且很容易出错；<br>关于出错:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MUL(a,b) a*b</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> max(a,b) ...</span></span><br><span class="line"><span class="type">int</span> x=<span class="number">4</span>,y=<span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> a=MUL(x,y+<span class="number">3</span>);<span class="comment">//4*2+3=11与本意不符,可以通过加括号的形式改变</span></span><br><span class="line"><span class="type">int</span> b=max(x++,y);<span class="comment">//这样会导致x自增两次</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
 <li>对带参的宏而言，由于是直接替换，并不会检查参数是否合法，存在安全隐患。</li>
 </ol>
 </li>
@@ -299,9 +280,7 @@
 - 减少函数调用开销
 - 在函数声明时使用 &lt;font color=red&gt;× &lt;/font&gt;  
 </code></pre>
-<ol start="17">
-<li>关于sizeof</li>
-</ol>
+<p>17.关于sizeof</p>
 <ul>
 <li>这是一个单目运算符,而不是函数.</li>
 <li>操作数可以是类型名也可以是表达式</li>
