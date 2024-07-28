@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png">
 <meta property="article:published_time" content="2024-07-25T08:00:02.000Z">
-<meta property="article:modified_time" content="2024-07-26T09:28:44.261Z">
+<meta property="article:modified_time" content="2024-07-28T14:16:57.192Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png">
@@ -238,7 +238,7 @@
 </li>
 <li><p>预处理:</p>
 <ul>
-<li>其中以#开头的#include,#define,#ifdef,#other等都属于预处理的范畴.</li>
+<li>其中以#开头的<font color="red">#include,#define,#ifdef,#other</font>等都属于预处理的范畴.</li>
 <li>处理预定义的宏如__DATA__这种前后都是双下划线,</li>
 <li>处理注释:用一个空格代替连续的注释</li>
 <li>处理三元符号,并非所有键盘都支持c的所有字符,有些键盘就没有#,??&#x3D;就可以代替#,??&#x2F;代替.</li>
@@ -260,8 +260,63 @@
 </ol>
 <p>答:&lt;&gt;从编译器指定的路径进行搜索,如果没有就直接报错,因此系统提供的头文件一般使用&lt;&gt;;<br>“”首先在程序当前目录搜多,然后再从编译器指定的路径搜索,所以系统文件的就没必要用””,否则会进行无用的搜索.</p>
 <ol start="12">
-<li>define宏定义<br>宏定义中的#可以将后面的宏参数进行完整的字符串替换如:<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ABC(x) cout&lt;&lt;#x&lt;&lt;endl;</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">	ABC(x);</span><br><span class="line">	ABC(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>define宏定义<br>宏定义中的#可以将后面的宏参数进行完整的字符串替换如:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ABC(x) cout&lt;&lt;#x&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z1(x,y) cout&lt;&lt;x##y&lt;&lt;endl;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Z2(x,y) cout&lt;&lt;#x###y&lt;&lt;endl;</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="type">int</span> x = <span class="number">1</span>,y = <span class="number">1</span>;</span><br><span class="line">	ABC(x);<span class="comment">//x</span></span><br><span class="line">	ABC(<span class="number">1</span>);<span class="comment">//1</span></span><br><span class="line">  Z1(x,y);<span class="comment">//报错</span></span><br><span class="line">  Z1(<span class="string">&quot;C&quot;</span>,<span class="string">&quot;++&quot;</span>);<span class="comment">//C++</span></span><br><span class="line">  Z2(x,y);<span class="comment">//xy</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总之就是#将后面的参数转换为字符串；##将前后的参数进行字符串连接，同时此时传入的值不能是变量，除非在在变量前面再加#。</p>
+</li>
+<li><p>简述assert断言的概念<br>答：主要用来进行程序的调试，他是一个带参数的宏，并非一个函数，可以在assert.h中找到其定义;assert()中的表达式为假表示检测失败,程序向标准错误流输出错误信息,同时调用abort()函数终止程序;频繁调用assert会影响程序性能,在调试结束后可以使用#define NDEBUG禁用assert宏.同时assert中的表达式尽量不要用&amp;&amp;,||这些,因为无法判断到底是哪个问题导致的错误,一半就是拆开写;同时注意不要再assert内部修改变量,因为assert仅存在与DEBUG版本,RELEASE版本会被忽略; </p>
+</li>
+<li><p>关于i++与++i</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">10</span>,b=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> m=(i++)+(i++)+(i++);<span class="comment">//i=13,m=39没什么好争论的</span></span><br><span class="line"><span class="type">int</span> n=(++i)+(++i)+(++i);<span class="comment">//VC编译器中n=39,GCC编译器中n=37</span></span><br><span class="line"><span class="comment">//这是因为VC编译器中要等三次自增完成之后,才进行相加操作,而在GCC中只要有两个完整的操作数就会执行加法运算,自然也会进行自增操作所以是12+12+13=37</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>简述静态全局变量的概念<br>答:全局变量前加static,不能使用extern将静态变量导出,其作用域仅限于静态全局变量所在的文件内部.普通全局变量就可以使用extern关键字在别的文件中打开了.</p>
+</li>
+<li><p>简述内联函数和宏定义的区别<br>答:两者都可以节省频繁的函数调用过程中产生的时间和空间的开销,提高程序的执行效率.都是通过将函数调用替换为 完整的函数体.但是两者还是存在一些区别:</p>
+</li>
 </ol>
+<ul>
+<li>宏定义仅仅只是字符串的替换,内联函数是个函数,可以像普通函数一样调试.</li>
+<li>二者代码展开发生在不同的阶段,宏定义的展开发生在预处理阶段,内联函数的宅开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动类型转换.</li>
+<li>宏定义存在缺陷所以就有了内联函数.<ul>
+<li>宏的优势：<ol>
+<li>提高了程序的可读性，同时也方便进行修改；</li>
+<li>提高程序的运行效率：使用带参的宏定义既可完成函数调用的功能，又能避免函数的出栈与入栈操作，减少系统开销，提高运行效率；</li>
+<li>宏是由预处理器处理的，通过字符串操作可以完成很多编译器无法实现的功能。比如##连接符。</li>
+</ol>
+</li>
+<li>宏的缺点：<ol>
+<li>由于是直接嵌入的，所以代码可能相对多一点；</li>
+<li>嵌套定义过多可能会影响程序的可读性，而且很容易出错；<br>关于出错:<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MUL(a,b) a*b</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> max(a,b) ...</span></span><br><span class="line"><span class="type">int</span> x=<span class="number">4</span>,y=<span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> a=MUL(x,y+<span class="number">3</span>);<span class="comment">//4*2+3=11与本意不符,可以通过加括号的形式改变</span></span><br><span class="line"><span class="type">int</span> b=max(x++,y);<span class="comment">//这样会导致x自增两次</span></span><br></pre></td></tr></table></figure></li>
+<li>对带参的宏而言，由于是直接替换，并不会检查参数是否合法，存在安全隐患。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>补充：预编译语句仅仅是简单的值替换，缺乏类型的检测机制。这样预处理语句就不能享受C++严格类型检查的好处，从而可能引发一系列错误的隐患。</p>
+<ul>
+<li>内联函数作为类的成员可以访问类的所有成员,宏定义则不行.</li>
+<li>函数层面上,内联函数完全可以替代宏定义,尽量使用内联函数.</li>
+<li>那么内联函数和普通函数之间又有什么区别呢?<br>调用函数比求解等价表达式要慢得多。在大多数的机器上，调用函数都要做很多工作：调用前要先保存寄存器，并在返回时恢复，复制实参，程序还必须转向一个新位置执行,内敛函数最后本质上是一个展开,比如求两个数中较大的那个,普通函数会有一系列其余操作,内联函数则将a &gt; b ? a : b;(函数实现)直接替代内联函数.极大减少了工作,其实就是改进版本的宏定义.</li>
+</ul>
+<p><font color="red">注:只有当函数只有 10 行甚至更少时才将其定义为内联函数</font><br>定义: 当函数被声明为内联函数之后, 编译器会将其内联展开, 而不是按通常的函数调用机制进行调用.<br>优点: 当函数体比较小的时候, 内联该函数可以令目标代码更加高效. 对于存取函数以及其它函数体比较短, 性能关键的函数, 鼓励使用内联.<br>缺点: 滥用内联将导致程序变慢. 内联可能使目标代码量或增或减, 这取决于内联函数的大小. 内联非常短小的存取函数通常会减少代码大小, 但内联一个相当大的函数将戏剧性的增加代码大小. 如果内联函数非常大就会造成代码膨胀,因为此时不再是函数调用了.所以一定要确保内联函数的短小.</p>
+<p><font color="red">注:内联函数一定要和函数定义在一起.</font></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>;   </span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>   <span class="comment">// inline 与函数定义体放在一起</span></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<pre><code>关于内联函数的一些说法:
+- 可以重载
+- 构造函数可以是内联函数
+- 减少函数调用开销
+- 在函数声明时使用 &lt;font color=red&gt;× &lt;/font&gt;  
+</code></pre>
+<ol start="17">
+<li>关于sizeof</li>
+</ol>
+<ul>
+<li>这是一个单目运算符,而不是函数.</li>
+<li>操作数可以是类型名也可以是表达式</li>
+<li>如果操作数是一个数组名,计算的是整个数组所占的空间,注意是数组名,而不是地址,如通过函数传递的尽管是数组名,但最后到函数内的sizeof的是一个地址,所以计算的是地址的占用空间.<br>strlen用来计算字符串长度,结束符不会被计算在内.</li>
+</ul>
 
       
 
