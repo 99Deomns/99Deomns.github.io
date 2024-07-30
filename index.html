@@ -178,10 +178,26 @@
 <p>5.程序中的内存分配方法<br>答：1、连续分配方式；2、基本分页存储管理方式；3、基本分段存储管理方式 ；4、段页式存储管理方式；</p>
 <p>6.malloc、calloc、realloc及new的区别</p>
 <ul>
-<li>申请的内存所在位置不同。new操作符从自由存储区上为对象动态分配内存空间，malloc函数从堆上动态分配内存。</li>
-<li>返回类型安全性不同。new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。malloc内存分配成功则是返回void <em>，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</li>
-<li>内存分配失败时的返回值不同。new内存分配失败时，会抛出bac_alloc异常，它不会返回NULL。malloc分配内存失败时返回NULL。</li>
-<li>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根S据类型信息自行计算。malloc则需要显式地指出所需内存的尺寸。</li>
+<li><p>申请的内存所在位置不同。new操作符从自由存储区上为对象动态分配内存空间，malloc函数从堆上动态分配内存。</p>
+</li>
+<li><p>返回类型安全性不同。new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。malloc内存分配成功则是返回void <em>，需要通过强制类型转换将void</em>指针转换成我们需要的类型。<font color="red">值得注意的是指针移动后,free并不会自动找到首地址,所以不要随便移动.free要接收的也是首地址</font></p>
+</li>
+<li><p>内存分配失败时的返回值不同。new内存分配失败时，会抛出bac_alloc异常，它不会返回NULL。malloc分配内存失败时返回NULL。</p>
+</li>
+<li><p>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根S据类型信息自行计算。malloc则需要显式地指出所需内存的尺寸。</p>
+</li>
+<li><p>使用malloc函数动态申请空间.<font color="red">动态分配的空间来自堆空间,指针指向一个堆空间的地址,指针本身作为局部变量存储在栈空间中.</font>使用malloc时,首先扫描<font color="red">可用空间链表</font>,直至发现第一个大于申请空间的可用空间,将这段空间的首地址返回给指针.</p>
+</li>
+<li><p>可用空间链表,记录堆中每一段可用空间的起始位置和这段空间的大小,是malloc寻找可用空间的依据.使用malloc和free都会更新空间链表.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p;</span><br><span class="line">p=(<span class="type">int</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>)*<span class="number">10</span>);<span class="comment">//以 字节为单位</span></span><br><span class="line"><span class="built_in">free</span>(p);<span class="comment">//必须通过free释放</span></span><br><span class="line">p=<span class="literal">NULL</span>;<span class="comment">//将指针置空,否则指针仍然指向原地址,但是无效</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>C++中引入new和delete,不仅开辟空间还完成了初始化的工作,delete不仅释放了空间还调用了析构函数.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p=new <span class="type">int</span>(<span class="number">10</span>);<span class="comment">//初始化</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> *p1 = new <span class="type">int</span>[<span class="number">3</span>]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;<span class="comment">//开辟数组空间并初始化</span></span><br><span class="line">delete(p);</span><br><span class="line">p=<span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">Test *p=new Test();/类的初始化</span><br><span class="line">delete p;</span><br><span class="line">p=<span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>delete和delete[]的区别：当new[]中的数组类型是自定义类型时,只能通过delete[]释放空间.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *i=new <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line">delete i;</span><br><span class="line">delete[] i;<span class="comment">//两种方式都可以正确释放整个数组空间,但是也仅当数组类型是基础类型时</span></span><br><span class="line"></span><br><span class="line">Test *a=new Test[<span class="number">5</span>];</span><br><span class="line">delete a;<span class="comment">//最后析构函数只会调用1次</span></span><br></pre></td></tr></table></figure>
+<p>总之new[]和delete[]对应.</p>
+</li>
 </ul>
 <p>7.Socket通信流程</p>
 <ul>
@@ -195,12 +211,6 @@
 <p>8.为什么局部变量没有赋值时，每次初始化的结果不一样？</p>
 <ul>
 <li>定义局部变量，其实就是在栈中通过移动栈指针来给程序提供一个内存空间和这个局部变量名绑定。因为这段内存空间在栈上，而栈内存是反复使用的，上次用完没清零的，所以说使用栈来实现的局部变量定义时如果不显式初始化，值就是脏的，是不确定的。</li>
-</ul>
-<p>9.c语言volatile作用和用法</p>
-<ul>
-<li>在C语言中，volatile关键字可以用来提醒编译器它后面所定义的变量随时有可能改变，因此编译后的程序每次需要存储或读取这个变量的时候，都会直接从变量地址中读取数据。如果没有volatile关键字，则编译器可能优化读取和存储，可能暂时使用寄存器中的值，如果这个变量由别的程序更新了的话，将出现不一致的现象。</li>
-<li>告诉编译器不要优化volatile修饰的变量；</li>
-<li>用途：多进程共享变量、硬件寄存器（状态寄存器）</li>
 </ul>
 <p>10.<font color="red">编译</font>有几个阶段，每个阶段做什么事情？GCC呢？</p>
 <ul>
@@ -280,12 +290,200 @@
 - 减少函数调用开销
 - 在函数声明时使用 &lt;font color=red&gt;× &lt;/font&gt;  
 </code></pre>
-<p>17.关于sizeof</p>
+<p>19.计算二进制中1的个数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(count=<span class="number">0</span>;num!=<span class="number">0</span>;num&gt;&gt;<span class="number">1</span>)&#123;</span><br><span class="line">  <span class="keyword">if</span>(num&amp;<span class="number">1</span>) count++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//两种方法均可</span></span><br><span class="line"><span class="keyword">for</span>(count=<span class="number">0</span>;num!=<span class="number">0</span>;count++)&#123;</span><br><span class="line">  num&amp;=num<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="20">
+<li>如何对二进制的某一位进行取反?<font color="red">与1异或就是取反,反之与0异或就是本身</font><br>答:记为第n位,数字为num,res&#x3D;num^(1&lt;&lt;n);<br>例1:将某个二进制数的倒数第2位的前4位取反:  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> num,n=<span class="number">4</span>,m=<span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> r=(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>;</span><br><span class="line">r=r&lt;&lt;m;</span><br><span class="line"><span class="type">int</span> res=num^r;</span><br></pre></td></tr></table></figure>
+例2:一个数组中只有一个数字只出现过一次,其余数字都出现过两次,找到这个数:全部异或就可以了.<br>例3:一个数组中有3个只出现一次的,找到其中任意一个都可以:只需要按照某种方式分类,确保一边是一个,另外一边是两个,这样另一边异或不为0(因为有两个不一样的数字),且这边是奇数个(成对出现的数字+一个),就能找到了.  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getsingle</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; nums)</span> &#123;</span><br><span class="line">	<span class="type">int</span> res1=<span class="number">0</span>, res2=<span class="number">0</span>, num1=<span class="number">0</span>, num2=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; nums.size(); j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (nums[j] &amp; (<span class="number">1</span> &lt;&lt; i)) &#123;</span><br><span class="line">				res1 ^= nums[j];</span><br><span class="line">				num1++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				res2 ^= nums[j];</span><br><span class="line">				num2++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (num1 % <span class="number">2</span> &amp;&amp; res2 != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> res1;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (num2 % <span class="number">2</span> &amp;&amp; res1 != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> res2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="C语言八股"><a href="#C语言八股" class="headerlink" title="C语言八股"></a>C语言八股</h1><h2 id="1-运算符优先级"><a href="#1-运算符优先级" class="headerlink" title="1 运算符优先级"></a>1 运算符优先级</h2><p>答:成员运算符&gt;单目运算符(那种++,–,-10中的-,&amp;取址,按位取反…)&gt;&#x3D;算数运算符(+-&#x2F;<em>)&gt;移位&gt;关系(&gt;,&lt;,&#x3D;&#x3D;)&gt;逻辑(&amp;&amp;,||)&gt;赋值(各种赋值&#x3D;,</em>&#x3D;,+&#x3D;…)</p>
+<h2 id="2-原码、反码、补码"><a href="#2-原码、反码、补码" class="headerlink" title="2 原码、反码、补码"></a>2 原码、反码、补码</h2><p>原码就是二进制数;<br>正数的反码还是正数,负数的反码除了符号位全部取反,-10的原码为1000 1010,反码1111 0101;<br>补码:正数的补码不变,负数的补码为反码+1,-10的反码1111 0101,补码1111 0110,最终就是补码+10&#x3D;0;</p>
+<h2 id="3-关键字"><a href="#3-关键字" class="headerlink" title="3 关键字"></a>3 关键字</h2><h3 id="c语言volatile作用和用法"><a href="#c语言volatile作用和用法" class="headerlink" title="c语言volatile作用和用法"></a>c语言volatile作用和用法</h3><ul>
+<li>作用:用于修饰变量和指针，告诉编译器该变量是容易发生变化的，不能对该变量进行优化，每次取值必须从内存中取值而不是直接去取之前在寄存器中的值;<br>-<font color="red"> 注意： 首先要清楚在 c 语言中，变量是存储在内存中的，而编译器会将对内存的多次读取操作替换为单次读取操作，以减少对内存的访问次数。</font>比如下列代码：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">int</span> a = <span class="number">20</span>, b, c;</span><br><span class="line">b = a;<span class="comment">//先从a的内存中取值存放到寄存器，再把寄存器的值给存到b的内存</span></span><br><span class="line">c = a;<span class="comment">//把寄存器的值给存到c的内存,不再执行从 a 的内存中取值，而是直接从寄存器中取值 如果这段时间内 a 发生了变化（比如中断触发、多线程共享变量修改了a的值），那么 c 就不能得到最新的值</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 volatile 告诉编译器，不要对变量 a 进行优化，每次都是从内存中取出 a 的值;  </p>
 <ul>
+<li>使用场景<ul>
+<li>多线程使用共享变量：因为多线程是多核操作，同时进行</li>
+<li>中断：中断程序会修改其他程序中使用的变量</li>
+<li>硬件寄存器：因为寄存器随时会被修改，好比AD转换的寄存器，随时会因为电压变化而修改</li>
+<li>外部任务会修改变量</li>
+</ul>
+</li>
+</ul>
+<h1 id="4-struct结构体"><a href="#4-struct结构体" class="headerlink" title="4 struct结构体"></a>4 struct结构体</h1><h2 id="struct-与-typedef-struct-的区别"><a href="#struct-与-typedef-struct-的区别" class="headerlink" title="struct 与 typedef struct 的区别"></a>struct 与 typedef struct 的区别</h2><p>答:typedef 是类型定义的意思，用在结构体中是给结构体取别名</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	<span class="type">int</span> sex;</span><br><span class="line">&#125; stu; <span class="comment">// stu 即结构体别名</span></span><br><span class="line"></span><br><span class="line">stu Zhangsan = &#123;<span class="string">&quot;zhangsan&quot;</span>, <span class="number">18</span>, <span class="number">1</span>&#125;; <span class="comment">// 使用typedef struct可以直接使用结构体别名创建新的结构体成员</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">student</span> <span class="title">wang</span>=</span>&#123;...&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结构体大小计算"><a href="#结构体大小计算" class="headerlink" title="结构体大小计算"></a>结构体大小计算</h2><ul>
+<li>对于不同的操作系统,个别数据类型的大小有区别，比如 long 在 32 位操作系统中为 4 字节，在 64 位中就是 8 字节;</li>
+<li>计算大小时需要考虑字节对齐问题：<ul>
+<li>结构体成员的每个变量的首地址，必须是成员变量中“最大基本数据类型成员所占字节数”的整数倍（对齐）</li>
+<li>每个变量类型的偏移量必须是该变量类型的整数倍（对齐）</li>
+</ul>
+</li>
+<li>数据对齐,数据对齐是指在处理结构体中的函数时,<font color="red">成员在内存中的起始地址必须是该成员类型所占字节数的整数倍.如int型开始位置只能是4n.同时如果是数组也是类型,如int a[10],起始位置仍然是4的倍数,而不需要40的倍数</font>,还有一个规则就是最终sizeof结构体时计算结果必须是占用空间最多的类型的整数倍,详细见s2<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s1</span>&#123;</span><span class="comment">//0-15,一共占16个字节</span></span><br><span class="line">  <span class="type">char</span> a;<span class="comment">//一个字节,0-1</span></span><br><span class="line">  <span class="type">short</span> b;<span class="comment">//2个字节,只能从2开始,所以前面空了一个字节,2-3</span></span><br><span class="line">  <span class="type">int</span> c;<span class="comment">//4个字节,4-7</span></span><br><span class="line">  <span class="type">double</span> d;<span class="comment">//8个字节,8-15</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s2</span>&#123;</span><span class="comment">//0-18,一共19个字节,但是还有上面的规则,一定要是double的整数倍,所以最后是0-25,24个字节</span></span><br><span class="line">  <span class="type">int</span> a;<span class="comment">//0-3</span></span><br><span class="line">  <span class="type">double</span> b;<span class="comment">//8-15</span></span><br><span class="line">  <span class="type">short</span> c;<span class="comment">//16-17</span></span><br><span class="line">  <span class="type">char</span> d;<span class="comment">//18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s3</span>&#123;</span><span class="comment">//4个字节</span></span><br><span class="line">  <span class="type">char</span> a[<span class="number">4</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s4</span>&#123;</span><span class="comment">//5个字节</span></span><br><span class="line">  <span class="type">char</span> a[<span class="number">4</span>];</span><br><span class="line">  <span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s5</span>&#123;</span><span class="comment">//5个字节</span></span><br><span class="line">  s3 a;</span><br><span class="line">  <span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="union联合体"><a href="#union联合体" class="headerlink" title="union联合体"></a>union联合体</h2><ul>
+<li>union的使用:用法和 struct 差不多，<font color="orange">区别是同一个 union 成员的不同的成员变量共享同一块内存空间（起始地址相同）</font>，同一时刻只能存在一个成员变量;</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">Age</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> zhangsan;<span class="comment">//成员变量张三</span></span><br><span class="line">	<span class="type">int</span> lisi;<span class="comment">//成员变量李四</span></span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="comment">//union Age age = &#123;18, 20&#125;;//同一时刻只能存在一个成员变量，所以这里运行会报错</span></span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">Age</span> <span class="title">age</span>;</span></span><br><span class="line">	age.zhangsan = <span class="number">18</span>;</span><br><span class="line">	age.lisi = <span class="number">22</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d\n&quot;</span>, age.zhangsan, age.lisi);	<span class="comment">//运行结果 22, 22，说明后赋的值会将先赋的值覆盖</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%p, %p\n&quot;</span>, &amp;age.zhangsan, &amp;age.lisi);<span class="comment">//获取成员变量的地址值，结果0x7ffc6b832f5c, 0x7ffc6b832f5c，说明起始地址相同</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">union</span> Age));<span class="comment">//获取联合体大小，结果为4，说明该联合体只有一个int类型大小</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>与struct 结构体的区别:</p>
+<ul>
+<li>对于联合体同一成员的所有成员变量都共享一块内存，而结构体是将所有成员变量内存的叠加，需要考虑字节对齐问题。</li>
+<li>对于联合体来说，只要你修改了里面的成员变量，其他的成员变量也会被修改，而结构体间的成员变量是互不影响的。</li>
+</ul>
+</li>
+<li><p>联合体一般用来做什么:</p>
+<ul>
+<li>获取数据的高低位,或者检查大小端<ul>
+<li>大端存储模式：高字节存放在低位地址，低字节存放在高位地址</li>
+<li>小端存储模式：低字节存放在低位地址，高字节存放在高位地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">GetByte</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">short</span> twoByte; <span class="comment">//short 类型占 2 字节</span></span><br><span class="line">	<span class="type">char</span> myByte[<span class="number">2</span>];<span class="comment">//myByte[0] 和 myByte[1] 分别占用 1 字节</span></span><br><span class="line">&#125;getbit; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	getbit.twoByte = <span class="number">0x1122</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x, %x\n&quot;</span>, getbit.myByte[<span class="number">0</span>], getbit.myByte[<span class="number">1</span>]);	<span class="comment">//运行结果 22, 11；说明本计算机是低字节存放在低位，高字节存放在高位，为小端存储</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>节省内存空间</li>
+</ul>
+<h2 id="emum"><a href="#emum" class="headerlink" title="emum"></a>emum</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> a,b=<span class="number">5</span>, c, d=<span class="number">4</span>, e &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d, %d, %d, %d&quot;</span>,a, b, c, d, e);</span><br><span class="line">	<span class="comment">//输出结果0, 5, 6, 4, 5,值可以重复,没有赋值就是前一个值+1,第一个没有赋值就是0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><h3 id="typedef-和-define-的区别"><a href="#typedef-和-define-的区别" class="headerlink" title="typedef 和 #define 的区别"></a>typedef 和 #define 的区别</h3><ul>
+<li>#define 是 c 语言中定义的语法，是预处理指令，在预处理时进行简单而机械的字符串替换，不作正确性检查，只有在编译已被展开的源程序时才会发现可能的错误并报错。可作用于类型定义、常量、变量等。</li>
+<li>typedef 是关键字，在编译时处理，有类型检查功能。它在自己的作用域内给一个已存在的类型一个别名，但不能在一个函数定义里面使用 typedef。用 typedef 定义数组、指针、结构等类型能够使程序书写简单，也能使意义明确，增强可读性。可作用于类型定义上。</li>
+<li>define常量生命周期止于编译器,不分配内存空间,存在于程序的代码段.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> myptr int* p, <span class="comment">//不加,会报错,因为是字符串替换</span></span></span><br><span class="line">myptr a,b;<span class="comment">//a 是 p 的指针变量，b 是 int 变量</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span>* myptr;<span class="comment">//用myptr代替int *;</span></span><br><span class="line">myptr a,b;</span><br></pre></td></tr></table></figure>
+
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><ul>
+<li>const定义变量表示该变量是个常量,不允许修改,</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">char</span> b[a];<span class="comment">//不管是否赋值,都会报错,因为仍然是一个变量,但是在c++中就都不会报错了</span></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修饰函数参数,以免被修改,比较多的是c++中的传入数组,不让修改吧</li>
+<li>修饰函数返回值,赋值返回值的变量也需要被const修饰;</li>
+<li>const修饰指针</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span>* a=<span class="number">100</span>;<span class="comment">//不能修改*a的值,常量指针,指针可以改变,指向的值不能改变</span></span><br><span class="line"> <span class="type">int</span> <span class="type">const</span>* a=<span class="number">100</span>;<span class="comment">//与上式等价</span></span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> b;<span class="comment">//不能修改地址b的值,指针常量,指针指向的值可以改变,不能指向其他地址</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> c;<span class="comment">//不能修改地址c的值和*c的值,指向常量的常指针</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="red">常量指针,常量在前,值是常量;指针常量,指针在前,指针是常量;</font></p>
+<ul>
+<li>const修饰的变量的存放位置<ul>
+<li>对于const修饰的局部变量：存放在栈中，代码结束就会释放，在C语言中可以通过指针修改里面的值</li>
+<li>对于const修饰的全局变量（已初始化的）存放在只读数据段，不可以通过指针修改里面的值，未初始化的存放在.bss</li>
+</ul>
+</li>
+</ul>
+<h2 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h2><ul>
+<li><p>在文件 a.c 定义变量并声明全局变量：int a &#x3D; 10; 这时会建立存储空间;在文件 b.c 对变量 a 进行声明，注意声明时不能初始化。</p>
+</li>
+<li><p>全局变量最好不要写在头文件上,因为很可能会被多次引用从而报错.</p>
+</li>
+<li><p>extern 的作用主要是告诉编译器我在其他文件定义了个全局变量，并且已经分配了空间，不需要再为该变量申请空间</p>
+</li>
+<li><p>extern声明外部函数,和声明外部变量的方式一样.</p>
+</li>
+<li><p>extern C在C++中调用c语言代码,告诉编译器这部分代码由c进行编译.</p>
+</li>
+</ul>
+<h2 id="register"><a href="#register" class="headerlink" title="register"></a>register</h2><p>register 只能用于修饰变量（且不能是浮点数），被修饰的变量会被存储在 CPU 内部的寄存器中，而不是内存中。<br>寄存器有两个特点，一个是运算速度快，一个是不能取地址。被 register 修饰的变量无法取地址，取地址会编译报错.</p>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><h3 id="修饰变量"><a href="#修饰变量" class="headerlink" title="修饰变量"></a>修饰变量</h3><ul>
+<li>静态全局变量:作用域在当前文件中,其余文件无法访问,程序运行时初始化,且仅初始化1次.  </li>
+<li>静态局部变量:作用域仅在当前函数中,函数外部无法访问,函数被调用时初始化,仅初始化1次,生命周期不会随函数的结束而结束,会持续到程序结束.</li>
+<li>静态局部变量和静态全局变量的区别:<br>答:作用域不同.</li>
+<li>普通全局变量和静态全局变量的区别:<br>答:作用域不同,静态全局变量作用域仅为当前文件.</li>
+</ul>
+<h3 id="修饰函数"><a href="#修饰函数" class="headerlink" title="修饰函数"></a>修饰函数</h3><p>静态函数,作用域仅为当前文件,在其他文件可以使用同名的静态函数.</p>
+<h2 id="switch-case"><a href="#switch-case" class="headerlink" title="switch case"></a>switch case</h2><ul>
+<li>switch里面不能是浮点数、double，可以是表达式，但是结果不能是浮点数或double</li>
+<li>要注意 case 语句后面是否有break，如果没有，就会从找到的case语句一直执行到停止</li>
+<li>case不能是 “abcdef” 这样的字符串，但是可以是 ‘a’ 这样的单字符，因为字符最终也是整数</li>
+</ul>
+<h2 id="关于sizeof"><a href="#关于sizeof" class="headerlink" title="关于sizeof"></a>关于sizeof</h2><ul>
 <li>这是一个单目运算符,而不是函数.</li>
 <li>操作数可以是类型名也可以是表达式</li>
-<li>如果操作数是一个数组名,计算的是整个数组所占的空间,注意是数组名,而不是地址,如通过函数传递的尽管是数组名,但最后到函数内的sizeof的是一个地址,所以计算的是地址的占用空间.<br>strlen用来计算字符串长度,结束符不会被计算在内.</li>
+<li>如果操作数是一个数组名,计算的是整个数组所占的空间,注意是数组名,而不是地址,如通过函数传递的尽管是数组名,但最后到函数内的sizeof的是一个地址,所以计算的是地址的占用空间.<br>strlen用来计算字符串长度,结束符不会被计算在内,但是sizeof会计算\0的空间,因为结束符也占用了空间.</li>
 </ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> c[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(c)); <span class="comment">//5</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(c)); <span class="comment">//3</span></span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> i[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(i)); <span class="comment">//20</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//2</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//4,显示出来是(int)0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//报错空指针</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch[]  = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="type">char</span> str[<span class="number">10</span>] = &#123;<span class="string">&#x27;h&#x27;</span>,<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;o&#x27;</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(ch));<span class="comment">//6</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(ch));<span class="comment">//5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(str));<span class="comment">//10</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(str));<span class="comment">//5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="局部变量和全局变量可以重名-局部变量可以屏蔽全局"><a href="#局部变量和全局变量可以重名-局部变量可以屏蔽全局" class="headerlink" title="局部变量和全局变量可以重名,局部变量可以屏蔽全局."></a>局部变量和全局变量可以重名,局部变量可以屏蔽全局.</h2><h2 id="数组指针与指针数组"><a href="#数组指针与指针数组" class="headerlink" title="数组指针与指针数组"></a>数组指针与指针数组</h2><ul>
+<li>数组指针:指向数组的指针,重点在指针</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> b[<span class="number">12</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;;</span><br><span class="line"><span class="type">int</span>(*p)[<span class="number">4</span>];<span class="comment">//声明了一个指针,该指针指向有4个int型元素的数组</span></span><br><span class="line">p=b;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;**(++p);<span class="comment">//一次自增向后移动4个int,此时p指向&#123;4,5,6,7&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指针数组:重点在数组,数组的元素是指针.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"><span class="type">int</span>* p[<span class="number">4</span>];</span><br><span class="line">p[<span class="number">0</span>]=&amp;a[<span class="number">0</span>];</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="指针函数与函数指针"><a href="#指针函数与函数指针" class="headerlink" title="指针函数与函数指针"></a>指针函数与函数指针</h2><ul>
+<li>如果在程序中定义了一个函数，那么在编译时系统就会为这个函数代码分配一段存储空间，这段存储空间的首地址称为这个函数的地址而且函数名表示的就是这个地址既然是地址我们就可以定义一个指针变量来存放，这个指针变量就叫作函数指针变量，简称函数指针.指向函数的指针没有++或–的操作.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> (*p)(<span class="type">int</span>,<span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指针函数就是返回值为指针的函数</li>
+</ul>
+<h2 id="数组和指针的区别与联系"><a href="#数组和指针的区别与联系" class="headerlink" title="数组和指针的区别与联系:"></a>数组和指针的区别与联系:</h2><ul>
+<li>存储方式:数组通常存储在静态存储区或栈上；指针可以随时随地地指向任意类型的内存块; 数组在内存中是连续存放的，开辟一块连续的内存空间数组是根据数组的下标进行访问的;指针很灵活，它可以指向任意类型的数据指针的类型说明了它所指向地址空间的内存;</li>
+<li>在32位平台下，无论指针的类型是什么，sizeof（指针名）都是4，在64位平台下，无论指针的类型是什么，sizeof（指针名）都是8;</li>
+<li>野指针:<ul>
+<li>野指针是指向不可用内存的指针，当指针被创建，指针不可能自动指向NULL，这时，默认值是随机的，此时的指针成为野指针</li>
+<li>当指针被free或delete释放掉时，如果没有把指针设置为NULL，则会产生野指针，因为释放掉的仅仅是指针指向的内存，并没有把指针本身释放掉</li>
+<li>第三个造成野指针的原因是指针操作超越了变量的作用范围</li>
+</ul>
+</li>
+<li>怎么避免?<ul>
+<li>初始化</li>
+<li>释放后,赋值NULL;</li>
+</ul>
+</li>
+<li>malloc之后需要注意:<ul>
+<li>检查是否分配成功,看返回值;</li>
+<li>清空内存数据,以免有垃圾值.</li>
+</ul>
+</li>
+<li>this指针<ul>
+<li>本质上是成员函数的形参,指向类的某个实例</li>
+<li>指向当前对象,可以访问当前对象的所有成员变量</li>
+<li>const指针</li>
+<li>只有创建了指针,this指针才有意义</li>
+<li>static静态成员函数不能使用this指针,因为静态成员函数属于类,而不属于某个对象,所以this静态成员函数没有this指针.</li>
+<li>this在成员函数的开始执行前构造的，在成员函数的执行结束后清除至于如何清除的，由编译器实现，程序员不关心this是通过函数参数的首参数来传递的;</li>
+</ul>
+</li>
+</ul>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="内存分配方式"><a href="#内存分配方式" class="headerlink" title="内存分配方式"></a>内存分配方式</h3><ul>
+<li>静态存储区,如全局变量,静态变量</li>
+<li>栈上分配</li>
+<li>堆上分配</li>
+</ul>
+<h3 id="栈的作用"><a href="#栈的作用" class="headerlink" title="栈的作用"></a>栈的作用</h3><ul>
+<li>存储临时变量,临时变量包括函数参数和函数内部定义的临时变量函数调用中和函数调用相关的函数返回地址，函数中的临时变量，寄存器等均保存在栈中，函数调动返回后从栈中恢复寄存器和临时变量等函数运行场景;</li>
+<li>多线程编程的基础是栈，栈是多线程编程的基石;操作系统最基本的功能是支持多线程编程，支持中断和异常处理，每个线程都有专属的栈，中断和异常处理也具有专属的栈，栈是操作系统多线程管理的基石;</li>
+</ul>
+<h3 id="C-内存管理"><a href="#C-内存管理" class="headerlink" title="C++内存管理"></a>C++内存管理</h3><p>在C++中，虚拟内存分为代码段、数据段、BSS段、堆区、文件映射区以及栈区六部分;</p>
+<ul>
+<li>代码段：包括只读存储区和文本区，其中只读存储区存储字符串常量，文本区存储程序的机器代码</li>
+<li>数据段：存储程序中已初始化的全局变量和静态变量</li>
+<li>BSS段：存储未初始化的全局变量和静态变量（局部+全局），以及所有被初始化为0的全局变量和静态变量</li>
+<li>堆区：调用new&#x2F;malloc函数时在堆区动态分配内存，同时需要调用delete&#x2F;free来手动释放申请的内存</li>
+<li>映射区:存储动态链接库以及调用mmap函数进行的文件映射</li>
+<li>栈：使用栈空间存储函数的返回地址、参数、局部变量、返回值</li>
+</ul>
+<h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><p>简单地说就是申请了一块内存空间，使用完毕后没有释放掉,它的一般表现方式是程序运行时间越长，占用内存越多，最终用尽全部内存，整个系统崩溃由程序申请的一块内存，且没有任何一个指针指向它，那么这块内存就泄露了;</p>
 
       
 
