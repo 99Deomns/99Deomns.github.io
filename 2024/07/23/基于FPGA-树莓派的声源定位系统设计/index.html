@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png">
 <meta property="og:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/6.png">
 <meta property="article:published_time" content="2024-07-23T02:41:28.000Z">
-<meta property="article:modified_time" content="2024-07-24T12:33:02.552Z">
+<meta property="article:modified_time" content="2024-07-31T03:03:00.451Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png">
@@ -225,6 +225,7 @@
 <h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2><h3 id="udp助手"><a href="#udp助手" class="headerlink" title="udp助手"></a>udp助手</h3><p>这个其实就是一些qt自带的库函数，首先是绑定自身的port和ip，然后分别有函数writeDatagram、readDatagram对数据进行发送与接收。主要是接收，按照指定顺序与要求接收就可以了；然后就是一些细节上的东西，如接收要十六进制接收，否则会乱码，同时还要能够唤起另外一个声源定位程序，接收数据时，最好有显示接收了多少字节。。。</p>
 <h3 id="声源定位软件"><a href="#声源定位软件" class="headerlink" title="声源定位软件"></a>声源定位软件</h3><p>写了两个版本的，分别用C++和python，使用pyqt写更加简便。按照matlab仿真的按顺序写下就好了。</p>
 <p>然后就是些原理性的东西。。。</p>
+<p>首先是，整体的一个设计是基于远场的声源定位，然后采集到的数据包含了噪声，传统的波束形成算法对于每个麦克风都是一视同仁的，然后由于每个麦克风相对于基准都有特定的延迟，然后通过抵消这个延迟就可以得到最大的功率，而自适应波束形成通过自适应的调整对各个阵元的加权系数，来更好的减少噪声的影响，主要是保证声源的基础上，尽可能地减少整体的功率，这样最后就得到了加权系数，从而计算出实际功率，然后根据公式进行谱峰搜索，找到谱峰最低点，此时就代表的声源的波达角度。</p>
 
       
 
