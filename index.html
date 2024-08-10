@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 21
+			总文章数 23
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leecode-图论" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/">leecode-图论</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/" class="archive-article-date">
+  	<time datetime="2024-08-04T05:30:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-04</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="图论"><a href="#图论" class="headerlink" title="图论"></a><center>图论</center></h1><h2 id="图的种类"><a href="#图的种类" class="headerlink" title="图的种类"></a>图的种类</h2><ol>
+<li>有向图</li>
+<li>无向图</li>
+<li>加权有向图<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/1.png"></li>
+<li>加权无向图</li>
+</ol>
+<h2 id="度"><a href="#度" class="headerlink" title="度"></a>度</h2><p>无向图中有几条边连接该节点，该节点就有几度。</p>
+<p>在有向图中，有出度和入度，出度是从该节点出发；<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/2.png"></p>
+<h2 id="连通性"><a href="#连通性" class="headerlink" title="连通性"></a>连通性</h2><p>表示节点的连通情况。在无向图中，任何两个节点都可以到达，称为连通图。<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/3.png"><br>反之称为无向图：<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/4.png"></p>
+<h3 id="强连通图"><a href="#强连通图" class="headerlink" title="强连通图"></a>强连通图</h3><p>任意两个节点可以互相到达，下图就不行。<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/5.png"></p>
+<h3 id="连通分量"><a href="#连通分量" class="headerlink" title="连通分量"></a>连通分量</h3><p>下图中，125组成的子图是一个连通分量，该子图中所有节点可以互相到达；但是34构成的子图就不是连通分量了，必须是346构成的子图才行。<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/6.png"></p>
+<h3 id="强连通分量"><a href="#强连通分量" class="headerlink" title="强连通分量"></a>强连通分量</h3><p>下图中，12345构成的子图是强连通分量，既是强连通图又是极大图；而678就不是因为6可以到8，但是8不能到6；<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/7.png"></p>
+<h2 id="图的构造"><a href="#图的构造" class="headerlink" title="图的构造"></a>图的构造</h2><p>一般使用邻接表、邻接矩阵或用类表示，主要是朴素存储、邻接表、邻接矩阵。</p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>邻接矩阵：n个节点就是n*n的矩阵，如grid[2][5]&#x3D;6就是2到5的有向图，权值为6，如果grid[5][2]&#x3D;6表示二者相互连通。但是节点比较多的时候，会出现浪费的情况出现。</p>
+<p>邻接矩阵的优点：</p>
+<ul>
+<li>表达方式简单，易于理解</li>
+<li>检查任意两个顶点间是否存在边的操作非常快</li>
+<li>适合稠密图，在边数接近顶点数平方的图中，邻接矩阵是一种空间效率较高的表示方法。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>遇到稀疏图，会导致申请过大的二维数组造成空间浪费 且遍历 边 的时候需要遍历整个n * n矩阵，造成时间浪费。</li>
+</ul>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>也就是数组+链表的形式，有多少边，申请对应大小的链表。<br><img src="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/8.png"></p>
+<p>上图就是节点1指向3和5，节点2指向435，节点3指向4，节点4指向1，有多少邻接表才会申请多少个对应的链表节点。</p>
+<h2 id="图的遍历方式"><a href="#图的遍历方式" class="headerlink" title="图的遍历方式"></a>图的遍历方式</h2><ol>
+<li>深度优先搜索（dfs）如二叉树的递归遍历</li>
+<li>广度优先搜索（bfs）如二叉树的层序遍历</li>
+</ol>
+<p>这是两种算法，可以在不同的数据结构上进行搜索。</p>
+<p>dfs：一个方向去搜，直到绝境，再换方向，也就是回溯。<br>bfs：把本节点连接的节点遍历一遍，依次进行下去。</p>
+<p>dfs：就是回溯感觉，框架如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">dfs</span><span class="params">(参数)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (选择：本节点所连接的其他节点) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        dfs(图，选择的节点); <span class="comment">// 递归</span></span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/04/leecode-%E5%9B%BE%E8%AE%BA/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-汇川面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/01/%E6%B1%87%E5%B7%9D%E9%9D%A2%E7%BB%8F/">汇川面经</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/08/01/%E6%B1%87%E5%B7%9D%E9%9D%A2%E7%BB%8F/" class="archive-article-date">
+  	<time datetime="2024-08-01T11:58:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-01</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>介绍项目，我说的还是有点快了</li>
+<li>MEMS（micro electro mechanical systems，微机电系统）麦克风的基础知识，我没说出来，主要是微机电系统。就是一个电容器集成在微硅晶片上，可以采用表贴工艺进行制造,能够承受很高的回流焊温度,容易与 CMOS 工艺及其它音频电路相集成, 并具有改进的噪声消除性能。</li>
+<li>问了项目中遇到的问题，我回答的是，异步时钟数据出错，以及udp协议的fpga实现；下次可以说第二个项目的一个思维，加上学到了什么。</li>
+<li>问了IIC方面的时序等，什么时候可以改变数据，具体是怎么实现的？还有问了IIC的时钟，没说上来；<br>时钟频率与数据传输率是如何对等的喃。因为一个SCL时钟周期只能传输1bit数据（并且只能在SCL的低电平期间进行SDA数据电平的变化），假如SCL的时钟频率为100KHz，那么1s中就能产生100K个SCL时钟周期，也就是说1s中可以传输100Kbit的数据。此时，可以看出时钟频率100KHz与数据传输率100Kbit&#x2F;s就是一样的了。<br>IIC传输位速率在标准模式下可达100Kbit&#x2F;s，快速模式下可达400Kbit&#x2F;s，高速模式下可达3.4Mbit&#x2F;s；也可以理解为时钟频率在标准模式下可达100kHz，快速模式下可达400kHz，高速模式下可达3.4MHz。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jackailson/article/details/89647811">https://blog.csdn.net/jackailson/article/details/89647811</a></li>
+<li>问了SPI方面的内容，问了什么时候采样，我回答的是有两个信号，一个是控制空闲时的电平一个是控制第几个跳变沿采样。<br>大概就是这样，一面过。</li>
+</ol>
+<p>下次如果面试官问有什么想问的，可以问问简历之类的。。。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/01/%E6%B1%87%E5%B7%9D%E9%9D%A2%E7%BB%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-记录面经中的一些问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -181,7 +360,7 @@
 </ul>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png"></p>
 <ul>
-<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br>![](.&#x2F;记录面经中的一些问题&#x2F;2.png</p>
+<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/2.png"></p>
 </li>
 <li><p>信号，通过kill（pid，signal）向指定进程发送信号。</p>
 </li>
@@ -364,7 +543,7 @@
 <ul>
 <li>节省内存空间</li>
 </ul>
-<h2 id="emum"><a href="#emum" class="headerlink" title="emum"></a>emum</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> a,b=<span class="number">5</span>, c, d=<span class="number">4</span>, e &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d, %d, %d, %d&quot;</span>,a, b, c, d, e);</span><br><span class="line">	<span class="comment">//输出结果0, 5, 6, 4, 5,值可以重复,没有赋值就是前一个值+1,第一个没有赋值就是0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> a,b=<span class="number">5</span>, c, d=<span class="number">4</span>, e &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d, %d, %d, %d&quot;</span>,a, b, c, d, e);</span><br><span class="line">	<span class="comment">//输出结果0, 5, 6, 4, 5,值可以重复,没有赋值就是前一个值+1,第一个没有赋值就是0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><h3 id="typedef-和-define-的区别"><a href="#typedef-和-define-的区别" class="headerlink" title="typedef 和 #define 的区别"></a>typedef 和 #define 的区别</h3><ul>
 <li>#define 是 c 语言中定义的语法，是预处理指令，在预处理时进行简单而机械的字符串替换，不作正确性检查，只有在编译已被展开的源程序时才会发现可能的错误并报错。可作用于类型定义、常量、变量等。</li>
@@ -1145,301 +1324,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-通信协议之CAN（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/">通信协议之CAN（五）</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2024-07-14T03:17:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-14</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35057766/article/details/135580884">https://blog.csdn.net/qq_35057766/article/details/135580884</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
-<h1 id="通信协议之CAN总线协议（五）"><a href="#通信协议之CAN总线协议（五）" class="headerlink" title="通信协议之CAN总线协议（五）"></a><center>通信协议之CAN总线协议（五）</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>CAN（Controller Area Network）控制器局域网,是国际标准化串行通信协议。</p>
-<p>CAN 是一种多主方式的串行通讯总线，基本设计规范要求有高的位速率，高抗电磁干扰性，而且能够检测出产生的任何错误。当信号传输距离达到10Km 时，CAN 仍可提供高达50Kbit&#x2F;s 的数据传输速率。由于 CAN 总线具有很高的实时性能，现在，CAN 的高性能和可靠性已被认同，并被广泛地应用于工业自动化、船舶、医疗设备、工业设备等方面。</p>
-<h2 id="2-总线结构"><a href="#2-总线结构" class="headerlink" title="2 总线结构"></a>2 总线结构</h2><ol>
-<li>闭环结构</li>
-</ol>
-<p>高速、短距离CAN网络，通信速率在125kbit&#x2F;s-1Mbit&#x2F;s之间,120Ω电阻用于防止信号反射.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/1.png" alt="Alt text"></p>
-<ol start="2">
-<li>开环结构</li>
-</ol>
-<p>两根信号线独立，低速、远距离CAN网络，通信速率最大为125kbit&#x2F;s，在40kbit&#x2F;s时，总线最长距离为1km。<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/2.png" alt="Alt text"></p>
-<p>CAN总线由两根信号线组成，即途中的CANH和CANL，没有时钟同步信号，是一种异步通信方式，与UART的异步通信方式类似，而SPI、I2C是以时钟信号同步的同步通信方式。</p>
-<p>CAN总线的两根信号线通常采用的是双绞线，传输的是差分信号，通过两根信号线的电压差CANH-CANL来表示总线电平。以差分信号传输信息具有抗干扰能力强，能有效抑制外部电磁干扰等优点，这也是CAN总线在工业上应用广泛的一个原因。使用差分信号表示总线电平的还有RS485网络，也是一种常用的工业现场总线。双绞线示意图如下：</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/3.png" alt="Alt text"></p>
-<p>两根信号线的电压差CANH-CANL表示CAN总线的电平，与传输的逻辑信号1或0对应。对应于逻辑1的称为隐性（Recessive）电平，对应于逻辑0成为显性（Dominant）电平。下图中，上半部分为实际CANH和CANL的电平，下半部分对应的逻辑电平。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/4.png" alt="Alt text"><br><font color="red"><br>CAN总线电平：（有点绕，逻辑1是隐性，对应的电压差是低电平）<br>逻辑1是隐性电平，CAN_High和CAN_Low都是2.5V，电位差为0V，<br>逻辑0是显性电平，CAN_Hight为3.5V，CAN_Low为1.5V，电位差是2V；<br>这里是因为CAN协议采用线与的方式,后面有讲.逻辑1对总线上信号没有影响所以说是隐性电平,任何数字&amp;1都等于本身,反之&amp;0,就是显性电平<br></font></p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/5.png" alt="Alt text"></p>
-<p>CAN总线上的一个终端设备称为一个节点（Node），在CAN网络中，没有主设备和从设备的区别。一个CAN节点的硬件部分一般由CAN控制器和CAN收发器两个部分组成。CAN控制器负责CAN总线的逻辑控制，实现CAN传输协议；CAN收发器主要负责MCU逻辑电平与CAN总线电平之间的转换。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/6.png" alt="Alt text"></p>
-<p>CAN控制器一般是MCU的片上外设，例如，STM32F407由两个CAN控制器。CAN收发器一般是单独的芯片，并且根据CAN总线的结构不同，需要使用不同的CAN收发芯片，例如，STM32F407开发板上使用的CAN收发芯片是TJA1040，只能构成闭环网络结构。</p>
-<h2 id="3-CAN总线特点"><a href="#3-CAN总线特点" class="headerlink" title="3 CAN总线特点"></a>3 CAN总线特点</h2><ol>
-<li><p>实时性：适用于需要及时传输数据的应用，如汽车控制系统、工业自动化等。仲裁机制和帧优先级的设计保证了低延迟和可预测性。</p>
-</li>
-<li><p>多主机系统:CAN支持多主机系统，多个节点可以同时发送和接收数据。这种分布式控制结构使得系统更加灵活，适用于复杂的嵌入式网络。CAN总线上的节点既可以发送数据又可以接收数据，没有主从之分。但是在同一个时刻，只能由一个节点发送数据，其他节点只能接收数据。2</p>
-</li>
-<li><p>差分信号传输： CAN使用差分信号传输，通过两个线路（CAN_H和CAN_L）之间的电压差来传递信息。这种差分传输方式提供了良好的抗干扰性能，使得CAN总线适用于工业环境等有电磁干扰的场合。</p>
-</li>
-<li><p>仲裁机制： CAN总线采用非破坏性仲裁机制，通过比较消息标识符的优先级来决定哪个节点有权继续发送数据。这种机制确保了总线上数据传输的有序性，避免了冲突。  (大概就是会议中你和领导同时讲话,领导优先级较高)</p>
-</li>
-</ol>
-<ul>
-<li><p>现在假设每个设备都有一个优先级码，数值越小则优先级越高。数值越小，则从高位向低位看过去，会比数值更大的更早出现0（比如7、5和3，7的二进制是111，5是101，3是011，从高位往低位，7没有0，而5的第二位就出现了0，3则是第一位就出现了0。而如果是4，也就是100，它的前两位和5相同，但最后一位出现了0，而5是1），或者说从高位往低位逐位看，两个二进制数第一次出现不同的时候，那一位是0的那个数更小，是1的那个数更大。而我们规定了数越小代表优先级越高。</p>
-</li>
-<li><p>此时，这些有着不同优先级的设备都使用我们上面提到的「上拉电阻+下拉三极管」的模式挂接在同一条总线上，它们高电平代表1，低电平代表0。它们在发送数据的时候会先发送自己的优先级码，从高位到地位依次发送。每发送一位的同时它们同时也检测一下那根总线上的电平，看看和自己设置的输出电平是否相同。此时如果有两个设备同时开始发送，那么当两个设备的识别码从高位到低位发送的时候，在某一位出现了不同，那么这一位发送0的那个设备的优先级码更小，优先级更高，发送1的那个设备的优先级码更大，优先级更低。因为我们前面所说的那些特性，作为显性电平的低电平会覆盖掉作为隐性电平的高电平，因此整条总线此时是低电平，也就是0。此时两个设备都检测总线上的电平是否是自己设置要输出的那个，优先级高、优先级码小的那个设备本身就要输出0，检测到总线也是0，因此继续发送；而优先级低、优先级码大的那个设备设置的输出是1，但因为1被0覆盖，它检测到总线上是0，和自己设置的1不符，因此知道同时有一个优先级更高的设备也要发送数据了，它就会停止发送数据，转为接收模式，等着看看这个数据帧是不是发给自己的。等到那个高优先级的设备发完数据，发送了明确的帧结束标志提示发送结束后，这个低优先级的设备再尝试占用总线发送自己要发送的数据。这就是靠优先级码完成的仲裁。</p>
-</li>
-<li><p>简单举个例子，现在有一个优先级码是4（100）的A设备和一个优先级码是5（101）的B设备要同时发送数据，A设备的优先级码更小，因此它的优先级更高。它们各自都从最高位开始发送，第一个周期两者都发送1，总线是1，和自己设置的输出相同；第二个周期两者都发送0，总线是0，和自己设置的输出也相同。第三个周期，A发送0，B发送1，因为0是显性电平，1是隐性电平，0覆盖掉了1，总线是0，这时A检测到总线的0和自己设置的输出0相同，说明自己成功获得了总线的占用权，继续发送数据；而B检测到总线的0和自己设置的输出1不同，因此得知有更高优先级的设备已经占用了总线，于是转为接受模式，开始逐位读取A发送到总线上的数据，判断这一帧数据的发送目标是自己还是总线上其他的设备。</p>
-</li>
-<li><p>现在说回CAN总线，它是差分工作的，但核心思想与上面那个0V-5V的体系是一样的。CAN收发芯片内部通过一些电路产生一个2.5V的参考电压和1.5V、3.5V的两个显性电平电压。CAN-High线通过下拉电阻连接2.5V，通过上拉三极管连接3.5V；CAN-Low线通过上拉电阻连接2.5V，通过下拉三极管连接1.5V；这两个三极管同时导通、同时截止。平时两个三极管都截止，CAN-High和CAN-Low都被电阻拉到2.5V左右，压差是0V，表示逻辑1，这是隐性电平；只要有一个设备要输出逻辑0，它的两个三极管就会同时导通，把CAN-High拉高到3.5V，把CAN-Low拉低到1.5V，压差是2V，表示逻辑0，这是显性电平，能覆盖表示逻辑1的隐性电平。CAN-High和CAN-Low连接在一个电压比较器上，检测两线的压差，看看和自己要输出的那个值是否相同。然后就能代入上一段所说的那个比较的方法，检测优先级顺序，判断哪个设备有资格优先占用总线了。</p>
-</li>
-</ul>
-<ol start="5">
-<li><p>广播通信： CAN总线采用广播通信方式，即发送的数据帧可以被总线上的所有节点接收。这种特性有助于信息的共享和同步，同时减少了系统的复杂性。</p>
-</li>
-<li><p>低成本： CAN总线的硬件成本相对较低，适用于大规模的系统集成。由于CAN控制器在硬件上实现了仲裁机制，无需额外的主机处理器，减小了成本和复杂性</p>
-</li>
-<li><p>灵活性： CAN协议灵活适应不同的应用场景，支持不同的波特率和通信速率。这使得CAN总线可以被广泛用于各种嵌入式系统，从低速的传感器网络到高速的汽车控制系统。</p>
-</li>
-<li><p>错误检测和处理： CAN总线具有强大的错误检测和处理机制。通过CRC检查和其他错误检测手段，CAN能够识别和处理传输过程中可能发生的错误，提高了通信的可靠性。</p>
-</li>
-<li><p>多种帧类型：CAN总线上的节点没有地址的概念。CAN总线上的数据是以帧为单位传输的，帧又分为数据帧、遥控帧等多种帧类型，帧包含需要传输的数据或控制信息。</p>
-</li>
-<li><p>线与逻辑：CAN总线具有“线与”的特性，也就是当由两个节点同时向总线发送信号时，一个是发送显性电平（逻辑0），另一个发送隐性电平（逻辑1），则总线呈现为显性电平。这个特性被用于总线总裁，也就是哪个节点优先占用总线进行发送操作。</p>
-</li>
-<li><p>特定标识符：每一个帧有一个标识符（Identifier，一下简称ID）。ID不是地址，它表示传输数据的类型，也可以用于总线仲裁时确定优先级。例如，在汽车的CAN总线上，假设用于碰撞检测的节点输出数据帧ID为01，车内温度检测节点发送数据帧的ID为05等。</p>
-</li>
-<li><p>滤波特性：每个CAN节点都接收数据，但是可以对接收的帧根据ID进行过滤。只有节点需要的数据才会被接收并进一步处理，不需要的数据会被自动舍弃。例如，假设安全气囊控制器只接受碰撞检测节点发出的ID为01的帧，这种ID的过滤时有硬件完成的，以便安全气囊控制器在发送碰撞时能及时响应。</p>
-</li>
-<li><p>半双工：CAN总线通信时半双工的，即总线不能同时发送和接收。在多个节点竞争总线进行发送时，通过ID的优先级进行仲裁，竞争胜出的节点继续发送，竞争失败的节点立刻转入接收状态。</p>
-</li>
-<li><p>无时钟信号：CAN总线没有用于同步的时钟信号，所以需要规定CAN总线通信的波特率，所以节点都是用同样的波特率进行通信。</p>
-</li>
-</ol>
-<h2 id="4-CAN位时序和波特率"><a href="#4-CAN位时序和波特率" class="headerlink" title="4 CAN位时序和波特率"></a>4 CAN位时序和波特率</h2><h2 id="5-CAN总线协议"><a href="#5-CAN总线协议" class="headerlink" title="5 CAN总线协议"></a>5 CAN总线协议</h2><p>CAN协议包含了表中ISO规定的OSI基本参照模型中的传输层、数据链路层、物理层。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/8.png" alt="Alt text"></p>
-<h2 id="6-CAN各类型帧"><a href="#6-CAN各类型帧" class="headerlink" title="6 CAN各类型帧"></a>6 CAN各类型帧</h2><h3 id="6-1-帧的种类"><a href="#6-1-帧的种类" class="headerlink" title="6.1 帧的种类"></a>6.1 帧的种类</h3><ol>
-<li>数据帧（Data frame）：节点发送的包含ID和数据的帧，用于发送单元向接收单元传送数据的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/7.png" alt="Alt text"><br>注:图中的数字是几位,不是电平.<br>包含以下几个部分：</li>
-</ol>
-<p><font color="red">比较重要的有：ID、数据长度、数据、CRC，其他信号会有专用工具处理。</font></p>
-<ul>
-<li>帧起始：表示数据帧开始的段。</li>
-<li>仲裁段：表示该帧优先级的段。<ul>
-<li>R0TR远程传送请求位，规定数据帧的RTR必须为显性电平；远程帧的RTR位为隐性电平;</li>
-</ul>
-</li>
-<li>控制段：表示数据的字节数及保留位的段。<ul>
-<li>IDE标识符扩展位：显性电平0</li>
-<li>r保留位：显性电平0</li>
-<li>DLC数据场长度码</li>
-</ul>
-</li>
-<li>数据段：数据的内容，可发送 0～8 个字节的数据。</li>
-<li>CRC 段：检查帧的传输错误的段。<ul>
-<li>CRC序列：为了保证通信双方的可靠性，要发送方根据发送信息计算CRC值与接收方根据接收信息计算的CRC值对上，才能判断通信成功，否则报错。</li>
-<li>CRC界定符DEL：固定的隐性电平1；</li>
-</ul>
-</li>
-<li>ACK 段：表示确认正常接收的段。<ul>
-<li>应答间隙ACK：发送节点发送的为隐性电平1</li>
-<li>应答界定符DEL：发送节点发送的为隐性电平1，接收节点正确接收后会用显性电平0覆盖隐性电平，以表示正确接收。发送节点也会进行回读，确保信号被正确接收</li>
-</ul>
-</li>
-<li>帧结束：表示数据帧结束的段。<ul>
-<li>7个连续的隐性位</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><p>遥控帧（Remote frame,也有说是远程帧的）：节点向网络上的其他节点发出的某个ID的数据请求，发送节点收到遥控帧后就可以发送相应ID的数据帧；也就是节点1需要数据，发送遥控帧给节点2，节点2接收到后给节点1发送数据。<br>与数据帧不同的是没有数据场,同时RTR为隐性电平.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/10.png" alt="Alt text"></p>
-</li>
-<li><p>错误帧（Error frame）：节点检测出错误时，向其他节点发送的通知错误的帧；<br>错误类型有以下几种:<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/20.png" alt="Alt text"><br><font color="orange">除CRC错误在ACK界定符后的下一位输出错误标志外，其余四种错误在检测出错误后的下一位开始输出错误标志。</font></p>
-</li>
-</ol>
-<ul>
-<li>关于位错误：<ul>
-<li><p>位错误由向总线上输出数据帧、遥控帧、错误帧、过载帧的单元和输出 ACK 的单元、输出错误的单元来检测。</p>
-</li>
-<li><p><font color="orange">在仲裁段输出隐性电平，但检测出显性电平时，将被视为仲裁失利，而不是位错误。毕竟有多个CAN设备在竞争。</font></p>
-</li>
-<li><p><font color="red">在仲裁段作为填充位输出隐性电平时，但检测出显性电平时，将不视为位错误，而是填充错误。</font></p>
-</li>
-<li><p><font color="orange">发送单元在 ACK 段输出隐性电平，但检测到显性电平时，将被判断为其它单元的 ACK 应答，而非位错误。</font></p>
-</li>
-<li><p><font color="red">输出被动错误标志（6 个位隐性位）但检测出显性电平时，将遵从错误标志的结束条件，等待检测出连续相同 6 个位的值（显性或隐性），并不视为位错误。</font></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>错误界定符为8为隐性;错误标志叠加位是,同时接收到两个错误;<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/11.png" alt="Alt text"><br>主动错误和被动错误就是:错个几次主动报错,也就是主动错误,连续6个显性位,此时会覆盖总线上的其他位信号(线与),这样之前传输的报文就会被破坏,相当于发现错误的节点主动认错,让其他节点接收了丢弃就行了;错误计数超过127时,总线认为错误次数太多了,此时是6个隐性位,总线上的信号都不会受到影响,此时处于被动错误状态,发送错误,但是不被接收了;超过255次时该节点直接离线.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/21.png" alt="Alt text"></p>
-<ol start="4">
-<li>过载帧（Overload frame）：接收单元未做好接收数据的准备时发送的帧，发送节点收到过载帧后可以暂缓发送数据帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/12.png" alt="Alt text"></li>
-<li>帧间空间（Inter-frame space）：用于将数据帧、遥控帧与前后的帧分隔开的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/13.png" alt="Alt text"></li>
-</ol>
-<p>另外，数据帧和遥控帧有标准格式和扩展格式两种格式。标准格式有 11 个位的标识符（Identifier: 以下称 ID），扩展格式有 29 个位的 ID。标准帧用的比较多。</p>
-<h3 id="非破坏性仲裁"><a href="#非破坏性仲裁" class="headerlink" title="非破坏性仲裁"></a>非破坏性仲裁</h3><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/15.png" alt="Alt text"></p>
-<p>如果传来多个ID,对每一位进行线与,只要有0那一位就是0,所以最后报文值ID越小,优先级越高,也就越重要;</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/22.png" alt="Alt text"><br>另一方面,数据帧和遥控帧的竞争,不同ID的好说,哪个重要就哪个,但是相同ID,此时前面提到仲裁段的RTR,遥控帧的RTR为隐性,数据帧的RTR为显性,所以总线电平为为数据帧.</p>
-<h3 id="位填充机制"><a href="#位填充机制" class="headerlink" title="位填充机制"></a>位填充机制</h3><p>CAN总线规定信号的跳变沿即为同步信号,所以只要信号发生变化了,节点时钟就会被同步,但是如果有连续相同信号发送,时钟误差就会越来越大,从而导致信号异常,所以规定有连续5个相同信号时插入一个补码,插入区间为SOF-CRC之间,因为CRC之后为固定格式,不允许填充.</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/16.png" alt="Alt text"></p>
-<h3 id="位时序及同步"><a href="#位时序及同步" class="headerlink" title="位时序及同步"></a>位时序及同步</h3><p>位定时是指CAN总线上,一个数据位的持续时间,主要用于CAN总线上波特率的设置,同一总线上波特率相同.每一个位并不是最小时间单位，每个位被分为4个段，这些段又由最小时间单位Time Quantum（以下称为 Tq）构成。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/17.png" alt="Alt text"></p>
-<h4 id="位时序分解："><a href="#位时序分解：" class="headerlink" title="位时序分解："></a>位时序分解：</h4><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/23.png" alt="Alt text"></p>
-<p>• SS 段 (SYNC SEG)，SS 译为同步段，若通讯节点检测到总线上信号的跳变沿被包含在 SS 段的范围之内，则表示节点与总线的时序是同步的，当节点与总线同步时，采样点采集到的总线电平即可被确定为该位的电平。SS 段的大小固定为 1Tq。</p>
-<p>• PTS 段 (PROP SEG)，PTS 译为传播时间段，这个时间段是用于补偿网络的物理延时时间。是总线上输入比较器延时和输出驱动器延时总和的两倍。PTS 段的大小可以为 1~8Tq。</p>
-<p>• PBS1 段 (PHASE SEG1)，PBS1 译为相位缓冲段，主要用来补偿边沿阶段的误差，它的时间长度在重新同步的时候可以加长。PBS1 段的初始大小可以为 1~8Tq。</p>
-<p>• PBS2 段 (PHASE SEG2)，PBS2 这是另一个相位缓冲段，也是用来补偿边沿阶段误差的，它的时间长度在重新同步时可以缩短。PBS2 段的初始大小可以为 2~8Tq。</p>
-<p>该图中表示的 CAN 通讯信号每一个数据位的长度为 19Tq，其中 SS 段占 1Tq， PTS 段占 6Tq， PBS1段占 5Tq， PBS2 段占 7Tq。信号的采样点位于 PBS1 段与 PBS2 段之间，通过控制各段的长度，可以对采样点的位置进行偏移，以便准确地采样。</p>
-<h4 id="通讯的波特率"><a href="#通讯的波特率" class="headerlink" title="通讯的波特率"></a>通讯的波特率</h4><p>总线上的各个通讯节点只要约定好 1 个 Tq 的时间长度以及每一个数据位占据多少个 Tq，就可以确定 CAN 通讯的波特率。</p>
-<p><font color="red">例如，1Tq&#x3D;1us，而每个数据位由 19 个 Tq 组成，则传输一位数据需要时间 T1bit&#x3D;19us，从而每秒可以传输的数据位个数为：10的6次方&#x2F;19 &#x3D; 52631.6 (bps)</font></p>
-<p>这个每秒可传输的数据位的个数即为通讯中的波特率。</p>
-<h4 id="同步分析过程"><a href="#同步分析过程" class="headerlink" title="同步分析过程"></a>同步分析过程</h4><p>CAN通信没有时钟线,所以随着时间的推移信号的误差积累就会变大.</p>
-<p>硬同步：若某个 CAN 节点通过总线发送数据时，它会发送一个表示通讯起始的信号 (即下一小节介绍的帧起始信号)，该信号是一个由高变低的下降沿。而挂载到 CAN 总线上的通讯节点在不发送数据时，会时刻检测总线上的信号。见图 ，可以看到当总线出现帧起始信号时，某节点检测到总线的帧起始信号不在节点内部时序的 SS 段范围，所以判断它自己的内部时序与总线不同步，因而这个状态的采样点采集得的数据是不正确的。所以节点以硬同步的方式调整，把自己的位时序中的 SS 段平移至总线出现下降沿的部分，获得同步，同步后采样点就可以采集得正确数据了。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/18.png" alt="Alt text"></p>
-<p>重同步:<br>前面的硬同步只是当存在帧起始信号时才起作用，如果在一帧很长的数据内，节点信号与总线信号相位有偏移时，这种同步方式就无能为力了。因而需要引入重新同步方式，它利用普通数据位的高至低电平的跳变沿来同步 (帧起始信号是特殊的跳变沿)。重新同步与硬同步方式相似的地方是它们都使用 SS 段来进行检测，同步的目的都是使节点内的 SS 段把跳变沿包含起来。重新同步的方式分为超前和滞后两种情况，以总线跳变沿与 SS 段的相对位置进行区分。<font color="orange">第一种相位超前的情况如图 ，节点从总线的边沿跳变中，检测到它内部的时序比总线的时序相对超前 2Tq，这时控制器在下一个位时序中的 PBS1 段增加 2Tq 的时间长度，使得节点与总线时序重新同步。<br></font><br>SS是节点的段，相对于总线超前。<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/19.png" alt="Alt text"></p>
-<p>第二种相位滞后的情况如图 ，节点从总线的边沿跳变中，检测到它的时序比总线的时序相对滞后 2Tq，这时控制器在前一个位时序中的 PBS2 段减少 2Tq 的时间长度，获得同步。</p>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/24.png" alt="Alt text"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-通信协议之IIS（四）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/">通信协议之IIS（四）</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2024-07-14T01:53:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-14</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="通信接口之IIS"><a href="#通信接口之IIS" class="headerlink" title="通信接口之IIS"></a><center>通信接口之IIS</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>在给音频采集和输出中，IIS（音频总线）用于AD与主芯片之间的通信，将数字音频器件连接在一起的串行总线接口标准。IIS是PCM的一个分支，接口定义一样，IIS的采样频率一般位44.1kHz，48kHz，PCM的采样频率一般位8k，16k。</p>
-<p>IIS速度快，用于音频的传输。<br>PCM&#x2F;TDM接口主要用来传语音。<br>PDM两根线数据线和时钟线。</p>
-<h2 id="2-总线信号"><a href="#2-总线信号" class="headerlink" title="2 总线信号"></a>2 总线信号</h2><ol>
-<li>SDATA，也就是串行数据信号，使用二进制传输数字信号，传输形式为补码的方式。</li>
-<li>SCK，串行时钟，也叫位时钟（BCLK），对应数字音频的每一位数据。SCLK的频率&#x3D;2<em>采样频率</em>采样位数。</li>
-<li>LRCK，帧时钟，也叫做WS，负责左右声道的切换。如高电平表示右声道，低电平表示左声道。频率等于采样频率。</li>
-<li>MCK，主时钟，也就是系统时钟，是采样频率的256倍，384倍，512倍或768倍，频率范围0.256-16MHz。</li>
-</ol>
-<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/1.png" alt="Alt text"></p>
-<h3 id="2-1-特性"><a href="#2-1-特性" class="headerlink" title="2.1 特性"></a>2.1 特性</h3><ol>
-<li>主从模式：IIS协议定义了两种操作模式，MASTER和SLAVE，主机向从机提供LRCK和SCK。</li>
-</ol>
-<h3 id="2-2-传输模式"><a href="#2-2-传输模式" class="headerlink" title="2.2 传输模式"></a>2.2 传输模式</h3><p>标准IIS模式：标准左对齐格式再延迟一个时钟位变化<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/2.png" alt="Alt text"></p>
-<p>左对齐模式：<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/3.png" alt="Alt text"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/">展开全文 >></a>
         </p>
       
 

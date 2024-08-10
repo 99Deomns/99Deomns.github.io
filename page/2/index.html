@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 21
+			总文章数 23
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -145,6 +145,301 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-通信协议之CAN（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/">通信协议之CAN（五）</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2024-07-14T03:17:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-14</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35057766/article/details/135580884">https://blog.csdn.net/qq_35057766/article/details/135580884</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V14y1L7Tm/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
+<h1 id="通信协议之CAN总线协议（五）"><a href="#通信协议之CAN总线协议（五）" class="headerlink" title="通信协议之CAN总线协议（五）"></a><center>通信协议之CAN总线协议（五）</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>CAN（Controller Area Network）控制器局域网,是国际标准化串行通信协议。</p>
+<p>CAN 是一种多主方式的串行通讯总线，基本设计规范要求有高的位速率，高抗电磁干扰性，而且能够检测出产生的任何错误。当信号传输距离达到10Km 时，CAN 仍可提供高达50Kbit&#x2F;s 的数据传输速率。由于 CAN 总线具有很高的实时性能，现在，CAN 的高性能和可靠性已被认同，并被广泛地应用于工业自动化、船舶、医疗设备、工业设备等方面。</p>
+<h2 id="2-总线结构"><a href="#2-总线结构" class="headerlink" title="2 总线结构"></a>2 总线结构</h2><ol>
+<li>闭环结构</li>
+</ol>
+<p>高速、短距离CAN网络，通信速率在125kbit&#x2F;s-1Mbit&#x2F;s之间,120Ω电阻用于防止信号反射.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/1.png" alt="Alt text"></p>
+<ol start="2">
+<li>开环结构</li>
+</ol>
+<p>两根信号线独立，低速、远距离CAN网络，通信速率最大为125kbit&#x2F;s，在40kbit&#x2F;s时，总线最长距离为1km。<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/2.png" alt="Alt text"></p>
+<p>CAN总线由两根信号线组成，即途中的CANH和CANL，没有时钟同步信号，是一种异步通信方式，与UART的异步通信方式类似，而SPI、I2C是以时钟信号同步的同步通信方式。</p>
+<p>CAN总线的两根信号线通常采用的是双绞线，传输的是差分信号，通过两根信号线的电压差CANH-CANL来表示总线电平。以差分信号传输信息具有抗干扰能力强，能有效抑制外部电磁干扰等优点，这也是CAN总线在工业上应用广泛的一个原因。使用差分信号表示总线电平的还有RS485网络，也是一种常用的工业现场总线。双绞线示意图如下：</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/3.png" alt="Alt text"></p>
+<p>两根信号线的电压差CANH-CANL表示CAN总线的电平，与传输的逻辑信号1或0对应。对应于逻辑1的称为隐性（Recessive）电平，对应于逻辑0成为显性（Dominant）电平。下图中，上半部分为实际CANH和CANL的电平，下半部分对应的逻辑电平。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/4.png" alt="Alt text"><br><font color="red"><br>CAN总线电平：（有点绕，逻辑1是隐性，对应的电压差是低电平）<br>逻辑1是隐性电平，CAN_High和CAN_Low都是2.5V，电位差为0V，<br>逻辑0是显性电平，CAN_Hight为3.5V，CAN_Low为1.5V，电位差是2V；<br>这里是因为CAN协议采用线与的方式,后面有讲.逻辑1对总线上信号没有影响所以说是隐性电平,任何数字&amp;1都等于本身,反之&amp;0,就是显性电平<br></font></p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/5.png" alt="Alt text"></p>
+<p>CAN总线上的一个终端设备称为一个节点（Node），在CAN网络中，没有主设备和从设备的区别。一个CAN节点的硬件部分一般由CAN控制器和CAN收发器两个部分组成。CAN控制器负责CAN总线的逻辑控制，实现CAN传输协议；CAN收发器主要负责MCU逻辑电平与CAN总线电平之间的转换。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/6.png" alt="Alt text"></p>
+<p>CAN控制器一般是MCU的片上外设，例如，STM32F407由两个CAN控制器。CAN收发器一般是单独的芯片，并且根据CAN总线的结构不同，需要使用不同的CAN收发芯片，例如，STM32F407开发板上使用的CAN收发芯片是TJA1040，只能构成闭环网络结构。</p>
+<h2 id="3-CAN总线特点"><a href="#3-CAN总线特点" class="headerlink" title="3 CAN总线特点"></a>3 CAN总线特点</h2><ol>
+<li><p>实时性：适用于需要及时传输数据的应用，如汽车控制系统、工业自动化等。仲裁机制和帧优先级的设计保证了低延迟和可预测性。</p>
+</li>
+<li><p>多主机系统:CAN支持多主机系统，多个节点可以同时发送和接收数据。这种分布式控制结构使得系统更加灵活，适用于复杂的嵌入式网络。CAN总线上的节点既可以发送数据又可以接收数据，没有主从之分。但是在同一个时刻，只能由一个节点发送数据，其他节点只能接收数据。2</p>
+</li>
+<li><p>差分信号传输： CAN使用差分信号传输，通过两个线路（CAN_H和CAN_L）之间的电压差来传递信息。这种差分传输方式提供了良好的抗干扰性能，使得CAN总线适用于工业环境等有电磁干扰的场合。</p>
+</li>
+<li><p>仲裁机制： CAN总线采用非破坏性仲裁机制，通过比较消息标识符的优先级来决定哪个节点有权继续发送数据。这种机制确保了总线上数据传输的有序性，避免了冲突。  (大概就是会议中你和领导同时讲话,领导优先级较高)</p>
+</li>
+</ol>
+<ul>
+<li><p>现在假设每个设备都有一个优先级码，数值越小则优先级越高。数值越小，则从高位向低位看过去，会比数值更大的更早出现0（比如7、5和3，7的二进制是111，5是101，3是011，从高位往低位，7没有0，而5的第二位就出现了0，3则是第一位就出现了0。而如果是4，也就是100，它的前两位和5相同，但最后一位出现了0，而5是1），或者说从高位往低位逐位看，两个二进制数第一次出现不同的时候，那一位是0的那个数更小，是1的那个数更大。而我们规定了数越小代表优先级越高。</p>
+</li>
+<li><p>此时，这些有着不同优先级的设备都使用我们上面提到的「上拉电阻+下拉三极管」的模式挂接在同一条总线上，它们高电平代表1，低电平代表0。它们在发送数据的时候会先发送自己的优先级码，从高位到地位依次发送。每发送一位的同时它们同时也检测一下那根总线上的电平，看看和自己设置的输出电平是否相同。此时如果有两个设备同时开始发送，那么当两个设备的识别码从高位到低位发送的时候，在某一位出现了不同，那么这一位发送0的那个设备的优先级码更小，优先级更高，发送1的那个设备的优先级码更大，优先级更低。因为我们前面所说的那些特性，作为显性电平的低电平会覆盖掉作为隐性电平的高电平，因此整条总线此时是低电平，也就是0。此时两个设备都检测总线上的电平是否是自己设置要输出的那个，优先级高、优先级码小的那个设备本身就要输出0，检测到总线也是0，因此继续发送；而优先级低、优先级码大的那个设备设置的输出是1，但因为1被0覆盖，它检测到总线上是0，和自己设置的1不符，因此知道同时有一个优先级更高的设备也要发送数据了，它就会停止发送数据，转为接收模式，等着看看这个数据帧是不是发给自己的。等到那个高优先级的设备发完数据，发送了明确的帧结束标志提示发送结束后，这个低优先级的设备再尝试占用总线发送自己要发送的数据。这就是靠优先级码完成的仲裁。</p>
+</li>
+<li><p>简单举个例子，现在有一个优先级码是4（100）的A设备和一个优先级码是5（101）的B设备要同时发送数据，A设备的优先级码更小，因此它的优先级更高。它们各自都从最高位开始发送，第一个周期两者都发送1，总线是1，和自己设置的输出相同；第二个周期两者都发送0，总线是0，和自己设置的输出也相同。第三个周期，A发送0，B发送1，因为0是显性电平，1是隐性电平，0覆盖掉了1，总线是0，这时A检测到总线的0和自己设置的输出0相同，说明自己成功获得了总线的占用权，继续发送数据；而B检测到总线的0和自己设置的输出1不同，因此得知有更高优先级的设备已经占用了总线，于是转为接受模式，开始逐位读取A发送到总线上的数据，判断这一帧数据的发送目标是自己还是总线上其他的设备。</p>
+</li>
+<li><p>现在说回CAN总线，它是差分工作的，但核心思想与上面那个0V-5V的体系是一样的。CAN收发芯片内部通过一些电路产生一个2.5V的参考电压和1.5V、3.5V的两个显性电平电压。CAN-High线通过下拉电阻连接2.5V，通过上拉三极管连接3.5V；CAN-Low线通过上拉电阻连接2.5V，通过下拉三极管连接1.5V；这两个三极管同时导通、同时截止。平时两个三极管都截止，CAN-High和CAN-Low都被电阻拉到2.5V左右，压差是0V，表示逻辑1，这是隐性电平；只要有一个设备要输出逻辑0，它的两个三极管就会同时导通，把CAN-High拉高到3.5V，把CAN-Low拉低到1.5V，压差是2V，表示逻辑0，这是显性电平，能覆盖表示逻辑1的隐性电平。CAN-High和CAN-Low连接在一个电压比较器上，检测两线的压差，看看和自己要输出的那个值是否相同。然后就能代入上一段所说的那个比较的方法，检测优先级顺序，判断哪个设备有资格优先占用总线了。</p>
+</li>
+</ul>
+<ol start="5">
+<li><p>广播通信： CAN总线采用广播通信方式，即发送的数据帧可以被总线上的所有节点接收。这种特性有助于信息的共享和同步，同时减少了系统的复杂性。</p>
+</li>
+<li><p>低成本： CAN总线的硬件成本相对较低，适用于大规模的系统集成。由于CAN控制器在硬件上实现了仲裁机制，无需额外的主机处理器，减小了成本和复杂性</p>
+</li>
+<li><p>灵活性： CAN协议灵活适应不同的应用场景，支持不同的波特率和通信速率。这使得CAN总线可以被广泛用于各种嵌入式系统，从低速的传感器网络到高速的汽车控制系统。</p>
+</li>
+<li><p>错误检测和处理： CAN总线具有强大的错误检测和处理机制。通过CRC检查和其他错误检测手段，CAN能够识别和处理传输过程中可能发生的错误，提高了通信的可靠性。</p>
+</li>
+<li><p>多种帧类型：CAN总线上的节点没有地址的概念。CAN总线上的数据是以帧为单位传输的，帧又分为数据帧、遥控帧等多种帧类型，帧包含需要传输的数据或控制信息。</p>
+</li>
+<li><p>线与逻辑：CAN总线具有“线与”的特性，也就是当由两个节点同时向总线发送信号时，一个是发送显性电平（逻辑0），另一个发送隐性电平（逻辑1），则总线呈现为显性电平。这个特性被用于总线总裁，也就是哪个节点优先占用总线进行发送操作。</p>
+</li>
+<li><p>特定标识符：每一个帧有一个标识符（Identifier，一下简称ID）。ID不是地址，它表示传输数据的类型，也可以用于总线仲裁时确定优先级。例如，在汽车的CAN总线上，假设用于碰撞检测的节点输出数据帧ID为01，车内温度检测节点发送数据帧的ID为05等。</p>
+</li>
+<li><p>滤波特性：每个CAN节点都接收数据，但是可以对接收的帧根据ID进行过滤。只有节点需要的数据才会被接收并进一步处理，不需要的数据会被自动舍弃。例如，假设安全气囊控制器只接受碰撞检测节点发出的ID为01的帧，这种ID的过滤时有硬件完成的，以便安全气囊控制器在发送碰撞时能及时响应。</p>
+</li>
+<li><p>半双工：CAN总线通信时半双工的，即总线不能同时发送和接收。在多个节点竞争总线进行发送时，通过ID的优先级进行仲裁，竞争胜出的节点继续发送，竞争失败的节点立刻转入接收状态。</p>
+</li>
+<li><p>无时钟信号：CAN总线没有用于同步的时钟信号，所以需要规定CAN总线通信的波特率，所以节点都是用同样的波特率进行通信。</p>
+</li>
+</ol>
+<h2 id="4-CAN位时序和波特率"><a href="#4-CAN位时序和波特率" class="headerlink" title="4 CAN位时序和波特率"></a>4 CAN位时序和波特率</h2><h2 id="5-CAN总线协议"><a href="#5-CAN总线协议" class="headerlink" title="5 CAN总线协议"></a>5 CAN总线协议</h2><p>CAN协议包含了表中ISO规定的OSI基本参照模型中的传输层、数据链路层、物理层。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/8.png" alt="Alt text"></p>
+<h2 id="6-CAN各类型帧"><a href="#6-CAN各类型帧" class="headerlink" title="6 CAN各类型帧"></a>6 CAN各类型帧</h2><h3 id="6-1-帧的种类"><a href="#6-1-帧的种类" class="headerlink" title="6.1 帧的种类"></a>6.1 帧的种类</h3><ol>
+<li>数据帧（Data frame）：节点发送的包含ID和数据的帧，用于发送单元向接收单元传送数据的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/7.png" alt="Alt text"><br>注:图中的数字是几位,不是电平.<br>包含以下几个部分：</li>
+</ol>
+<p><font color="red">比较重要的有：ID、数据长度、数据、CRC，其他信号会有专用工具处理。</font></p>
+<ul>
+<li>帧起始：表示数据帧开始的段。</li>
+<li>仲裁段：表示该帧优先级的段。<ul>
+<li>R0TR远程传送请求位，规定数据帧的RTR必须为显性电平；远程帧的RTR位为隐性电平;</li>
+</ul>
+</li>
+<li>控制段：表示数据的字节数及保留位的段。<ul>
+<li>IDE标识符扩展位：显性电平0</li>
+<li>r保留位：显性电平0</li>
+<li>DLC数据场长度码</li>
+</ul>
+</li>
+<li>数据段：数据的内容，可发送 0～8 个字节的数据。</li>
+<li>CRC 段：检查帧的传输错误的段。<ul>
+<li>CRC序列：为了保证通信双方的可靠性，要发送方根据发送信息计算CRC值与接收方根据接收信息计算的CRC值对上，才能判断通信成功，否则报错。</li>
+<li>CRC界定符DEL：固定的隐性电平1；</li>
+</ul>
+</li>
+<li>ACK 段：表示确认正常接收的段。<ul>
+<li>应答间隙ACK：发送节点发送的为隐性电平1</li>
+<li>应答界定符DEL：发送节点发送的为隐性电平1，接收节点正确接收后会用显性电平0覆盖隐性电平，以表示正确接收。发送节点也会进行回读，确保信号被正确接收</li>
+</ul>
+</li>
+<li>帧结束：表示数据帧结束的段。<ul>
+<li>7个连续的隐性位</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>遥控帧（Remote frame,也有说是远程帧的）：节点向网络上的其他节点发出的某个ID的数据请求，发送节点收到遥控帧后就可以发送相应ID的数据帧；也就是节点1需要数据，发送遥控帧给节点2，节点2接收到后给节点1发送数据。<br>与数据帧不同的是没有数据场,同时RTR为隐性电平.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/10.png" alt="Alt text"></p>
+</li>
+<li><p>错误帧（Error frame）：节点检测出错误时，向其他节点发送的通知错误的帧；<br>错误类型有以下几种:<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/20.png" alt="Alt text"><br><font color="orange">除CRC错误在ACK界定符后的下一位输出错误标志外，其余四种错误在检测出错误后的下一位开始输出错误标志。</font></p>
+</li>
+</ol>
+<ul>
+<li>关于位错误：<ul>
+<li><p>位错误由向总线上输出数据帧、遥控帧、错误帧、过载帧的单元和输出 ACK 的单元、输出错误的单元来检测。</p>
+</li>
+<li><p><font color="orange">在仲裁段输出隐性电平，但检测出显性电平时，将被视为仲裁失利，而不是位错误。毕竟有多个CAN设备在竞争。</font></p>
+</li>
+<li><p><font color="red">在仲裁段作为填充位输出隐性电平时，但检测出显性电平时，将不视为位错误，而是填充错误。</font></p>
+</li>
+<li><p><font color="orange">发送单元在 ACK 段输出隐性电平，但检测到显性电平时，将被判断为其它单元的 ACK 应答，而非位错误。</font></p>
+</li>
+<li><p><font color="red">输出被动错误标志（6 个位隐性位）但检测出显性电平时，将遵从错误标志的结束条件，等待检测出连续相同 6 个位的值（显性或隐性），并不视为位错误。</font></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>错误界定符为8为隐性;错误标志叠加位是,同时接收到两个错误;<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/11.png" alt="Alt text"><br>主动错误和被动错误就是:错个几次主动报错,也就是主动错误,连续6个显性位,此时会覆盖总线上的其他位信号(线与),这样之前传输的报文就会被破坏,相当于发现错误的节点主动认错,让其他节点接收了丢弃就行了;错误计数超过127时,总线认为错误次数太多了,此时是6个隐性位,总线上的信号都不会受到影响,此时处于被动错误状态,发送错误,但是不被接收了;超过255次时该节点直接离线.<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/21.png" alt="Alt text"></p>
+<ol start="4">
+<li>过载帧（Overload frame）：接收单元未做好接收数据的准备时发送的帧，发送节点收到过载帧后可以暂缓发送数据帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/12.png" alt="Alt text"></li>
+<li>帧间空间（Inter-frame space）：用于将数据帧、遥控帧与前后的帧分隔开的帧；<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/13.png" alt="Alt text"></li>
+</ol>
+<p>另外，数据帧和遥控帧有标准格式和扩展格式两种格式。标准格式有 11 个位的标识符（Identifier: 以下称 ID），扩展格式有 29 个位的 ID。标准帧用的比较多。</p>
+<h3 id="非破坏性仲裁"><a href="#非破坏性仲裁" class="headerlink" title="非破坏性仲裁"></a>非破坏性仲裁</h3><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/15.png" alt="Alt text"></p>
+<p>如果传来多个ID,对每一位进行线与,只要有0那一位就是0,所以最后报文值ID越小,优先级越高,也就越重要;</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/22.png" alt="Alt text"><br>另一方面,数据帧和遥控帧的竞争,不同ID的好说,哪个重要就哪个,但是相同ID,此时前面提到仲裁段的RTR,遥控帧的RTR为隐性,数据帧的RTR为显性,所以总线电平为为数据帧.</p>
+<h3 id="位填充机制"><a href="#位填充机制" class="headerlink" title="位填充机制"></a>位填充机制</h3><p>CAN总线规定信号的跳变沿即为同步信号,所以只要信号发生变化了,节点时钟就会被同步,但是如果有连续相同信号发送,时钟误差就会越来越大,从而导致信号异常,所以规定有连续5个相同信号时插入一个补码,插入区间为SOF-CRC之间,因为CRC之后为固定格式,不允许填充.</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/16.png" alt="Alt text"></p>
+<h3 id="位时序及同步"><a href="#位时序及同步" class="headerlink" title="位时序及同步"></a>位时序及同步</h3><p>位定时是指CAN总线上,一个数据位的持续时间,主要用于CAN总线上波特率的设置,同一总线上波特率相同.每一个位并不是最小时间单位，每个位被分为4个段，这些段又由最小时间单位Time Quantum（以下称为 Tq）构成。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/17.png" alt="Alt text"></p>
+<h4 id="位时序分解："><a href="#位时序分解：" class="headerlink" title="位时序分解："></a>位时序分解：</h4><p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/23.png" alt="Alt text"></p>
+<p>• SS 段 (SYNC SEG)，SS 译为同步段，若通讯节点检测到总线上信号的跳变沿被包含在 SS 段的范围之内，则表示节点与总线的时序是同步的，当节点与总线同步时，采样点采集到的总线电平即可被确定为该位的电平。SS 段的大小固定为 1Tq。</p>
+<p>• PTS 段 (PROP SEG)，PTS 译为传播时间段，这个时间段是用于补偿网络的物理延时时间。是总线上输入比较器延时和输出驱动器延时总和的两倍。PTS 段的大小可以为 1~8Tq。</p>
+<p>• PBS1 段 (PHASE SEG1)，PBS1 译为相位缓冲段，主要用来补偿边沿阶段的误差，它的时间长度在重新同步的时候可以加长。PBS1 段的初始大小可以为 1~8Tq。</p>
+<p>• PBS2 段 (PHASE SEG2)，PBS2 这是另一个相位缓冲段，也是用来补偿边沿阶段误差的，它的时间长度在重新同步时可以缩短。PBS2 段的初始大小可以为 2~8Tq。</p>
+<p>该图中表示的 CAN 通讯信号每一个数据位的长度为 19Tq，其中 SS 段占 1Tq， PTS 段占 6Tq， PBS1段占 5Tq， PBS2 段占 7Tq。信号的采样点位于 PBS1 段与 PBS2 段之间，通过控制各段的长度，可以对采样点的位置进行偏移，以便准确地采样。</p>
+<h4 id="通讯的波特率"><a href="#通讯的波特率" class="headerlink" title="通讯的波特率"></a>通讯的波特率</h4><p>总线上的各个通讯节点只要约定好 1 个 Tq 的时间长度以及每一个数据位占据多少个 Tq，就可以确定 CAN 通讯的波特率。</p>
+<p><font color="red">例如，1Tq&#x3D;1us，而每个数据位由 19 个 Tq 组成，则传输一位数据需要时间 T1bit&#x3D;19us，从而每秒可以传输的数据位个数为：10的6次方&#x2F;19 &#x3D; 52631.6 (bps)</font></p>
+<p>这个每秒可传输的数据位的个数即为通讯中的波特率。</p>
+<h4 id="同步分析过程"><a href="#同步分析过程" class="headerlink" title="同步分析过程"></a>同步分析过程</h4><p>CAN通信没有时钟线,所以随着时间的推移信号的误差积累就会变大.</p>
+<p>硬同步：若某个 CAN 节点通过总线发送数据时，它会发送一个表示通讯起始的信号 (即下一小节介绍的帧起始信号)，该信号是一个由高变低的下降沿。而挂载到 CAN 总线上的通讯节点在不发送数据时，会时刻检测总线上的信号。见图 ，可以看到当总线出现帧起始信号时，某节点检测到总线的帧起始信号不在节点内部时序的 SS 段范围，所以判断它自己的内部时序与总线不同步，因而这个状态的采样点采集得的数据是不正确的。所以节点以硬同步的方式调整，把自己的位时序中的 SS 段平移至总线出现下降沿的部分，获得同步，同步后采样点就可以采集得正确数据了。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/18.png" alt="Alt text"></p>
+<p>重同步:<br>前面的硬同步只是当存在帧起始信号时才起作用，如果在一帧很长的数据内，节点信号与总线信号相位有偏移时，这种同步方式就无能为力了。因而需要引入重新同步方式，它利用普通数据位的高至低电平的跳变沿来同步 (帧起始信号是特殊的跳变沿)。重新同步与硬同步方式相似的地方是它们都使用 SS 段来进行检测，同步的目的都是使节点内的 SS 段把跳变沿包含起来。重新同步的方式分为超前和滞后两种情况，以总线跳变沿与 SS 段的相对位置进行区分。<font color="orange">第一种相位超前的情况如图 ，节点从总线的边沿跳变中，检测到它内部的时序比总线的时序相对超前 2Tq，这时控制器在下一个位时序中的 PBS1 段增加 2Tq 的时间长度，使得节点与总线时序重新同步。<br></font><br>SS是节点的段，相对于总线超前。<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/19.png" alt="Alt text"></p>
+<p>第二种相位滞后的情况如图 ，节点从总线的边沿跳变中，检测到它的时序比总线的时序相对滞后 2Tq，这时控制器在前一个位时序中的 PBS2 段减少 2Tq 的时间长度，获得同步。</p>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/24.png" alt="Alt text"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BCAN%EF%BC%88%E4%BA%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-通信协议之IIS（四）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/">通信协议之IIS（四）</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2024-07-14T01:53:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-14</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="通信接口之IIS"><a href="#通信接口之IIS" class="headerlink" title="通信接口之IIS"></a><center>通信接口之IIS</center></h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>在给音频采集和输出中，IIS（音频总线）用于AD与主芯片之间的通信，将数字音频器件连接在一起的串行总线接口标准。IIS是PCM的一个分支，接口定义一样，IIS的采样频率一般位44.1kHz，48kHz，PCM的采样频率一般位8k，16k。</p>
+<p>IIS速度快，用于音频的传输。<br>PCM&#x2F;TDM接口主要用来传语音。<br>PDM两根线数据线和时钟线。</p>
+<h2 id="2-总线信号"><a href="#2-总线信号" class="headerlink" title="2 总线信号"></a>2 总线信号</h2><ol>
+<li>SDATA，也就是串行数据信号，使用二进制传输数字信号，传输形式为补码的方式。</li>
+<li>SCK，串行时钟，也叫位时钟（BCLK），对应数字音频的每一位数据。SCLK的频率&#x3D;2<em>采样频率</em>采样位数。</li>
+<li>LRCK，帧时钟，也叫做WS，负责左右声道的切换。如高电平表示右声道，低电平表示左声道。频率等于采样频率。</li>
+<li>MCK，主时钟，也就是系统时钟，是采样频率的256倍，384倍，512倍或768倍，频率范围0.256-16MHz。</li>
+</ol>
+<p><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/1.png" alt="Alt text"></p>
+<h3 id="2-1-特性"><a href="#2-1-特性" class="headerlink" title="2.1 特性"></a>2.1 特性</h3><ol>
+<li>主从模式：IIS协议定义了两种操作模式，MASTER和SLAVE，主机向从机提供LRCK和SCK。</li>
+</ol>
+<h3 id="2-2-传输模式"><a href="#2-2-传输模式" class="headerlink" title="2.2 传输模式"></a>2.2 传输模式</h3><p>标准IIS模式：标准左对齐格式再延迟一个时钟位变化<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/2.png" alt="Alt text"></p>
+<p>左对齐模式：<br><img src="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/3.png" alt="Alt text"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/14/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BIIS%EF%BC%88%E5%9B%9B%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
   
     <article id="post-通信协议之SPI（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1117,271 +1412,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-字符串处理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="第六章-字符串处理"><a href="#第六章-字符串处理" class="headerlink" title="第六章 字符串处理"></a>第六章 字符串处理</h1><p><font color="red">我是红色</font></p>
-<h2 id="6-1-字符串输入输出"><a href="#6-1-字符串输入输出" class="headerlink" title="6.1 字符串输入输出"></a>6.1 字符串输入输出</h2><h3 id="6-1-1-puts函数"><a href="#6-1-1-puts函数" class="headerlink" title="6.1.1 puts函数"></a>6.1.1 puts函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">puts</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>；  </span><br></pre></td></tr></table></figure>
-<p>将字符输出到标准输出设备，’\0’转换为换行符，也就是将字符串输出并添加一个换行。<br>但是也仅限于输出字符串了。</p>
-<h3 id="6-1-2-putchar函数"><a href="#6-1-2-putchar函数" class="headerlink" title="6.1.2 putchar函数"></a>6.1.2 putchar函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">putchar</span><span class="params">(<span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
-<p>c为0-127之间的一个十进制整型数，ascii码。<br>这个就没有什么换行符了,只能输出到标准输出设备.</p>
-<h3 id="6-1-3-fputc函数"><a href="#6-1-3-fputc函数" class="headerlink" title="6.1.3 fputc函数"></a>6.1.3 fputc函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">(<span class="type">int</span> c, FILE *stream)</span>;第二个参数为文件指针</span><br></pre></td></tr></table></figure>
-<p>与putchar类似但是可以输出到任意文件中.</p>
-<h2 id="6-1-4-fputs函数"><a href="#6-1-4-fputs函数" class="headerlink" title="6.1.4 fputs函数"></a>6.1.4 fputs函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-1-5-gets函数"><a href="#6-1-5-gets函数" class="headerlink" title="6.1.5 gets函数"></a>6.1.5 gets函数</h3><p><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/1.png"></p>
-<p>如果成功返回指向s的指针,而不是*s，失败则返回null.输入的空格、单引号双引号等都会作为字符串的一部分直到回车。<br>用户从键盘输入的字符串首先存放在输入缓冲区中,该函数从韩冲去读取,并存储到s指向的内存空间中.输入的字符串中就算有空格也可以直接输入字符串输入完成后回车，该函数不检查缓冲区溢出。程序中使用 gets()函数是非常不安全的，可能会出现 bug、出现不可靠性，gets()在某些意外情况下会导致程序陷入不可控状态，所以一般建议大家不要使用这个函数，可以使用后面将给大家介绍的 fgets()代替。</p>
-<h4 id="gets函数与scanf的区别"><a href="#gets函数与scanf的区别" class="headerlink" title="gets函数与scanf的区别"></a>gets函数与scanf的区别</h4><p>gets更加简洁，且空格，tab等都可以作为是scanf的分隔符。<br>gets读取到回车后会将之丢弃，而scanf就不会读取分隔符。 <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/2.png"><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/3.png">)  </center></p>
-<p>如果使用%c的形式，会把换行符读出来，对于%c来说空格换行符、tab、回车都是正常字符。  <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/4.png">)<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/5.png">)  </center><br>这里是因为gets读取了回车，但是丢了，所以什么都没有。<br>如果是123空格空格56，后面的空格空格56正常打印，丢回车不丢空格。</p>
-<h3 id="6-1-6-getchar函数"><a href="#6-1-6-getchar函数" class="headerlink" title="6.1.6 getchar函数"></a>6.1.6 getchar函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>从标准输入设备中读取一个字符。注意这里返回值是int，强制无符号char转换为int，错误就返回EOF。可以读取空格tab换行。</p>
-<h3 id="6-1-7-fgets函数"><a href="#6-1-7-fgets函数" class="headerlink" title="6.1.7 fgets函数"></a>6.1.7 fgets函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">fgets</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> size, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>size：要读取的最大字符数。</p>
-<h4 id="与gets的区别"><a href="#与gets的区别" class="headerlink" title="与gets的区别"></a>与gets的区别</h4><ol>
-<li>fgets可以从标准输入设备、文件中读取输入字符串，gets只能从标准输入设备中读取。</li>
-<li>fgets可以设置最大读取字符数。</li>
-<li>gets读取换行符然后丢弃，并替换为’\0’，但是fgets读取之后不丢弃，在最后添加结束字符。</li>
-</ol>
-<h2 id="6-2-字符串长度"><a href="#6-2-字符串长度" class="headerlink" title="6.2 字符串长度"></a>6.2 字符串长度</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">strlen</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>;</span><br></pre></td></tr></table></figure>
-<p>返回值不包含结束字符。<br>与函数sizeof的区别：</p>
-<ol>
-<li>sizeof为c语言内置操作符关键字，strlen是库函数  </li>
-<li>sizeof用于计算数据类型的大小或变量的大小，strlen只接受以结束字符结尾的字符串。  </li>
-<li>编译器在编译时就计算出sizeof 的结果，strlen必须在运行时才能计算出。  </li>
-<li>sizeof 计算数据类型或变量会占用内存的大小，strlen 计算字符串实际长度，如果使用字符串名计算sizeof则是占用空间的大小及数组长度*每个占用字节数，而strlen是字符长度。</li>
-</ol>
-<h2 id="6-3字符串拼接"><a href="#6-3字符串拼接" class="headerlink" title="6.3字符串拼接"></a>6.3字符串拼接</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcat</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src)</span>;<span class="comment">//相当于dest+src，dest末尾的结束字符被覆盖，src末尾的结束字符仍然在。  </span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strncat</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src, <span class="type">size_t</span> n)</span>;<span class="comment">//多了一个最大追加字符  </span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-4-字符串拷贝"><a href="#6-4-字符串拷贝" class="headerlink" title="6.4 字符串拷贝"></a>6.4 字符串拷贝</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strcpy</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src)</span>;  </span><br><span class="line"><span class="type">char</span> *<span class="title function_">strncpy</span><span class="params">(<span class="type">char</span> *dest, <span class="type">const</span> <span class="type">char</span> *src, <span class="type">size_t</span> n)</span>;  <span class="comment">//多了一个指定字符数量</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">memset</span><span class="params">(<span class="type">void</span> *s, <span class="type">int</span> c, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>从地址s开始每个字节填充c,一共填充n个字节,尽管这里是int c但是实际上使用该值填充时用的时无符号字符形式,以字节为单位填充.<br>返回值为指向内存空间s的指针.  </p>
-<p>值得注意的时c 的值只能为8位,同时如果最高位为1整体为负数.  <center><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/6.png"><br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/7.png">  </center><br><font color="red"><br>因为0x80在一个字节中表示负数所以输出成%d就是0xffffff80<br>就是尽管只赋值了一个字节最后打印仍然会打印出4个字节的数字如果最高位是1，则前面统一补1，反之补0；至于为什么是4个字节，和汇编有关。同时如果以这种方式初始化char数组，并写入，读出来数据不一样，不知道是什么问题，但是如果以赋值的形式如char a[]&#x3D;{0x1,0x2…}这种方式读取出来是没问题的。<br></font><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jmh1996/article/details/53884246">https://blog.csdn.net/jmh1996/article/details/53884246</a><br>memset赋值时只能赋值为0？<br>答案肯定不是，比如任意字符都是可以的，初始化成0是最常用的。int类型的一般都是赋值0或-1，其他的值都不行。</p>
-<p>结论<br>为地址str开始的n个字节赋值c，注意：是逐个字节赋值，str开始的n个字节中的每个字节都赋值为c.</p>
-<ol>
-<li>若str指向char型地址，value可为任意字符值；</li>
-<li>若str指向非char型，如int型地址，要想赋值正确，value的值只能是-1或0，因为-1和0转化成二进制后每一位都是一样的，设int型占4个字节，则-1&#x3D;0XFFFFFFFF, 0&#x3D;0X00000000。</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;strings.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">bzero</span><span class="params">(<span class="type">void</span> *s, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>将一段内存空间的数据置0;</p>
-<h2 id="6-6字符串比较"><a href="#6-6字符串比较" class="headerlink" title="6.6字符串比较"></a>6.6字符串比较</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">strcmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1, <span class="type">const</span> <span class="type">char</span> *s2)</span>;<span class="comment">//s1&lt;s2 返回值小于0;</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">strncmp</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s1, <span class="type">const</span> <span class="type">char</span> *s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-7字符串查找"><a href="#6-7字符串查找" class="headerlink" title="6.7字符串查找"></a>6.7字符串查找</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;<span class="comment">//从前往后查找字符c</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strrchr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, <span class="type">int</span> c)</span>;<span class="comment">//从后往前查找</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">strstr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *haystack, <span class="type">const</span> <span class="type">char</span> *needle)</span>;<span class="comment">//从前往后查找字符串needle</span></span><br></pre></td></tr></table></figure>
-
-<p>从字符串中查找一个字符返回其首次出现的地址.  </p>
-<h2 id="6-8字符串与数字互转"><a href="#6-8字符串与数字互转" class="headerlink" title="6.8字符串与数字互转"></a>6.8字符串与数字互转</h2><h3 id="6-8-1-字符串转整型"><a href="#6-8-1-字符串转整型" class="headerlink" title="6.8.1 字符串转整型"></a>6.8.1 字符串转整型</h3><p>分别将字符串转为int,long int,long long int</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">atoi</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="title function_">atol</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">atoll</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;</span><br><span class="line"><span class="comment">//分别将字符串转为int,long int,long long int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//分别将字符串转为long int,long long int,同时可以指定不同进制数,base是进制范围从2-36,或者特殊值0</span></span><br><span class="line"><span class="comment">//此时如果字符串包含0x就认为是16进制,如果0是前缀,数字为8进制</span></span><br><span class="line"><span class="comment">//如果endptr不为null</span></span><br><span class="line"><span class="type">long</span> <span class="type">int</span> <span class="title function_">strtol</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoll</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="comment">//与上面两个一样,只不过换成unsigned类型,则strtol()或 strtoll()会将字符串中第一个无效字符的地址存储在*endptr 中。如果根本没有数字，strtol()或 strtoll()会将 nptr 的原始值存储在*endptr 中（并返回 0）。也可将参数 endptr 设置为 NULL，表示不接收相应信息。</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoul</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="type">int</span> <span class="title function_">strtoull</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr, <span class="type">int</span> base)</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0x500&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;500&quot;</span>, <span class="literal">NULL</span>, <span class="number">16</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">8</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;0777&quot;</span>, <span class="literal">NULL</span>, <span class="number">0</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;strtol: %ld\n&quot;</span>, strtol(<span class="string">&quot;-1111&quot;</span>, <span class="literal">NULL</span>, <span class="number">2</span>));</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果:<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/8.png"></p>
-<h3 id="6-8-2-字符串转浮点型"><a href="#6-8-2-字符串转浮点型" class="headerlink" title="6.8.2 字符串转浮点型"></a>6.8.2 字符串转浮点型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">atof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr)</span>;<span class="comment">//字符串转double</span></span><br><span class="line"><span class="comment">//endptr与上面的strtol一样,同时没有进制变量.</span></span><br><span class="line"><span class="type">double</span> <span class="title function_">strtod</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">float</span> <span class="title function_">strtof</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">double</span> <span class="title function_">strtold</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *nptr, <span class="type">char</span> **endptr)</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-8-3-数字转字符串"><a href="#6-8-3-数字转字符串" class="headerlink" title="6.8.3 数字转字符串"></a>6.8.3 数字转字符串</h2><p>使用格式化IO相关库函数,如使用printf()将数字转字符串,并输出到标准输出设备,或者使用sprintf()或者snprintf()将数字转换为字符串并存储在缓冲区中.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%d&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%f&quot;</span>, <span class="number">500.111</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">memset</span>(str, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(str));</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%u&quot;</span>, <span class="number">500</span>);</span><br><span class="line">    <span class="built_in">puts</span>(str);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果:<br><img src="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/9.png"></p>
-<h2 id="6-9-给应用程序传参"><a href="#6-9-给应用程序传参" class="headerlink" title="6.9 给应用程序传参"></a>6.9 给应用程序传参</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-10-正则表达式"><a href="#6-10-正则表达式" class="headerlink" title="6.10 正则表达式"></a>6.10 正则表达式</h2><p>在许多的应用程序当中，通常会有这样的需要：给定一个字符串，检查该字符串是否符合某种条件或规则、或者从给定的字符串中找出符合某种条件或规则的子字符串，将匹配到的字符串提取出来。这种需要在很多的应用程序当中是存在的，例如，很多应用程序都有这种校验功能，譬如检验用户输入的账号或密码是否符合它们定义的规则，如果不符合规则通常会提示用户按照正确的规则输入用户名或密码。</p>
-<h3 id="6-10-1-初识正则表达式"><a href="#6-10-1-初识正则表达式" class="headerlink" title="6.10.1 初识正则表达式"></a>6.10.1 初识正则表达式</h3><p>正则表达式又称规则表达式,通常被用来检索、替换那些符合某个模式（规则）的字符串，正则表达式描述了一种字符串的匹配模式（pattern），<font color="red">可以用来检查一个给定的字符串中是否含有某种子字符串、将匹配的字符串替换或者从某个字符串中取出符合某个条件的子字符串。</font></p>
-<p>linux中通配符可以通过*或?来查找匹配.如data?.txt可以匹配</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">data.dat</span><br><span class="line">data1.dat</span><br><span class="line">data2.dat</span><br><span class="line">datax.dat</span><br><span class="line">dataN.dat</span><br><span class="line">``````  </span><br><span class="line">尽管使用通配符的方法很有用，但它还是很有限，正则表达式则更加强大、更加灵活。  </span><br><span class="line"></span><br><span class="line">许多程序设计语言都支持正则表达式。譬如，在 Perl 中就内建了一个功能强大的正则表达式引擎、Python提供了内置模块 re 用于处理正则表达式，正则表达式这个概念最初是由 Unix 中的工具软件（例如 sed 和 grep）普及开的，使用过 sed 命令的朋友想必对正则表达式并不陌生。同样，在 C 语言函数库中也提供了用于处理正则表达式的接口供程序员使用。  </span><br><span class="line"></span><br><span class="line">## 6.11 c语言中使用正则表达式</span><br><span class="line"></span><br><span class="line">c语言中使用正则表达式一般分为三步:  </span><br><span class="line">1. 编译正则表达式 regcomp()</span><br><span class="line">2. 匹配正则表达式 regexec()</span><br><span class="line">3. 释放正则表达式 regfree()</span><br><span class="line"></span><br><span class="line">``````c</span><br><span class="line">int regcomp (regex_t *compiled, const char *pattern, int cflags) </span><br><span class="line">参数说明：</span><br><span class="line">// 1. regex_t 是一个结构体数据类型，用来存放编译后的正则表达式，它的成员re_nsub 用来存储正则表达式中的子正则表达式的个数，子正则表达式就是用圆括号包起来的部分表达式。</span><br><span class="line">// 2. pattern 是指向我们写好的正则表达式的指针。</span><br><span class="line">// 3. cflags 有如下4个值或者是它们或运算(|)后的值：</span><br><span class="line">// REG_EXTENDED 以功能更加强大的扩展正则表达式的方式进行匹配。</span><br><span class="line">// REG_ICASE 匹配字母时忽略大小写。</span><br><span class="line">// REG_NOSUB 不用存储匹配后的结果。</span><br><span class="line">// REG_NEWLINE 识别换行符，这样’$’就可以从行尾开始匹配，’^’就可以从行的开头开始匹配。</span><br><span class="line">int regexec (regex_t *compiled, char *string, size_t nmatch, regmatch_t matchptr [], int eflags)</span><br><span class="line">// 参数说明：</span><br><span class="line">// 1. compiled 是已经用regcomp函数编译好的正则表达式。</span><br><span class="line">// 2. string 是目标文本串。</span><br><span class="line">// 3. nmatch 是regmatch_t结构体数组的长度。</span><br><span class="line">// 4. matchptr regmatch_t类型的结构体数组，存放匹配文本串的位置信息。</span><br><span class="line">// 5. eflags 有两个值</span><br><span class="line">// REG_NOTBOL 按我的理解是如果指定了这个值，那么’^’就不会从我们的目标串开始匹配。总之我到现在还不是很明白这个参数的意义；</span><br><span class="line">// REG_NOTEOL 和上边那个作用差不多，不过这个指定结束end of line。</span><br><span class="line">void regfree (regex_t *compiled);</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/derkampf/article/details/70661551">https://blog.csdn.net/derkampf/article/details/70661551</a><br>这个用到的时候再看吧</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/03/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-嵌入式学习路线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">初始化博客</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" class="archive-article-date">
-  	<time datetime="2024-07-03T02:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-03</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#1 嵌入式学习路线</p>
-<h1 id="必备技能大纲-–-嵌入式软件工程师："><a href="#必备技能大纲-–-嵌入式软件工程师：" class="headerlink" title="必备技能大纲 – 嵌入式软件工程师："></a>必备技能大纲 – 嵌入式软件工程师：</h1><ol>
-<li>嵌入式软件编程基础阶段<ul>
-<li>编程语言基础 –&gt; 很重要！必须要从头搞透他！<ul>
-<li>C语言编程基础</li>
-<li>特别是C语言中对指针的理解和应用</li>
-<li>指针，数组，结构体，函数，这些简单的至少得会，要能写出来</li>
-</ul>
-</li>
-<li>常见的数据结构和算法<ul>
-<li>Leetcode继续刷题 with C语言</li>
-</ul>
-</li>
-<li>开发环境 – Linux<ul>
-<li>Linux系统的基本应用</li>
-<li>Linux常用命令</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>真正嵌入式编程几段<ul>
-<li>学习ARM体系结构编程（这一阶段才是真正的嵌入式编程）<ul>
-<li>选择一款嵌入式CPU（目前ARM嵌入式CPU应用最广泛）和嵌入式开发平台<ul>
-<li>学习嵌入式CPU的裸机&#x2F;逻辑编程</li>
-<li>熟悉中断、定时器、串口、NANDFLASH、网络控制器、LCD屏、触摸屏等常用外围设备硬件工作原理</li>
-<li>如何使用C语言来编程、控制这些硬件</li>
-</ul>
-</li>
-<li>嵌入式硬件知识体系<ul>
-<li>硬件工作原理</li>
-<li>模拟电路、数字电路、微机原理和单片机</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>重点要看CPU芯片手册<ul>
-<li>英语很重要！！！</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>嵌入式系统构建阶段<ul>
-<li>学习带有操作系统的嵌入式系统构建<ul>
-<li>系统启动流程</li>
-<li>Bootloader的工作流程</li>
-<li>UBOOT的编译</li>
-<li>裁剪与移植</li>
-<li>嵌入式Linux内核的裁剪、移植与编译</li>
-<li>嵌入式根文件系统的定制、BootLoader、内核和根文件系统的烧写</li>
-</ul>
-</li>
-<li>此阶段目的是掌握带有操作系统的嵌入式系统的构建和烧写过程，以及对嵌入式系统软件的总体构成有个整体认识，为接下来学习嵌入式应用和驱动开发打下坚实基础</li>
-</ul>
-</li>
-<li>学习嵌入式Linux应用程序开发<ul>
-<li>基于Linux多进程、多线程、网络、文件与目录</li>
-<li>QT编程</li>
-</ul>
-</li>
-<li>学习嵌入式Linux驱动程序开发<ul>
-<li>学习底层嵌入式Linux设备驱动程序开发设计<ul>
-<li>常用的字符设备驱动</li>
-<li>块设备驱动</li>
-<li>LCD设备驱动</li>
-<li>触摸屏设备驱动</li>
-<li>驱动程序开发中的核心技术</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>基于嵌入式Linux平台实现的飞行器、智能机器人等综合的嵌入式实训项目<ul>
-<li>综合应用了嵌入式开发当中的应用、驱动和QT开发技术</li>
-</ul>
-</li>
-</ol>
-<p>需要学些的一些协议：UART、IIC、SPI、IIS、CAN、USB、TCP、UDP；<br>stm32单片机，Xilinx Artix-7系列FPGA，zynq7000系SOC，恩智浦arm-7系列芯片裸机开发及linux应用、驱动开发，瑞芯微rk3568系列这些芯片需要了解基础内容，资源等等。。。<br>就比如，片内资源有哪些，比如定时器、寄存器、通用IO、IIC接口、SPI接口等等<br>然后就是每个项目都写出来，如果面试官让讲一下这个项目的话。。。。  </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/03/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">展开全文 >></a>
         </p>
       
 

@@ -16,9 +16,10 @@
 <meta property="og:description" content="1.堆和栈的区别答：栈由系统自动分配，堆需要人为开辟；栈空间小，速度快，堆空间大速度慢；栈是连续的空间，堆不是。 2.什么是野指针，产生的原因是什么？答：野指针是指指向位置随机的、不正确的指针。产生原因有：创建指针时没有初始化，从而指针指向随机位置；释放指针指向的内存后，指针没有指向null。 3.DMA有什么作用答：DMA是在专门的硬件（ DMA）控制下，实现高速外设和主存储器之间自动成批交换数">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png">
+<meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/2.png">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png">
 <meta property="article:published_time" content="2024-07-25T08:00:02.000Z">
-<meta property="article:modified_time" content="2024-07-31T03:55:27.701Z">
+<meta property="article:modified_time" content="2024-07-31T07:40:06.251Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png">
@@ -67,7 +68,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 21
+			总文章数 23
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -194,7 +195,7 @@
 </ul>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png"></p>
 <ul>
-<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br>![](.&#x2F;记录面经中的一些问题&#x2F;2.png</p>
+<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/2.png"></p>
 </li>
 <li><p>信号，通过kill（pid，signal）向指定进程发送信号。</p>
 </li>
@@ -377,7 +378,7 @@
 <ul>
 <li>节省内存空间</li>
 </ul>
-<h2 id="emum"><a href="#emum" class="headerlink" title="emum"></a>emum</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> a,b=<span class="number">5</span>, c, d=<span class="number">4</span>, e &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d, %d, %d, %d&quot;</span>,a, b, c, d, e);</span><br><span class="line">	<span class="comment">//输出结果0, 5, 6, 4, 5,值可以重复,没有赋值就是前一个值+1,第一个没有赋值就是0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> a,b=<span class="number">5</span>, c, d=<span class="number">4</span>, e &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %d, %d, %d, %d&quot;</span>,a, b, c, d, e);</span><br><span class="line">	<span class="comment">//输出结果0, 5, 6, 4, 5,值可以重复,没有赋值就是前一个值+1,第一个没有赋值就是0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><h3 id="typedef-和-define-的区别"><a href="#typedef-和-define-的区别" class="headerlink" title="typedef 和 #define 的区别"></a>typedef 和 #define 的区别</h3><ul>
 <li>#define 是 c 语言中定义的语法，是预处理指令，在预处理时进行简单而机械的字符串替换，不作正确性检查，只有在编译已被展开的源程序时才会发现可能的错误并报错。可作用于类型定义、常量、变量等。</li>
@@ -579,6 +580,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2024/08/01/%E6%B1%87%E5%B7%9D%E9%9D%A2%E7%BB%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          汇川面经
+        
+      </div>
+    </a>
   
   
     <a href="/2024/07/25/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BTCP-IP%E3%80%81UDP%E3%80%81UDP%E3%80%81IP%E3%80%81SOCKET%EF%BC%88%E5%85%AD%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
