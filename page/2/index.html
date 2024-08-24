@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 23
+			总文章数 24
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -145,6 +145,103 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-leecode-动态规划" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">leecode-动态规划</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="archive-article-date">
+  	<time datetime="2024-07-15T02:19:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-15</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a><center>动态规划</center></h1><h2 id="基础题型"><a href="#基础题型" class="headerlink" title="基础题型"></a>基础题型</h2><ol>
+<li>背包问题</li>
+<li>打家劫舍</li>
+<li>股票问题</li>
+<li>子序列问题</li>
+</ol>
+<h2 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h2><ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+<li>确定递推公式：<font color="red">这部分挺像高中的数学归纳法的，说白了还是要去找规律不能空想。</font></li>
+<li>dp数组如何初始化</li>
+<li>确定遍历顺序</li>
+<li>举例推导dp数组</li>
+</ol>
+<p>好像也没啥好说的。。。确实挺像数归的，要注意每个dp[i]的值；</p>
+<p>另外一点，如果发现题目中明显的把数据区分为两类，如<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/1.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/2.png" alt="Alt text"></p>
+<p>此时就可以进行分析，得出其中一半数据，转换为背包问题。<br>如石头敲碎后要想最少别然是分为两堆质量差最少的；目标和也可以分为左右两堆，左边的都是正，右边的添加负号，这样就可以得到公式，转换为背包问题。</p>
+<p>一般dp数组就是答案，做过的题大都是这样。</p>
+<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/3.png" alt="Alt text"></p>
+<p>题目中的m，n都是背包的维度，以往所写的代码外层是物品的for循环，也就是是否加入第i个物品，然后内层从背包的维度出发，可以是重量也可以是长度，宽度等多个因素，不要认为背包的维度只能是重量。本题中外层循环的仍然是物品，也就是每一个字符串，同时内层循环变为了两层，从右下角开始遍历。</p>
+<p>然后除了01背包还有完全背包：也就是每个物品可以拿无数次。同时<font color="red">纯完全背包</font>内外两次遍历可以颠倒顺序。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/4.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/5.png" alt="Alt text"><br>其中第二种先遍历背包再遍历物品，中间过程可能不一样，但是最后的结果是一样的，因为前面更新的终将被最后也就是最优更新，同时最优被更新时又包含了所有物品。</p>
+<p>我当时的疑问：物品1的那个45如果，物品2的那个不是30比30更大，那就错了。实际上更新到45下面那个又包含了物品2，所以最优更新了。</p>
+<p><font color="red">纯完全背包是凑成背包最大价值是多少，下题中要求凑成总金额的物品组合个数时可不是纯背包问题了。<br></font></p>
+<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/6.png" alt="Alt text"></p>
+<p>纯背包问题用哪种都无所谓，但是非纯背包问题就需要考虑了。如下题中，如果物品在外背包在内</p>
+<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/7.png" alt="Alt text"><br>以下图输入为例，最终结果是4，这里就是完全没有重复的情况，因为每一次遍历中，在前面的物品不会出现在后面。由coins[0、1]组成的5是11111，1112，122组成，可以看到2只可能在1的后面。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/8.png" alt="Alt text"><br>但是如果背包在外物品在内：这个其实可以理解为背包重量j&#x3D;0时有什么放法，。。。，背包为3时有什么放法，后面背包重量变大了，再去考虑是否装的下物品123，反之前面那种，遍历了物品1之后不会再遍历，所以物品1只会出现在前面，而本种排序，就是每次都考虑当前是否放物品123，这样当然顺序可以改变。<br>i&#x3D;1 <font color="red">1 1 1 2 4  </font><br>i&#x3D;2 <font color="red">1 1 2 3 6  </font><br>i&#x3D;3 <font color="red">1 1 2 4 7  </font><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/9.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/10.jpg" alt="Alt text"></p>
+<p>多重背包问题，就是每个物品个数不一样，其实看作01背包，此时将相同物品的每个个体都看作一个物体，在原有的二重for再加一重。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> bagWeight,n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; bagWeight &gt;&gt; n;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">weight</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">value</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">nums</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; weight[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; value[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">dp</span><span class="params">(bagWeight + <span class="number">1</span>, <span class="number">0</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123; <span class="comment">// 遍历物品</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = bagWeight; j &gt;= weight[i]; j--) &#123; <span class="comment">// 遍历背包容量</span></span><br><span class="line">            <span class="comment">// 以上为01背包，然后加一个遍历个数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">1</span>; k &lt;= nums[i] &amp;&amp; (j - k * weight[i]) &gt;= <span class="number">0</span>; k++) &#123; <span class="comment">// 遍历个数</span></span><br><span class="line">                dp[j] = max(dp[j], dp[j - k * weight[i]] + k * value[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[bagWeight] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/10.png"><br>关于这个题，就是要想到两个数组相同子序列不一定要同一个位置，所以整个数组都需要遍历。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/11.png"><br>这个题也是，也需要遍历两个。与上题不同的是，这个题不需要以dp遍历到的i，j为结尾，其中的区别就是一个要求是连续的一个没有要求。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
   
     <article id="post-通信协议之CAN（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1303,115 +1400,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/05/%E4%BF%A1%E5%8F%B7%EF%BC%9A%E5%9F%BA%E7%A1%80/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-系统信息与系统资源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/">系统信息与系统资源</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/" class="archive-article-date">
-  	<time datetime="2024-07-05T02:27:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-05</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="系统信息与资源"><a href="#系统信息与资源" class="headerlink" title="系统信息与资源"></a>系统信息与资源</h1><font color="red">
-主要内容：通过linux系统调用或c库函数获取系统信息，譬如获取系统时间、日期、以及设置系统时间、日期等；除此之外，还会向大家介绍 Linux 系统下的/proc 虚拟文件系统，包括/proc 文件系统是什么以及如何从/proc 文件系统中读取系统、进程有关信息。  
-</font>
-
-<h2 id="1-1-系统信息"><a href="#1-1-系统信息" class="headerlink" title="1.1 系统信息"></a>1.1 系统信息</h2><h3 id="1-1-1-系统标识uname函数、sysinfo-函数、gethostname-函数、sysconf-函数"><a href="#1-1-1-系统标识uname函数、sysinfo-函数、gethostname-函数、sysconf-函数" class="headerlink" title="1.1.1 系统标识uname函数、sysinfo 函数、gethostname 函数、sysconf()函数"></a>1.1.1 系统标识uname函数、sysinfo 函数、gethostname 函数、sysconf()函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/utsname.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">utsname</span> &#123;</span></span><br><span class="line"><span class="type">char</span> sysname[];<span class="comment">/* 当前操作系统的名称 */</span></span><br><span class="line"><span class="type">char</span> nodename[];<span class="comment">/* 网络上的名称（主机名） */</span></span><br><span class="line"><span class="type">char</span> release[];<span class="comment">/* 操作系统内核版本 */</span></span><br><span class="line"><span class="type">char</span> version[];<span class="comment">/* 操作系统发行版本 */</span></span><br><span class="line"><span class="type">char</span> machine[];<span class="comment">/* 硬件架构类型 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _GNU_SOURCE</span></span><br><span class="line"><span class="type">char</span> domainname[];<span class="comment">/* 当前域名 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">uname</span><span class="params">(<span class="keyword">struct</span> utsname *buf)</span>;<span class="comment">//参数为一个结构体,其中有各种信息</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/sysinfo.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sysinfo</span> &#123;</span></span><br><span class="line"><span class="type">long</span> uptime;</span><br><span class="line"><span class="comment">/* 自系统启动之后所经过的时间（以秒为单位） */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> loads[<span class="number">3</span>];<span class="comment">/* 1, 5, and 15 minute load averages */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> totalram;<span class="comment">/* 总的可用内存大小 */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> freeram;<span class="comment">/* 还未被使用的内存大小 */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> sharedram;<span class="comment">/* Amount of shared memory */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> bufferram;<span class="comment">/* Memory used by buffers */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> totalswap;<span class="comment">/* Total swap space size */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> freeswap;<span class="comment">/* swap space still available */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> procs;<span class="comment">/* 系统当前进程数量 */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> totalhigh;<span class="comment">/* Total high memory size */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> freehigh;<span class="comment">/* Available high memory size */</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> mem_unit;<span class="comment">/* 内存单元大小（以字节为单位） */</span></span><br><span class="line"><span class="type">char</span> _f[<span class="number">20</span><span class="number">-2</span>*<span class="keyword">sizeof</span>(<span class="type">long</span>)-<span class="keyword">sizeof</span>(<span class="type">int</span>)]; <span class="comment">/* Padding to 64 bytes */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">sysinfo</span><span class="params">(<span class="keyword">struct</span> sysinfo *info)</span>;<span class="comment">//获取系统统计信息</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">gethostname</span><span class="params">(<span class="type">char</span> *name, <span class="type">size_t</span> len)</span>;<span class="comment">//linux系统主机名,参数分别为缓冲区及其长度</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="title function_">sysconf</span><span class="params">(<span class="type">int</span> name)</span>;</span><br></pre></td></tr></table></figure>
-<p>其中,调用 sysconf()函数获取系统的配置信息，参数 name 指定了要获取哪个配置信息，参数 name 可取以下任何一个值（都是宏定义，可通过 man 手册查询）：<br>⚫ _SC_ARG_MAX：exec 族函数的参数的最大长度，exec 族函数后面会介绍，这里先不管！<br>⚫ _SC_CHILD_MAX：每个用户的最大并发进程数，也就是同一个用户可以同时运行的最大进程数。<br>⚫ _SC_HOST_NAME_MAX：主机名的最大长度。<br>⚫ _SC_LOGIN_NAME_MAX：登录名的最大长度。<br>⚫ _SC_CLK_TCK：每秒时钟滴答数，也就是系统节拍率。<br>⚫ _SC_OPEN_MAX：一个进程可以打开的最大文件数。<br>⚫ _SC_PAGESIZE：系统页大小（page size）。<br>⚫ _SC_TTY_NAME_MAX：终端设备名称的最大长度。<br>除以上之外，还有很多，这里就不再一一列举了，可以通过 man 手册进行查看，用的比较多的是_SC_PAGESIZE 和_SC_CLK_TCK，在后面章节示例代码中有使用到。<br>若指定的参数 name 为无效值，则 sysconf()函数返回-1，并会将 errno 设置为 EINVAL。否则返回的值<br>便是对应的配置值。注意，返回值是一个 long 类型的数据。</p>
-<h1 id="1-2-时间、日期"><a href="#1-2-时间、日期" class="headerlink" title="1.2 时间、日期"></a>1.2 时间、日期</h1><p>命令行中可以直接使用date命令查看系统当前的本地时间;  </p>
-<p>操作系统中一般有两个时钟,系统时钟和实时时钟(RTC),系统时钟由系统启动之后由内核来维护,date命令查看的就是系统时钟,在系统关机后不存在.实时时钟由RTCS时钟芯片提供,有专门的电池供电.只有在开机启动时会读取一次时间,对系统时钟进行初始化.系统关机后会将此时系统时钟写入RTC硬件,进行同步操作.  </p>
-<h3 id="1-2-1-获取时间time-gettimeofday函数"><a href="#1-2-1-获取时间time-gettimeofday函数" class="headerlink" title="1.2.1 获取时间time&#x2F;gettimeofday函数"></a>1.2.1 获取时间time&#x2F;gettimeofday函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"><span class="type">time_t</span> <span class="title function_">time</span><span class="params">(<span class="type">time_t</span> *tloc)</span>;<span class="comment">//以秒为单位，返回得到的值是自 1970-01-01 00:00:00 +0000 (UTC)以来的秒数,参数为null</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">gettimeofday</span><span class="params">(<span class="keyword">struct</span> timeval *tv, <span class="keyword">struct</span> timezone *tz)</span>;<span class="comment">//time()获取到的时间只能精确到秒，如果想要获取更加精确的时间可以使用系统调用 gettimeofday 来实现，gettimeofday()函数提供微秒级时间精度</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-2-时间转换函数"><a href="#1-2-2-时间转换函数" class="headerlink" title="1.2.2 时间转换函数"></a>1.2.2 时间转换函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">ctime</span><span class="params">(<span class="type">const</span> <span class="type">time_t</span> *timep)</span>;</span><br><span class="line"><span class="type">char</span> *<span class="title function_">ctime_r</span><span class="params">(<span class="type">const</span> <span class="type">time_t</span> *timep, <span class="type">char</span> *buf)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="keyword">struct</span> tm *<span class="title function_">localtime</span><span class="params">(<span class="type">const</span> <span class="type">time_t</span> *timep)</span>;</span><br><span class="line"><span class="keyword">struct</span> tm *<span class="title function_">localtime_r</span><span class="params">(<span class="type">const</span> <span class="type">time_t</span> *timep, <span class="keyword">struct</span> tm *result)</span>;</span><br></pre></td></tr></table></figure>
-<p>返回值：成功将返回一个 char *类型指针，指向转换后得到的字符串；失败将返回 NULL。所以由此可知，使用 ctime 函数非常简单，只需将 time_t 时间变量的指针传入即可，调用成功便可返回字符串指针，拿到字符串指针之后，可以使用 printf 将其打印输出。但是 ctime()是一个不可重入函数，存在一些安全上面的隐患，ctime_r()是 ctime()的可重入版本，一般推荐大家使用可重入函数 ctime_r()，可重入函数 ctime_r()多了一个参数 buf，也就是缓冲区首地址，所以 ctime_r()函数需要调用者提供用于存放字符串的缓冲区。  </p>
-<p>localtime()函数可以把 time()或 gettimeofday()得到的秒数（time_t 时间或日历时间）变成一个 struct tm结构体所表示的时间，该时间对应的是本地时间。结构体中有年月日时分秒对应的变量.  </p>
-<h3 id="1-2-3-可以通过time函数生成随机数"><a href="#1-2-3-可以通过time函数生成随机数" class="headerlink" title="1.2.3 可以通过time函数生成随机数"></a>1.2.3 可以通过time函数生成随机数</h3><p>rand函数产生的是伪随机数,多次调用生成一组随机数序列,但是每次运行程序得到的随机数序列相同.可以通过srand设置随机数种子,代码如下:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> random_number_arr[<span class="number">8</span>];</span><br><span class="line">    <span class="type">int</span> count;</span><br><span class="line">    <span class="comment">/* 设置随机数种子 */</span></span><br><span class="line">    srand(time(<span class="literal">NULL</span>));</span><br><span class="line">    <span class="comment">/* 生成伪随机数 */</span></span><br><span class="line">    <span class="keyword">for</span> (count = <span class="number">0</span>; count &lt; <span class="number">8</span>; count++)</span><br><span class="line">        random_number_arr[count] = rand() % <span class="number">100</span>;</span><br><span class="line">    <span class="comment">/* 打印随机数数组 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (count = <span class="number">0</span>; count &lt; <span class="number">8</span>; count++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, random_number_arr[count]);</span><br><span class="line">        <span class="keyword">if</span> (count != <span class="number">8</span> - <span class="number">1</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;, &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;]\n&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-1-进程时间"><a href="#2-1-进程时间" class="headerlink" title="2.1 进程时间"></a>2.1 进程时间</h2><p>进程时间指的是进程从创建后（也就是程序运行后）到目前为止这段时间内使用 CPU 资源的时间总数，出于记录的目的，内核把 CPU 时间（进程时间）分为以下两个部分：<br>⚫ 用户 CPU 时间：进程在用户空间（用户态）下运行所花费的 CPU 时间。有时也成为虚拟时间（virtualtime）。<br>⚫ 系统 CPU 时间：进程在内核空间（内核态）下运行所花费的 CPU 时间。这是内核执行系统调用或代表进程执行的其它任务（譬如，服务页错误）所花费的时间。<br>一般来说，进程时间指的是用户 CPU 时间和系统 CPU 时间的总和，也就是总的 CPU 时间。Tips：进程时间不等于程序的整个生命周期所消耗的时间，如果进程一直处于休眠状态（进程被挂起、不会得到系统调度），那么它并不会使用 CPU 资源，所以休眠的这段时间并不计算在进程时间中。  </p>
-<h3 id="2-1-1-times函数"><a href="#2-1-1-times函数" class="headerlink" title="2.1.1 times函数"></a>2.1.1 times函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/times.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tms</span> &#123;</span></span><br><span class="line"><span class="type">clock_t</span> tms_utime; <span class="comment">/* user time, 进程的用户 CPU 时间, tms_utime 个系统节拍数 */</span></span><br><span class="line"><span class="type">clock_t</span> tms_stime; <span class="comment">/* system time, 进程的系统 CPU 时间, tms_stime 个系统节拍数 */</span></span><br><span class="line"><span class="type">clock_t</span> tms_cutime; <span class="comment">/* user time of children, 已死掉子进程的 tms_utime + tms_cutime 时间总和 */</span></span><br><span class="line"><span class="type">clock_t</span> tms_cstime; <span class="comment">/* system time of children, 已死掉子进程的 tms_stime + tms_cstime 时间总和 */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">clock_t</span> <span class="title function_">times</span><span class="params">(<span class="keyword">struct</span> tms *buf)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>返回值：返回值类型为 clock_t（实质是 long 类型），调用成功情况下，<font color="red">将返回从过去任意的一个时间点（譬如系统启动时间）所经过的时钟滴答数（其实就是系统节拍数），将(节拍数 &#x2F; 节拍率)便可得到秒数</font>，返回值可能会超过 clock_t 所能表示的范围（溢出）；调用失败返回-1，并设置 errno。  </p>
-<h3 id="2-1-2-clock函数"><a href="#2-1-2-clock函数" class="headerlink" title="2.1.2 clock函数"></a>2.1.2 clock函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">clock_t</span> <span class="title function_">clock</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line">```````</span><br><span class="line"></span><br><span class="line">返回值：返回值是到目前为止程序的进程时间，为 <span class="type">clock_t</span> 类型，&lt;font color=red&gt;注意 clock()的返回值并不是系统节拍数，如果想要获得秒数，请除以 CLOCKS_PER_SEC（这是一个宏）&lt;/font&gt;。如果返回的进程时间不可用或其值无法表示，则该返回值是<span class="number">-1</span>。  </span><br><span class="line"></span><br><span class="line"># <span class="number">3.1</span>休眠</span><br><span class="line"></span><br><span class="line">``````c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> sleep(<span class="type">unsigned</span> <span class="type">int</span> seconds);<span class="comment">//休眠多少秒</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">usleep</span><span class="params">(<span class="type">useconds_t</span> usec)</span>;<span class="comment">//休眠多少us</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span>  </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">nanosleep</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> timespec *req, <span class="keyword">struct</span> timespec *rem)</span>;<span class="comment">//高精度休眠支持纳秒级时长设置</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="4-1-申请堆内存"><a href="#4-1-申请堆内存" class="headerlink" title="4.1 申请堆内存"></a>4.1 申请堆内存</h1><h3 id="4-1-1malloc与free函数"><a href="#4-1-1malloc与free函数" class="headerlink" title="4.1.1malloc与free函数"></a>4.1.1malloc与free函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">malloc</span><span class="params">(<span class="type">size_t</span> size)</span>;/返回<span class="type">void</span>型指针</span><br><span class="line"><span class="type">void</span> <span class="title function_">free</span><span class="params">(<span class="type">void</span> *ptr)</span>;</span><br></pre></td></tr></table></figure>
-<p>关于是不是要调用free函数,毕竟函数结束后也会自动调用free释放没有释放的空间:  </p>
-<ol>
-<li>显式调用 free()能使程序具有更好的可读性和可维护性；</li>
-<li>对于很多程序来说，申请的内存并不是在程序的生命周期中一直需要，大多数情况下，都是根据代码需求动态申请、释放的，如果申请的内存对程序来说已经不再需要了，那么就已经把它释放、归还给操作系统，如果持续占用，将会导致内存泄漏，也就是人们常说的“你的程序在吃内存”！</li>
-</ol>
-<h1 id="4-1-2calloc函数"><a href="#4-1-2calloc函数" class="headerlink" title="4.1.2calloc函数"></a>4.1.2calloc函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">//calloc()在堆中动态地分配 nmemb 个长度为 size 的连续空间，并将每一个字节都初始化为 0。所以它的结果是分配了 nmemb * size 个字节长度的内存空间，并且每个字节的值都是 0。</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">calloc</span><span class="params">(<span class="type">size_t</span> nmemb, <span class="type">size_t</span> size)</span>;<span class="comment">//动态分配内存同时初始化为0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//以下两种方法等价</span></span><br><span class="line"><span class="comment">// calloc()分配内存空间并初始化</span></span><br><span class="line"><span class="type">char</span> *buf1 = (<span class="type">char</span> *)<span class="built_in">calloc</span>(<span class="number">10</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// malloc()分配内存空间并用 memset()初始化</span></span><br><span class="line"><span class="type">char</span> *buf2 = (<span class="type">char</span> *)<span class="built_in">malloc</span>(<span class="number">10</span> * <span class="number">2</span>);</span><br><span class="line"><span class="built_in">memset</span>(buf2, <span class="number">0</span>, <span class="number">20</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-1-proc文件系统"><a href="#5-1-proc文件系统" class="headerlink" title="5.1 proc文件系统"></a>5.1 proc文件系统</h2><p>proc 文件系统是一个虚拟文件系统，它以文件系统的方式为应用层访问系统内核数据提供了接口，用户和应用程序可以通过 proc 文件系统得到系统信息和进程相关信息，对 proc 文件系统的读写作为与内核进行通信的一种手段。但是与普通文件不同的是，proc 文件系统是动态创建的，文件本身并不存在于磁盘当中、只存在于内存当中,与 devfs 一样，都被称为虚拟文件系统.</p>
-<p>内核构建 proc 虚拟文件系统，它会将内核运行时的一些关键数据信息以文件的方式呈现在 proc 文件系统下的一些特定文件中，这样相当于将一些不可见的内核中的数据结构以可视化的方式呈现给应用层。</p>
-<p>proc 文件系统挂载在系统的&#x2F;proc 目录下，对于内核开发者（譬如驱动开发工程师）来说，proc 文件系统给了开发者一种调试内核的方法：<font color="red">通过查看&#x2F;proc&#x2F;xxx 文件来获取到内核特定数据结构的值，在添加了新功能前后进行对比，就可以判断此功能所产生的影响是否合理。</font>  </p>
-<p>&#x2F;proc 目录下中包含了一些目录和虚拟文件:  <center><br><img src="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/1.png">   </center><br>中间的数字是进程PID号,还有些虚拟文件是: <center><br><img src="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/2.png">   </center>   </p>
-<p>可以使用cat命令或者read()函数读取.(打开文件之后对文件描述符进行读取)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/05/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/">展开全文 >></a>
         </p>
       
 

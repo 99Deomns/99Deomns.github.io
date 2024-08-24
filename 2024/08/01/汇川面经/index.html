@@ -16,7 +16,7 @@
 <meta property="og:description" content="介绍项目，我说的还是有点快了 MEMS（micro electro mechanical systems，微机电系统）麦克风的基础知识，我没说出来，主要是微机电系统。就是一个电容器集成在微硅晶片上，可以采用表贴工艺进行制造,能够承受很高的回流焊温度,容易与 CMOS 工艺及其它音频电路相集成, 并具有改进的噪声消除性能。 问了项目中遇到的问题，我回答的是，异步时钟数据出错，以及udp协议的fpg">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-01T11:58:05.000Z">
-<meta property="article:modified_time" content="2024-08-04T05:43:13.603Z">
+<meta property="article:modified_time" content="2024-08-19T13:04:29.209Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -64,7 +64,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 23
+			总文章数 24
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -188,7 +188,15 @@
 <li>问了IIC方面的时序等，什么时候可以改变数据，具体是怎么实现的？还有问了IIC的时钟，没说上来；<br>时钟频率与数据传输率是如何对等的喃。因为一个SCL时钟周期只能传输1bit数据（并且只能在SCL的低电平期间进行SDA数据电平的变化），假如SCL的时钟频率为100KHz，那么1s中就能产生100K个SCL时钟周期，也就是说1s中可以传输100Kbit的数据。此时，可以看出时钟频率100KHz与数据传输率100Kbit&#x2F;s就是一样的了。<br>IIC传输位速率在标准模式下可达100Kbit&#x2F;s，快速模式下可达400Kbit&#x2F;s，高速模式下可达3.4Mbit&#x2F;s；也可以理解为时钟频率在标准模式下可达100kHz，快速模式下可达400kHz，高速模式下可达3.4MHz。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jackailson/article/details/89647811">https://blog.csdn.net/jackailson/article/details/89647811</a></li>
 <li>问了SPI方面的内容，问了什么时候采样，我回答的是有两个信号，一个是控制空闲时的电平一个是控制第几个跳变沿采样。<br>大概就是这样，一面过。</li>
 </ol>
-<p>下次如果面试官问有什么想问的，可以问问简历之类的。。。</p>
+<p>下次如果面试官问有什么想问的，可以问问简历之类的。。。  </p>
+<p><font color="red">面试问题：</font><br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/364011316049125376">https://www.nowcoder.com/discuss/364011316049125376</a></p>
+<p>二面HR面挂分析的原因有：</p>
+<ol>
+<li>被问到职业规划，不记得怎么说的了，没怎么说清楚，事实上也不知道说什么；</li>
+<li>被问到有什么遗憾，我说的没有，面试官问了几次，事实上也是不知道怎么说；下次说考研</li>
+<li>项目上可能说的不太好，要注重怎么解决问题，本意也是想表明自身学习、解决问题的能力还可以，但是说出来有点找人带的意思，不要再说希望有人带这种话，同时HR对项目难度没有认识，面试中问到其他同学面对同样的问题怎么解决，可以先从难度出发说，如当时说的是第二个项目，被问了查找文献没，可以说别人硕士毕业论文就是做这个，有一定帮助但是主要还是自己一步一步做，同时自己做的难度更大，涉及面更广；</li>
+<li>被问到有没有其他公司的投递，不确定性比较大可能，因为当时说了不少其他公司；</li>
+</ol>
 
       
 

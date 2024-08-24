@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 23
+			总文章数 24
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/24/%E9%9D%A2%E7%BB%8F/">面经</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/08/24/%E9%9D%A2%E7%BB%8F/" class="archive-article-date">
+  	<time datetime="2024-08-24T10:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-24</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="武汉小光子"><a href="#武汉小光子" class="headerlink" title="武汉小光子"></a>武汉小光子</h1><h2 id="一面技术面"><a href="#一面技术面" class="headerlink" title="一面技术面"></a>一面技术面</h2><ul>
+<li>对于第二个项目，为什么fpga速度快这么多？<ul>
+<li>fpga是并行的，针对图像方面；而arm是串行的，主要针对控制方面；</li>
+<li>fpga完全是自己去定制，使用硬件电路去处理；</li>
+<li>fpga减少计算任务的延迟，因为不需要通过操作系统那么多层的处理，减少上下文的切换和其他开销；</li>
+<li>树莓派相应的会受到很多因素的影响，fpga直接执行硬件逻辑，没有这么多的干扰</li>
+</ul>
+</li>
+<li>对于第一个项目，精度5%是怎么来的？<ul>
+<li>一方面是计算的结果；</li>
+<li>另一方面主要是时钟，像金属板的传播速度很快，如果使用100khz的时钟这个时间间隔就会很大，因为声速为5000m&#x2F;s，使用2.5Mhz的时钟，一个时钟的时间为0.4us，精度其实是5000m&#x2F;s*0.4us&#x3D;2mm，但是由于计算也有误差，最终的精度在5%以内。</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/24/%E9%9D%A2%E7%BB%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-leecode-图论" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -206,7 +288,19 @@
 <p>dfs：就是回溯感觉，框架如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">dfs</span><span class="params">(参数)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (选择：本节点所连接的其他节点) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        dfs(图，选择的节点); <span class="comment">// 递归</span></span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>如果是有向图，注意入度和出度。</p>
+<p>prim算法等算法：<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wG411z79G/?spm_id_from=333.788&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1wG411z79G/?spm_id_from=333.788&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
+<p>最短路径题：<a target="_blank" rel="noopener" href="https://kamacoder.com/problempage.php?pid=1053">https://kamacoder.com/problempage.php?pid=1053</a><br>prim算法：维护节点的集合，节点少更优，每次找一个距离已加入节点的最近的节点，然后维护距离。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> v, e;</span><br><span class="line">    cin &gt;&gt; v &gt;&gt; e;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">grid</span>(v + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(v + <span class="number">1</span>, <span class="number">10001</span>));</span><br><span class="line">    <span class="type">int</span> x, y, val;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; e; i++) &#123;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y &gt;&gt; val;</span><br><span class="line">        grid[x][y] = val;</span><br><span class="line">        grid[y][x] = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">mindis</span><span class="params">(v + <span class="number">1</span>, <span class="number">10001</span>)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visit</span><span class="params">(v + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= v - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="type">int</span> minindex = <span class="number">1</span>, minval = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= v; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visit[j] &amp;&amp; minval &gt; mindis[j]) &#123;</span><br><span class="line">                minindex = j;</span><br><span class="line">                minval = mindis[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visit[minindex] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">1</span>; k &lt;= v; k++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visit[k] &amp;&amp; grid[minindex][k] &lt; mindis[k]) &#123;</span><br><span class="line">                mindis[k] = grid[minindex][k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= v; i++) &#123;</span><br><span class="line">        res += mindis[i];</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p> Kruskal 维护的是边的集合。 如果 一个图中，节点多，但边相对较少，那么使用Kruskal 更优。<br>每次都找最小距离的边，需要维护边的首尾节点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">edge</span> &#123;</span><br><span class="line">    <span class="type">int</span> begin, end, val;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">cmp</span><span class="params">(edge x, edge y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.val &lt; y.val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;<span class="built_in">father</span>(<span class="number">10001</span>, <span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10001</span>; i++) &#123;</span><br><span class="line">        father[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> u == father[u] ? u : <span class="built_in">find</span>(father[u]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">join</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">    u = <span class="built_in">find</span>(u);</span><br><span class="line">    v = <span class="built_in">find</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (u == v) <span class="keyword">return</span>;</span><br><span class="line">    father[v] = u;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> v, e;</span><br><span class="line">    <span class="type">int</span> v1, v2, val;</span><br><span class="line">    cin &gt;&gt; v &gt;&gt; e;</span><br><span class="line">    vector&lt;edge&gt; Edge;</span><br><span class="line">    <span class="keyword">while</span> (e--) &#123;</span><br><span class="line">        cin &gt;&gt; v1 &gt;&gt; v2 &gt;&gt; val;</span><br><span class="line">        Edge.<span class="built_in">push_back</span>(&#123; v1,v2,val &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(Edge.<span class="built_in">begin</span>(), Edge.<span class="built_in">end</span>(), cmp);</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> aa : Edge) &#123;</span><br><span class="line">        <span class="type">int</span> x = <span class="built_in">find</span>(aa.begin);</span><br><span class="line">        <span class="type">int</span> y = <span class="built_in">find</span>(aa.end);</span><br><span class="line">        <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">            res += aa.val;</span><br><span class="line">            <span class="built_in">join</span>(aa.begin, aa.end);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>迪杰斯特拉算法：<a target="_blank" rel="noopener" href="https://kamacoder.com/problempage.php?pid=1047">https://kamacoder.com/problempage.php?pid=1047</a>  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//prim算法是铺路，从0可以到任意节点，最后mindis相加是从0到各个节点的最短路径的总和，更新的是到所有已遍历的节点的最小距离</span></span><br><span class="line"><span class="comment">//而迪杰斯特拉算法是从0到指定节点的距离，mindis每一个值是从0到i的距离，更新的是到源点的最短距离</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m, s, e, v;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">grid</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n + <span class="number">1</span>, INT_MAX));</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">minDis</span>(n + <span class="number">1</span>, INT_MAX);<span class="comment">//1到任意节点的距离</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">visit</span>(n + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">while</span> (m--) &#123;</span><br><span class="line">        cin &gt;&gt; s &gt;&gt; e &gt;&gt; v;</span><br><span class="line">        grid[s][e] = v;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> start = <span class="number">1</span>, end = n;</span><br><span class="line">    minDis[start] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> minval = INT_MAX;</span><br><span class="line">        <span class="type">int</span> cur = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visit[j] &amp;&amp; minval &gt; minDis[j]) &#123;</span><br><span class="line">                minval = minDis[j];</span><br><span class="line">                cur = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visit[cur] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt;= n; k++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visit[k] &amp;&amp; grid[cur][k]&lt;INT_MAX&amp;&amp;minDis[cur]+grid[cur][k]&lt;minDis[k]) &#123;</span><br><span class="line">                minDis[k] = minDis[cur] + grid[cur][k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (minDis[end] == INT_MAX)cout &lt;&lt; <span class="number">-1</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; minDis[end] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对负数的Bellman算法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m, s, t, v;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; grid;</span><br><span class="line">    <span class="keyword">while</span> (m--) &#123;</span><br><span class="line">        cin &gt;&gt; s &gt;&gt; v &gt;&gt; t;</span><br><span class="line">        grid.<span class="built_in">push_back</span>(&#123; s,v,t &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> start = <span class="number">1</span>, end = n;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">minDist</span><span class="params">(n + <span class="number">1</span>, INT_MAX)</span></span>;</span><br><span class="line">    minDist[start] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (vector&lt;<span class="type">int</span>&gt; j : grid) &#123;</span><br><span class="line">            <span class="type">int</span> begin = j[<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> end = j[<span class="number">1</span>];</span><br><span class="line">            <span class="type">int</span> val = j[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">if</span> (minDist[begin] != INT_MAX &amp;&amp; minDist[begin] + val &lt; minDist[end]) &#123;</span><br><span class="line">                minDist[end] = minDist[begin] + val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (minDist[end] == INT_MAX)cout &lt;&lt; <span class="string">&quot;unconnected&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; minDist[end] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -281,7 +375,15 @@
 <li>问了IIC方面的时序等，什么时候可以改变数据，具体是怎么实现的？还有问了IIC的时钟，没说上来；<br>时钟频率与数据传输率是如何对等的喃。因为一个SCL时钟周期只能传输1bit数据（并且只能在SCL的低电平期间进行SDA数据电平的变化），假如SCL的时钟频率为100KHz，那么1s中就能产生100K个SCL时钟周期，也就是说1s中可以传输100Kbit的数据。此时，可以看出时钟频率100KHz与数据传输率100Kbit&#x2F;s就是一样的了。<br>IIC传输位速率在标准模式下可达100Kbit&#x2F;s，快速模式下可达400Kbit&#x2F;s，高速模式下可达3.4Mbit&#x2F;s；也可以理解为时钟频率在标准模式下可达100kHz，快速模式下可达400kHz，高速模式下可达3.4MHz。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jackailson/article/details/89647811">https://blog.csdn.net/jackailson/article/details/89647811</a></li>
 <li>问了SPI方面的内容，问了什么时候采样，我回答的是有两个信号，一个是控制空闲时的电平一个是控制第几个跳变沿采样。<br>大概就是这样，一面过。</li>
 </ol>
-<p>下次如果面试官问有什么想问的，可以问问简历之类的。。。</p>
+<p>下次如果面试官问有什么想问的，可以问问简历之类的。。。  </p>
+<p><font color="red">面试问题：</font><br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/364011316049125376">https://www.nowcoder.com/discuss/364011316049125376</a></p>
+<p>二面HR面挂分析的原因有：</p>
+<ol>
+<li>被问到职业规划，不记得怎么说的了，没怎么说清楚，事实上也不知道说什么；</li>
+<li>被问到有什么遗憾，我说的没有，面试官问了几次，事实上也是不知道怎么说；下次说考研</li>
+<li>项目上可能说的不太好，要注重怎么解决问题，本意也是想表明自身学习、解决问题的能力还可以，但是说出来有点找人带的意思，不要再说希望有人带这种话，同时HR对项目难度没有认识，面试中问到其他同学面对同样的问题怎么解决，可以先从难度出发说，如当时说的是第二个项目，被问了查找文献没，可以说别人硕士毕业论文就是做这个，有一定帮助但是主要还是自己一步一步做，同时自己做的难度更大，涉及面更广；</li>
+<li>被问到有没有其他公司的投递，不确定性比较大可能，因为当时说了不少其他公司；</li>
+</ol>
 
       
 
@@ -352,42 +454,28 @@
       
         <p>1.堆和栈的区别<br>答：栈由系统自动分配，堆需要人为开辟；栈空间小，速度快，堆空间大速度慢；栈是连续的空间，堆不是。</p>
 <p>2.什么是野指针，产生的原因是什么？<br>答：野指针是指指向位置随机的、不正确的指针。产生原因有：创建指针时没有初始化，从而指针指向随机位置；释放指针指向的内存后，指针没有指向null。</p>
-<p>3.DMA有什么作用<br>答：DMA是在专门的硬件（ DMA）控制下，实现高速外设和主存储器之间自动成批交换数据尽量减少CPU干预的输入&#x2F;输出操作方式，主要作用就是减少CPU的负担，CPU只在开始和结束的时候干预。</p>
-<p>4.进程间的通讯方式<br>答：共享内存、信号、管道、信号量、套接字socket、消息队列。</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19j42197kh/?spm_id_from=pageDriver&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV19j42197kh/?spm_id_from=pageDriver&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
-<ul>
-<li>管道：使用<font color="red">mkfifo 管道名</font>创建，使用<font color="red">echo “写入的内容” &gt; 管道名</font>写入，通讯效率低下，不适合频繁通信。多个进程进行通信，先读的进程获得全部数据。</li>
-</ul>
-<p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png"></p>
-<ul>
-<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/2.png"></p>
-</li>
-<li><p>信号，通过kill（pid，signal）向指定进程发送信号。</p>
-</li>
-</ul>
+<p>3.DMA（直接内存访问）有什么作用<br>答：DMA是在专门的硬件（ DMA）控制下，实现高速外设和主存储器之间自动成批交换数据尽量减少CPU干预的输入&#x2F;输出操作方式，主要作用就是<font color="red">减少CPU的负担</font>，CPU只在开始和结束的时候干预。</p>
 <p>5.程序中的内存分配方法<br>答：1、连续分配方式；2、基本分页存储管理方式；3、基本分段存储管理方式 ；4、段页式存储管理方式；</p>
 <p>6.malloc、calloc、realloc及new的区别</p>
 <ul>
-<li><p>申请的内存所在位置不同。new操作符从自由存储区上为对象动态分配内存空间，malloc函数从堆上动态分配内存。</p>
-</li>
-<li><p>返回类型安全性不同。new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。malloc内存分配成功则是返回void <em>，需要通过强制类型转换将void</em>指针转换成我们需要的类型。<font color="red">值得注意的是指针移动后,free并不会自动找到首地址,所以不要随便移动.free要接收的也是首地址</font></p>
-</li>
-<li><p>内存分配失败时的返回值不同。new内存分配失败时，会抛出bac_alloc异常，它不会返回NULL。malloc分配内存失败时返回NULL。</p>
-</li>
-<li><p>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根S据类型信息自行计算。malloc则需要显式地指出所需内存的尺寸。</p>
-</li>
-<li><p>使用malloc函数动态申请空间.<font color="red">动态分配的空间来自堆空间,指针指向一个堆空间的地址,指针本身作为局部变量存储在栈空间中.</font>使用malloc时,首先扫描<font color="red">可用空间链表</font>,直至发现第一个大于申请空间的可用空间,将这段空间的首地址返回给指针.</p>
-</li>
-<li><p>可用空间链表,记录堆中每一段可用空间的起始位置和这段空间的大小,是malloc寻找可用空间的依据.使用malloc和free都会更新空间链表.</p>
+<li>申请的内存所在位置不同。new操作符从自由存储区上为对象动态分配内存空间，malloc函数从堆上动态分配内存。</li>
+<li>返回类型安全性不同。new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。malloc内存分配成功则是返回void *，需要通过强制类型转换将void*指针转换成我们需要的类型。<font color="red">值得注意的是指针移动后,free并不会自动找到首地址,所以不要随便移动.free要接收的也是首地址</font></li>
+<li>内存分配失败时的返回值不同。new内存分配失败时，会抛出bac_alloc异常，它不会返回NULL。malloc分配内存失败时返回NULL。</li>
+<li>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算。malloc则需要显式地指出所需内存的尺寸。</li>
+<li>使用malloc函数动态申请空间.<font color="red">动态分配的空间来自堆空间,指针指向一个堆空间的地址,指针本身作为局部变量存储在栈空间中.</font>使用malloc时,首先扫描<font color="red">可用空间链表</font>,直至发现第一个大于申请空间的可用空间,将这段空间的首地址返回给指针.</li>
+<li>可用空间链表,记录堆中每一段可用空间的起始位置和这段空间的大小,是malloc寻找可用空间的依据.使用malloc和free都会更新空间链表.</li>
+<li>new会同时调用构造函数，malloc不会</li>
+</ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p;</span><br><span class="line">p=(<span class="type">int</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>)*<span class="number">10</span>);<span class="comment">//以 字节为单位</span></span><br><span class="line"><span class="built_in">free</span>(p);<span class="comment">//必须通过free释放</span></span><br><span class="line">p=<span class="literal">NULL</span>;<span class="comment">//将指针置空,否则指针仍然指向原地址,但是无效</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>C++中引入new和delete,不仅开辟空间还完成了初始化的工作,delete不仅释放了空间还调用了析构函数.</p>
+
+<ul>
+<li>C++中引入new和delete,不仅开辟空间还完成了初始化的工作,delete不仅释放了空间还调用了析构函数.</li>
+</ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p=new <span class="type">int</span>(<span class="number">10</span>);<span class="comment">//初始化</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> *p1 = new <span class="type">int</span>[<span class="number">3</span>]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;<span class="comment">//开辟数组空间并初始化</span></span><br><span class="line">delete(p);</span><br><span class="line">p=<span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">Test *p=new Test();/类的初始化</span><br><span class="line">delete p;</span><br><span class="line">p=<span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>delete和delete[]的区别：当new[]中的数组类型是自定义类型时,只能通过delete[]释放空间.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *i=new <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line">delete i;</span><br><span class="line">delete[] i;<span class="comment">//两种方式都可以正确释放整个数组空间,但是也仅当数组类型是基础类型时</span></span><br><span class="line"></span><br><span class="line">Test *a=new Test[<span class="number">5</span>];</span><br><span class="line">delete a;<span class="comment">//最后析构函数只会调用1次</span></span><br></pre></td></tr></table></figure>
-<p>总之new[]和delete[]对应.</p>
-</li>
+
+<ul>
+<li>delete和delete[]的区别：当new[]中的数组类型是自定义类型时,只能通过delete[]释放空间.<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *i=new <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line">delete i;</span><br><span class="line">delete[] i;<span class="comment">//两种方式都可以正确释放整个数组空间,但是也仅当数组类型是基础类型时</span></span><br><span class="line"></span><br><span class="line">Test *a=new Test[<span class="number">5</span>];</span><br><span class="line">delete a;<span class="comment">//最后析构函数只会调用1次</span></span><br></pre></td></tr></table></figure>
+总之new[]和delete[]对应.</li>
 </ul>
 <p>7.Socket通信流程</p>
 <ul>
@@ -549,6 +637,7 @@
 <li>#define 是 c 语言中定义的语法，是预处理指令，在预处理时进行简单而机械的字符串替换，不作正确性检查，只有在编译已被展开的源程序时才会发现可能的错误并报错。可作用于类型定义、常量、变量等。</li>
 <li>typedef 是关键字，在编译时处理，有类型检查功能。它在自己的作用域内给一个已存在的类型一个别名，但不能在一个函数定义里面使用 typedef。用 typedef 定义数组、指针、结构等类型能够使程序书写简单，也能使意义明确，增强可读性。可作用于类型定义上。</li>
 <li>define常量生命周期止于编译器,不分配内存空间,存在于程序的代码段.</li>
+<li>对指针的操作使用typedef</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> myptr int* p, <span class="comment">//不加,会报错,因为是字符串替换</span></span></span><br><span class="line">myptr a,b;<span class="comment">//a 是 p 的指针变量，b 是 int 变量</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span>* myptr;<span class="comment">//用myptr代替int *;</span></span><br><span class="line">myptr a,b;</span><br></pre></td></tr></table></figure>
 
@@ -562,7 +651,7 @@
 <li>修饰函数返回值,赋值返回值的变量也需要被const修饰;</li>
 <li>const修饰指针</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span>* a=<span class="number">100</span>;<span class="comment">//不能修改*a的值,常量指针,指针可以改变,指向的值不能改变</span></span><br><span class="line"> <span class="type">int</span> <span class="type">const</span>* a=<span class="number">100</span>;<span class="comment">//与上式等价</span></span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> b;<span class="comment">//不能修改地址b的值,指针常量,指针指向的值可以改变,不能指向其他地址</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> c;<span class="comment">//不能修改地址c的值和*c的值,指向常量的常指针</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span>* a=<span class="number">100</span>;<span class="comment">//不能修改*a的值,常量指针,指针可以改变,指向的值不能改变</span></span><br><span class="line"><span class="type">int</span> <span class="type">const</span>* a=<span class="number">100</span>;<span class="comment">//与上式等价</span></span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> b;<span class="comment">//不能修改地址b的值,指针常量,指针指向的值可以改变,不能指向其他地址</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> c;<span class="comment">//不能修改地址c的值和*c的值,指向常量的常指针</span></span><br></pre></td></tr></table></figure>
 
 <p><font color="red">常量指针,常量在前,值是常量;指针常量,指针在前,指针是常量;</font></p>
 <ul>
@@ -604,7 +693,7 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> c[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(c)); <span class="comment">//5</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(c)); <span class="comment">//3</span></span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> i[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(i)); <span class="comment">//20</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//2</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//4,显示出来是(int)0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//报错空指针</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//2，这是一个字符串，后面还有一个\0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&quot;\0&quot;</span>));<span class="comment">//0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//4,显示出来是(int)0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(<span class="string">&#x27;\0&#x27;</span>));<span class="comment">//报错空指针</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch[]  = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="type">char</span> str[<span class="number">10</span>] = &#123;<span class="string">&#x27;h&#x27;</span>,<span class="string">&#x27;e&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;o&#x27;</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(ch));<span class="comment">//6</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(ch));<span class="comment">//5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(str));<span class="comment">//10</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(str));<span class="comment">//5</span></span><br></pre></td></tr></table></figure>
 
@@ -657,8 +746,8 @@
 </ul>
 <h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="内存分配方式"><a href="#内存分配方式" class="headerlink" title="内存分配方式"></a>内存分配方式</h3><ul>
 <li>静态存储区,如全局变量,静态变量</li>
-<li>栈上分配</li>
-<li>堆上分配</li>
+<li>栈上分配，自动创建，存储局部变量，函数执行完成，销毁</li>
+<li>堆上分配，手动创建释放</li>
 </ul>
 <h3 id="栈的作用"><a href="#栈的作用" class="headerlink" title="栈的作用"></a>栈的作用</h3><ul>
 <li>存储临时变量,临时变量包括函数参数和函数内部定义的临时变量函数调用中和函数调用相关的函数返回地址，函数中的临时变量，寄存器等均保存在栈中，函数调动返回后从栈中恢复寄存器和临时变量等函数运行场景;</li>
@@ -674,6 +763,122 @@
 <li>栈：使用栈空间存储函数的返回地址、参数、局部变量、返回值</li>
 </ul>
 <h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><p>简单地说就是申请了一块内存空间，使用完毕后没有释放掉,它的一般表现方式是程序运行时间越长，占用内存越多，最终用尽全部内存，整个系统崩溃由程序申请的一块内存，且没有任何一个指针指向它，那么这块内存就泄露了;</p>
+<h2 id="数组与链表的区别"><a href="#数组与链表的区别" class="headerlink" title="数组与链表的区别"></a>数组与链表的区别</h2><ul>
+<li><p>数组的地址的连续的空间，而链表不是</p>
+</li>
+<li><p>数组访问速度更快，通过下标访问，而链表需要进行遍历</p>
+</li>
+<li><p>链表的增删改查速度快</p>
+</li>
+</ul>
+<h2 id="全局变量和局部变量的区别"><a href="#全局变量和局部变量的区别" class="headerlink" title="全局变量和局部变量的区别"></a>全局变量和局部变量的区别</h2><ul>
+<li>作用域</li>
+<li>生命周期</li>
+<li>存储方式，全局变量存储在全局数据区中，局部变量存储在栈中</li>
+</ul>
+<h2 id="数组名和指针的区别"><a href="#数组名和指针的区别" class="headerlink" title="数组名和指针的区别"></a>数组名和指针的区别</h2><ul>
+<li>数组名就是数组首元素的地址，也可以看作常量指针，不能修改指向，4个字节</li>
+<li>使用指针访问数组时需要使用解引用，间接访问，而数组时直接访问</li>
+<li>使用sizeof时计算数组名是整个数组的大小</li>
+</ul>
+<h2 id="struct和class"><a href="#struct和class" class="headerlink" title="struct和class"></a>struct和class</h2><ul>
+<li>struct成员默认公有，class成员默认私有</li>
+<li>继承方面也是struct公有继承，class私有继承</li>
+<li>struct作简单数据结构，class用于封装和继承</li>
+</ul>
+<h2 id="C-中类的访问权限"><a href="#C-中类的访问权限" class="headerlink" title="C++中类的访问权限"></a>C++中类的访问权限</h2><ul>
+<li>公有私有</li>
+<li>protected，只能在类内部或者子类中进行访问</li>
+</ul>
+<h2 id="什么是交叉编译"><a href="#什么是交叉编译" class="headerlink" title="什么是交叉编译"></a>什么是交叉编译</h2><p>在一个平台上编译出另外一个平台的可执行程序，如arm开发板没有交叉编译工具链，要想执行.c文件需要借助ubuntu使用交叉编译工具链，将.c文件编译成可执行文件.</p>
+<h2 id="UART、IIC、SPI"><a href="#UART、IIC、SPI" class="headerlink" title="UART、IIC、SPI"></a>UART、IIC、SPI</h2><ul>
+<li>uart异步通信没有时钟线，另外两个有时钟线，同步通信</li>
+<li>接线的区别：<ul>
+<li>UART：TX、RX</li>
+<li>SPI：SCLK、CS、MOSI、MISO</li>
+<li>IIC：SDA、SCL</li>
+</ul>
+</li>
+<li>设备数量：<ul>
+<li>uart一对一通信</li>
+<li>IIC多主机和多从机</li>
+<li>SPI：一主机多从机</li>
+</ul>
+</li>
+<li>传输速度：<ul>
+<li>UART：115200、9600</li>
+<li>IIC：标准模式（100kbs）、快速模式（400kbs）、高速模式（3.4Mbps）</li>
+<li>SPI：高速</li>
+</ul>
+</li>
+<li>工作模式：<ul>
+<li>uart：全双工半双工</li>
+<li>IIC：半双工</li>
+<li>SPI：全双工</li>
+</ul>
+</li>
+</ul>
+<h3 id="SPI有几根线，可以去除哪些？"><a href="#SPI有几根线，可以去除哪些？" class="headerlink" title="SPI有几根线，可以去除哪些？"></a>SPI有几根线，可以去除哪些？</h3><p>4根，双向通信根据实际情况去除，只进行一对一时去除CS；</p>
+<h2 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h2><ul>
+<li>数据可靠性：TCP提供可靠的数据传输，三次握手；UDP无连接，不可靠</li>
+<li>通信方式：TCP面向连接，UDP不需要连接</li>
+<li>数据传输速率：UDP更快，丢包概率大</li>
+<li>应用场景：TCP一般用于邮件，文件传输（FTP）；UDP：视频、游戏、直播，丢几个包无所谓</li>
+</ul>
+<h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><ul>
+<li>定义：进程是资源分配的基本单位；线程是进程的执行单元，CPU调度的基本单位</li>
+<li>资源占用：每一个进程都有自己独立的地址空间，线程共享线程的地址空间</li>
+<li>容错性：进程出现问题不会影响其他进程的执行，但是线程出现问题可能会影响其他线程甚至导致程序崩溃</li>
+<li>调度和切换：进程是一个独立的单位，需要恢复的上下文内容较多，消耗的资源较多，线程消耗的资源较少</li>
+</ul>
+<h2 id="进程间的通讯方式"><a href="#进程间的通讯方式" class="headerlink" title="进程间的通讯方式"></a>进程间的通讯方式</h2><p>答：共享内存、信号、管道、命名管道、信号量、套接字socket、消息队列。其中管道、共享内存（内核空间中创建的贡献内存）、信号量、消息队列需要借助内核；</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19j42197kh/?spm_id_from=pageDriver&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV19j42197kh/?spm_id_from=pageDriver&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></p>
+<ul>
+<li>管道：使用<font color="red">mkfifo 管道名</font>创建，使用<font color="red">echo “写入的内容” &gt; 管道名</font>写入，通讯效率低下，不适合频繁通信。多个进程进行通信，先读的进程获得全部数据。</li>
+</ul>
+<p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/3.png"></p>
+<ul>
+<li><p>消息队列：消息队列在发送数据的时候，按照一个个独立单元(消息体)进行发送，其中每个消息体规定大小块，同时发送方和接收方约定好消息类型或者正文的格式。在管道中，其大小受限且只能承载无格式字节流的方式，而消息队列允许不同进程以消息队列的形式发送给任意的进程。<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/2.png"></p>
+</li>
+<li><p>信号，通过kill（pid，signal）向指定进程发送信号。</p>
+</li>
+</ul>
+<h2 id="进程有几个状态"><a href="#进程有几个状态" class="headerlink" title="进程有几个状态"></a>进程有几个状态</h2><ul>
+<li>创建状态，调用fork函数后进行该状态</li>
+<li>就绪状态：进程已经准备好，还没有运行</li>
+<li>运行状态：已经获得系统资源可以运行</li>
+<li>阻塞状态：等待信号量、或者互斥量等事件</li>
+<li>终止状态：进程结束<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/4.png"></li>
+</ul>
+<h2 id="什么是僵尸进程、孤儿进程、守护进程"><a href="#什么是僵尸进程、孤儿进程、守护进程" class="headerlink" title="什么是僵尸进程、孤儿进程、守护进程"></a>什么是僵尸进程、孤儿进程、守护进程</h2><ul>
+<li>僵尸进程：fork创建子进程后，如果父进程没有调用wait或waitpid函数获取子进程的退出状态并收尸，这个子进程的信息还保存在系统中</li>
+<li>孤儿进程：父进程异常结束，子进程由init1号进程收养</li>
+<li>守护进程：父进程创建出子进程后，结束父进程，这个进程就是守护进程</li>
+</ul>
+<h2 id="FreeRTOS的调度算法"><a href="#FreeRTOS的调度算法" class="headerlink" title="FreeRTOS的调度算法"></a>FreeRTOS的调度算法</h2><ul>
+<li>抢占式调度：高优先级打断低优先级的任务的执行</li>
+<li>时间片轮转：相同优先级的任务具有相同大小的时间片（1ms），时间片耗尽，退出</li>
+<li>协作式调度：</li>
+</ul>
+<h2 id="RTOS中的任务同步方式"><a href="#RTOS中的任务同步方式" class="headerlink" title="RTOS中的任务同步方式"></a>RTOS中的任务同步方式</h2><ul>
+<li>队列：还可以进行数据的传递</li>
+<li>信号量：①进程信号量（实现共享资源的访问）②计数型信号量</li>
+<li>互斥量：实现共享资源的访问</li>
+<li>事件组：等待多个任务的通知</li>
+<li>任务通知：轻量级的任务同步方式，TCB，不需要创建就可以使用（用于一对一的通信）</li>
+</ul>
+<h2 id="同步通信和异步通信"><a href="#同步通信和异步通信" class="headerlink" title="同步通信和异步通信"></a>同步通信和异步通信</h2><ul>
+<li>异步通信：发送、接收独立进行，发送方和接收方不需要同时进行操作，发送方发送完后可以继续执行其他任务，接收方在数据到达后进行处理；非阻塞，无需等待响应，适用于延迟较大的场景；</li>
+<li>同步通信：发送方会等待接收方的响应，才会进行后续的操作，发送方和接收方必须在相同的时间节点进行操作；如IIC的ACK信号；阻塞需要等待响应，适用于延迟较小的场景；</li>
+</ul>
+<h2 id="环形缓冲区"><a href="#环形缓冲区" class="headerlink" title="环形缓冲区"></a>环形缓冲区</h2><ul>
+<li>经常被用于串口通信，socket，使用环形缓冲区将数据保存，使用R、W指针对数据进行操作</li>
+</ul>
+<h2 id="if的写法"><a href="#if的写法" class="headerlink" title="if的写法"></a>if的写法</h2><p>if（0&#x3D;&#x3D;x）和if（x&#x3D;&#x3D;0），第一种写法可以有效防止漏写&#x3D;，如if（0&#x3D;x）会报错，另外一种就不会；</p>
+<h2 id="RS232和RS485"><a href="#RS232和RS485" class="headerlink" title="RS232和RS485"></a>RS232和RS485</h2><ul>
+<li>RS232：全双工TX、RX，用于点对点的通信；传输速率15m，传输速率更低</li>
+<li>RS485：半双工，差分传输，两根信号线差值超过多少就认为是高电平；抗干扰能力强（双绞线，受到干扰相同），用于多对多、一对多的通信，工业控制；传输距离更远；1.5km</li>
+</ul>
 
       
 
@@ -1227,103 +1432,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/19/8%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-leecode-动态规划" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">leecode-动态规划</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="archive-article-date">
-  	<time datetime="2024-07-15T02:19:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-15</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a><center>动态规划</center></h1><h2 id="基础题型"><a href="#基础题型" class="headerlink" title="基础题型"></a>基础题型</h2><ol>
-<li>背包问题</li>
-<li>打家劫舍</li>
-<li>股票问题</li>
-<li>子序列问题</li>
-</ol>
-<h2 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h2><ol>
-<li>确定dp数组（dp table）以及下标的含义</li>
-<li>确定递推公式：<font color="red">这部分挺像高中的数学归纳法的，说白了还是要去找规律不能空想。</font></li>
-<li>dp数组如何初始化</li>
-<li>确定遍历顺序</li>
-<li>举例推导dp数组</li>
-</ol>
-<p>好像也没啥好说的。。。确实挺像数归的，要注意每个dp[i]的值；</p>
-<p>另外一点，如果发现题目中明显的把数据区分为两类，如<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/1.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/2.png" alt="Alt text"></p>
-<p>此时就可以进行分析，得出其中一半数据，转换为背包问题。<br>如石头敲碎后要想最少别然是分为两堆质量差最少的；目标和也可以分为左右两堆，左边的都是正，右边的添加负号，这样就可以得到公式，转换为背包问题。</p>
-<p>一般dp数组就是答案，做过的题大都是这样。</p>
-<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/3.png" alt="Alt text"></p>
-<p>题目中的m，n都是背包的维度，以往所写的代码外层是物品的for循环，也就是是否加入第i个物品，然后内层从背包的维度出发，可以是重量也可以是长度，宽度等多个因素，不要认为背包的维度只能是重量。本题中外层循环的仍然是物品，也就是每一个字符串，同时内层循环变为了两层，从右下角开始遍历。</p>
-<p>然后除了01背包还有完全背包：也就是每个物品可以拿无数次。同时<font color="red">纯完全背包</font>内外两次遍历可以颠倒顺序。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/4.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/5.png" alt="Alt text"><br>其中第二种先遍历背包再遍历物品，中间过程可能不一样，但是最后的结果是一样的，因为前面更新的终将被最后也就是最优更新，同时最优被更新时又包含了所有物品。</p>
-<p>我当时的疑问：物品1的那个45如果，物品2的那个不是30比30更大，那就错了。实际上更新到45下面那个又包含了物品2，所以最优更新了。</p>
-<p><font color="red">纯完全背包是凑成背包最大价值是多少，下题中要求凑成总金额的物品组合个数时可不是纯背包问题了。<br></font></p>
-<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/6.png" alt="Alt text"></p>
-<p>纯背包问题用哪种都无所谓，但是非纯背包问题就需要考虑了。如下题中，如果物品在外背包在内</p>
-<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/7.png" alt="Alt text"><br>以下图输入为例，最终结果是4，这里就是完全没有重复的情况，因为每一次遍历中，在前面的物品不会出现在后面。由coins[0、1]组成的5是11111，1112，122组成，可以看到2只可能在1的后面。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/8.png" alt="Alt text"><br>但是如果背包在外物品在内：这个其实可以理解为背包重量j&#x3D;0时有什么放法，。。。，背包为3时有什么放法，后面背包重量变大了，再去考虑是否装的下物品123，反之前面那种，遍历了物品1之后不会再遍历，所以物品1只会出现在前面，而本种排序，就是每次都考虑当前是否放物品123，这样当然顺序可以改变。<br>i&#x3D;1 <font color="red">1 1 1 2 4  </font><br>i&#x3D;2 <font color="red">1 1 2 3 6  </font><br>i&#x3D;3 <font color="red">1 1 2 4 7  </font><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/9.png" alt="Alt text"><br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/10.jpg" alt="Alt text"></p>
-<p>多重背包问题，就是每个物品个数不一样，其实看作01背包，此时将相同物品的每个个体都看作一个物体，在原有的二重for再加一重。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> bagWeight,n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; bagWeight &gt;&gt; n;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">weight</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">value</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">nums</span><span class="params">(n, <span class="number">0</span>)</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; weight[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; value[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">dp</span><span class="params">(bagWeight + <span class="number">1</span>, <span class="number">0</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123; <span class="comment">// 遍历物品</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = bagWeight; j &gt;= weight[i]; j--) &#123; <span class="comment">// 遍历背包容量</span></span><br><span class="line">            <span class="comment">// 以上为01背包，然后加一个遍历个数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">1</span>; k &lt;= nums[i] &amp;&amp; (j - k * weight[i]) &gt;= <span class="number">0</span>; k++) &#123; <span class="comment">// 遍历个数</span></span><br><span class="line">                dp[j] = max(dp[j], dp[j - k * weight[i]] + k * value[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[bagWeight] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/10.png"><br>关于这个题，就是要想到两个数组相同子序列不一定要同一个位置，所以整个数组都需要遍历。<br><img src="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/11.png"><br>这个题也是，也需要遍历两个。与上题不同的是，这个题不需要以dp遍历到的i，j为结尾，其中的区别就是一个要求是连续的一个没有要求。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/15/leecode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">展开全文 >></a>
         </p>
       
 
