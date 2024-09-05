@@ -28,8 +28,9 @@
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/8.png">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/1.png">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/13.png">
+<meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/14.png">
 <meta property="article:published_time" content="2024-07-25T08:00:02.000Z">
-<meta property="article:modified_time" content="2024-09-04T13:24:51.726Z">
+<meta property="article:modified_time" content="2024-09-05T11:26:47.588Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/5.png">
@@ -78,7 +79,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 24
+			总文章数 25
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -738,6 +739,33 @@
 <li>pthread_detach()即主线程与子线程分离，两者相互不干涉，子线程结束同时子线程的资源自动回</li>
 <li>pthread_join()即是子线程合入主线程，主线程会一直阻塞，直到子线程执行结束，然后回收子线程资源，并继续执行。</li>
 </ul>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p><a target="_blank" rel="noopener" href="https://subingwen.cn/linux/threadpool/">https://subingwen.cn/linux/threadpool/</a></p>
+<p>使用线程时就创建一个线程，但是当并发线程很多，且每个线程都只是运行一会就结束，频繁创建线程会大大降低系统的效率，因为创建和销毁都会占用系统的资源；</p>
+<p>线程池是一种多线程处理形式，处理过程中将任务添加到队列，然后在创建线程后自动启动这些任务。线程池线程都是后台线程。每个线程都使用默认的堆栈大小，以默认的优先级运行，并处于多线程单元中。如果某个线程在托管代码中空闲（如正在等待某个事件）,则线程池将插入另一个辅助线程来使所有处理器保持繁忙。如果所有线程池线程都始终保持繁忙，但队列中包含挂起的工作，则线程池将在一段时间后创建另一个辅助线程但线程的数目永远不会超过最大值。超过最大值的线程可以排队，但他们要等到其他线程完成后才启动。</p>
+<p>线程池主要分为三个部分：</p>
+<ul>
+<li><font color="red">任务队列，存储需要处理的任务</font>，由工作的线程来处理这些任务；<font color="red">里面是回调函数</font><ul>
+<li>通过线程池提供的API函数，将待处理的任务添加到任务队列，或者删除；</li>
+<li>已处理的任务会被从任务队列中删除；</li>
+<li>线程池的使用者，也就是调用线程池函数往任务队列中添加任务的线程就是生产者线程；</li>
+</ul>
+</li>
+<li><font color="red">工作的线程，N个，负责从任务队列中取任务</font><ul>
+<li>线程池中维护了一定数量的工作线程, 他们的作用是是不停的读任务队列, 从里边取出任务并处理；</li>
+<li>如果任务队列为空, 工作的线程将会被阻塞 (使用条件变量&#x2F;信号量阻塞)；</li>
+<li>如果阻塞之后有了新的任务, 由生产者将阻塞解除, 工作线程开始工作；</li>
+</ul>
+</li>
+<li><font color="red">管理者线程（不处理任务队列中的任务），1个，负责管理工作的线程</font><ul>
+<li>它的任务是周期性的对任务队列中的任务数量以及处于忙状态的工作线程个数进行检测；<ul>
+<li>当任务过多的时候, 可以适当的创建一些新的工作线程</li>
+<li>当任务过少的时候, 可以适当的销毁一些工作的线程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/14.png"></p>
 
       
 
