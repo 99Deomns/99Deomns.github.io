@@ -60,7 +60,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 27
+			总文章数 28
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -145,6 +145,112 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-基于FPGA-树莓派的声源定位系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">基于FPGA+树莓派的声源定位系统设计</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+		
+		<!--显示阅读次数完毕-->
+
+        
+        <a href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
+  	<time datetime="2024-07-23T02:41:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-23</time>
+</a>
+        
+	
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基于FPGA-树莓派的声源定位与声纹识别系统设计"><a href="#基于FPGA-树莓派的声源定位与声纹识别系统设计" class="headerlink" title="基于FPGA+树莓派的声源定位与声纹识别系统设计"></a>基于FPGA+树莓派的声源定位与声纹识别系统设计</h1><p>组成部分：八臂式螺旋麦克风阵列、FPGA、树莓派，由于需要使用较多的麦克风，所以引脚资源以及后续还原PDM信号所需的资源需要注意，如果使用IIS接口，引脚资源爆炸，使用FPGA还原PDM信号，不仅速度快，而且引脚资源占用少，然后通过千兆网口将数据传输至树莓派，树莓派作为上位机完成网络助手、声源定位、声纹识别</p>
+<h2 id="八臂式螺旋麦克风阵列"><a href="#八臂式螺旋麦克风阵列" class="headerlink" title="八臂式螺旋麦克风阵列"></a>八臂式螺旋麦克风阵列</h2><p>风车式，八臂，每个臂8个麦克风，采用MEMS型麦克风，PDM接口，时钟线和数据线，其中数据线在每个时钟的上升沿和下降沿分别为麦克风的的左右声道数据，在硬件原理图上由麦克风的一个引脚决定，低电平代表数据在上升沿，反之下降沿。</p>
+<h2 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h2><h3 id="PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原"><a href="#PDM（脉冲密度调制，Pulse-Density-Modulation）数据还原" class="headerlink" title="PDM（脉冲密度调制，Pulse Density Modulation）数据还原"></a>PDM（脉冲密度调制，Pulse Density Modulation）数据还原</h3><p>是一种使用二进制数0,1表示模拟信号的调制方式。在PDM信号中，模拟信号的幅值使用输出脉冲对应区域的密度表示。PWM波是PDM波转换频率固定的一种特例，对于一个使用8位长表示的电压信号而言，峰值的1&#x2F;2处会高低电平各持续一半，即128个时钟周期。在PDM信号中，会在1,0之间每个时钟周期都切换。两种波形的平均值都是50%，但是PDM波切换的更加频繁。对于100%和0的电平信号，两种方式的输出相同。</p>
+<p><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/2.png" alt="Alt text"></p>
+<p>数据还原在FPGA中进行，方法主要有低通滤波器和下图中的方式两种。<br>滤波器（数字、模拟）公式：y(k)&#x3D;(1−a)⋅y(k−1)+a⋅x(k)<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42887190/article/details/125749509">https://blog.csdn.net/weixin_42887190/article/details/125749509</a><br>但是通过物理电路低通滤波器还原出来的信号每一个信号都占至少8位的位宽，同时16个麦克风同时工作，所以使用该种方法不现实，如果使用FPGA对其进行处理，可以有效减少引脚资源占用。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/1.png" alt="Alt text"><br>如上图所示，PDM信号的频率位2.304MHz，工作频率说明书推荐的，这个频率相对于一般的采样频率48k、44.1kHz较高，同时也较为冗余，可以通过CIC抽取滤波器抽取降采样12倍，通过两个HB半带滤波器分别降采样2倍，最终2.304MhZ降采样48倍得到48kHz的采样率。（完全包含可听声，且相比于44.1kHz留有更多的余量，也更好通过分频得到）。</p>
+<p>最开始通过IDDR原语将时钟上下沿的数据分出来，以前是分别以上升沿和下降沿作为触发信号，这样会导致数据有半个时钟的误差。<br>处理过程其实也没啥好说的，逐级进去就行了，但是有一点需要注意，就是滤波器的有效信号，这点非常重要。比如CIC滤波器输出到HB1滤波器的信号有cic_data和cic_tvalid这两个信号，cic_tvalid信号一定要与滤波器的信号时钟保持同步，具体来说就是滤波器时钟可以是50Mhz，但是cic_tvalid的一个有效高电平持续时间也必须是20ns，否则如果以3Mhz为valid信号的频率，一个数据会被送进hb1 50&#x2F;3&#x3D;17次，这样就会导致数据出现问题，最终波形不符，但是频谱图没啥问题，当然这不重要。</p>
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><h4 id="传输方式"><a href="#传输方式" class="headerlink" title="传输方式"></a>传输方式</h4><p>网线的几种接口：</p>
+<ol>
+<li>MII接口：25M的时钟，4bit数据线，100M</li>
+<li>GMII接口：125M的时钟，8bit的数据线，1000M</li>
+<li>RGMII接口：125M的时钟，4bit的数据线，但是时钟上升沿和下降沿都有数据，那就是125*4*2&#x3D;1000M</li>
+</ol>
+<p>对于16个麦克风的数据要求是并行的，每次采样1024个数据，每个数据16位，重要的是并行，所以这里我选择将数据串联在一起，通过fifo传出去，16个16位麦克风数据就是256位，经过观察发现，完全不需要占用16位，裁剪成8位，最后合并的数据就是128位，但是128位数据输入到fifo中最多只能输出16位数据，这与预期的千兆网8位的数据位不符。</p>
+<p>理论上，一个UDP包最大可以达到65535-20-8(65507，IP首部20个字节，UDP首部8个字节)个字节,<br>但是许多平台实际的限制是8192个字节（8KB）。<br>另外由于链路层要将数据进行分组，比如以太网的MTU为1500字节，<br>因此在实际的设计时，包长的选择还要尽量减少链路层的分组，这样才能达到最大的传输速度。因此我们UDP包应该在1024个字节之内。</p>
+<p>解决方案：首先确定一点，以太网数据帧的长度在46-1500字节，这是由以太网的物理特性决定的.这个1500字节被称为链路层的MTU(最大传输单元). 但这并不是指链路层的长度被限制在1500字节,其实这这个MTU指的是链路层的数据区.并不包括链路层的首部和尾部的18个字节.所以,事实上,这个1500字节就是网络层IP数据报的长度限制.<br>因为IP数据报的首部为20字节,所以IP数据报的数据区长度最大为1480字节.<br>而这个1480字节就是用来放TCP传来的TCP报文段或UDP传来的UDP数据报的.<br>又因为UDP数据报的首部8字节,所以UDP数据报的数据区最大长度为1472字节.<br>这个<font color="red">1472字节</font>就是我们可以使用的字节数。<br><font color="red">注：下图中的前导码那些并不属于以太网数据帧1500字节，属于TX_ETH_HEADER，在这1500字节中有TX_IP_HEADER，20字节 ，TX_UDP_HEADER，8个字节，一共28个字节，所以数据就只有1472个字节。</font><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png" alt="Alt text"><br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png" alt="Alt text"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/cainv89/article/details/50676670">https://blog.csdn.net/cainv89/article/details/50676670</a><br>上图中就显示了udp首部的格式，但是这个伪首部是在IP首部中的，同时这个0，17，udp长度我没有写。<br>以太网报头：mac地址之类的东西<br>IP报头：IP协议版本，。。。。之类的东西，最后8个字节是两个ip地址<br>udp报头：两个端口号（4bytes），udp数据长度（2bytes），校验和（2bytes）</p>
+<p>设置以下八个状态：IDLE、TX_PREAMBLE（前导码，帧开始符7+1个字节，对应8个时钟）、TX_ETH_HEADER（一对mac地址和长度，6+6+2个字节，对应14个时钟）、TX_IP_HEADER（IP报头20个字节）、TX_UDP_HEADER（UDP报头8个字节）、TX_DATA、TX_FILL_DATA、TX_CRC输出指定的数据。</p>
+<p>16位数据时钟和8位输出时钟都是125M，通过fifo的rd_en来控制fifo什么时候刷新数据，这样就避免了跨时钟数据的不同步问题，如下图。因为我最开始想到的是125M分频给fifo，但是跨时钟需要进行同步，这其中牵扯太多了，最后通过下图这种方式控制数据的读取，这样数据就可以按照125M时钟进入GMII了，最后通过ODDR原语将数据分别放到上升沿和下降沿中。<br><img src="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/6.png" alt="Alt text"></p>
+<p>然后是数据的快拍数，一般是1024，512这种数字，但是为了后续处理方便，尽量得到整数个包，一个包1472个字节，那就将快拍设定为1472个这样就有1472<em>16</em>1个字节，从而最后有16个包需要发送。</p>
+<p>大致需要设计以下几个IP核：</p>
+<ol>
+<li>控制多个包传输（对应工程中的eth_send_ctrl），因为一次性会有16个包，所以每次传输都需要判断剩余的数据量，以便进行新一个包的传输。</li>
+<li>控制一个包传输（对应工程的eth_udp_tx_gmii），一个包有1500个字节+前导码那一堆东西，这个ip用来发送这些，并传输数据。</li>
+<li>gmii_to_rgmii，两个接口的转换，将8位压缩至4位。</li>
+<li>按键开关，为了便于调试，以及fifo的写入，按下按键传输数据1472次，也就是1472个8位*16个.</li>
+</ol>
+<p>期间遇到的问题：  </p>
+<ol>
+<li>eth的reset没有加上，导致以太网一直处于复位的状态；</li>
+<li>使用时没接网线，导致fpga时钟为默认时钟，接上网线之后才是125M；</li>
+<li>前面说到的PDM脉冲密度调制，还原出来的数据一直不符，结果是时钟问题；</li>
+<li>跨时钟域处理，一定要同步，否则在一些数据上就会出错；</li>
+<li>fifo真好用；</li>
+<li>CRC校验<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&vd_source=4971acba02ef23a0bccd70049de4932f">https://www.bilibili.com/video/BV1V4411Z7VA/?spm_id_from=333.337.search-card.all.click&amp;vd_source=4971acba02ef23a0bccd70049de4932f</a></li>
+</ol>
+<h2 id="树莓派"><a href="#树莓派" class="headerlink" title="树莓派"></a>树莓派</h2><h3 id="udp助手"><a href="#udp助手" class="headerlink" title="udp助手"></a>udp助手</h3><p>这个其实就是一些qt自带的库函数，首先是绑定自身的port和ip，然后分别有函数writeDatagram、readDatagram对数据进行发送与接收。主要是接收，按照指定顺序与要求接收就可以了；然后就是一些细节上的东西，如接收要十六进制接收，否则会乱码，同时还要能够唤起另外一个声源定位程序，接收数据时，最好有显示接收了多少字节。。。</p>
+<h3 id="声源定位软件"><a href="#声源定位软件" class="headerlink" title="声源定位软件"></a>声源定位软件</h3><p>写了两个版本的，分别用C++和python，使用pyqt写更加简便。按照matlab仿真的按顺序写下就好了。</p>
+<p>然后就是些原理性的东西。。。</p>
+<p>首先是，整体的一个设计是基于远场的声源定位，然后采集到的数据包含了噪声，传统的波束形成算法对于每个麦克风都是一视同仁的，然后由于每个麦克风相对于基准都有特定的延迟，然后通过抵消这个延迟就可以得到最大的功率，而自适应波束形成通过自适应的调整对各个阵元的加权系数，来更好的减少噪声的影响，主要是保证声源的基础上，尽可能地减少整体的功率，这样最后就得到了加权系数，从而计算出实际功率，然后根据公式进行谱峰搜索，找到谱峰最低点，此时就代表的声源的波达角度。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/23/%E5%9F%BA%E4%BA%8EFPGA-%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%A3%B0%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
   
     <article id="post-基于stm32的超声测厚系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1209,90 +1315,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/11/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E4%B9%8BUART%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-leecode：贪心算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">leecode：贪心算法</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-		
-		<!--显示阅读次数完毕-->
-
-        
-        <a href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2024-07-09T02:40:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-09</time>
-</a>
-        
-	
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法 "></a><center>贪心算法 </center></h1><p>记录：这部分也没啥好说的，没有固定的套路，就是从局部最优到全局最优，举不出反例就可以，然后就是关于两个维度的题目：<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/submissions/545873492/">https://leetcode.cn/problems/queue-reconstruction-by-height/submissions/545873492/</a>  </p>
-<p><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1.png" alt="Alt text"></p>
-<p>这种题就先确定一个维度，然后再修改另外一个维度，比如这里如果按照身高作为第一个维度，那么后面再修改第二个维度就行了；但是反过来说人数作为第一维度就成了四不像。</p>
-<p>又或者这道题：<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/candy/description/">https://leetcode.cn/problems/candy/description/</a><br><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/2.png" alt="Alt text"></p>
-<p>从左到右是一个维度，从右到左又是一个维度，如果兼顾，最后啥也不是。</p>
-<h1 id="在贪心算法过程中碰到的关于vector的insert操作和list的insert操作"><a href="#在贪心算法过程中碰到的关于vector的insert操作和list的insert操作" class="headerlink" title="在贪心算法过程中碰到的关于vector的insert操作和list的insert操作"></a>在贪心算法过程中碰到的关于vector的insert操作和list的insert操作</h1><p>首先vector分为普通数组和动态数组：</p>
-<ol>
-<li>静态数组定义好了大小就不能改变了；</li>
-<li>动态数组可以随时随意往里面放数据，关键在于动态数组的底层实现；</li>
-</ol>
-<p>vector的大小有两个维度一个是size一个是capicity，size是大小，而capicity是vector底层数组（就是普通数组）的大小，capicity可不一定就是size。  </p>
-<p>当insert数据的时候，如果已经大于capicity，capicity会成倍扩容，但对外暴漏的size其实仅仅是+1。</p>
-<p><font color="red">那么既然vector底层实现是普通数组，怎么扩容的？</font></p>
-<p>就是重新申请一个二倍于原数组大小的数组，然后把数据都拷贝过去，并释放原数组内存。（对，就是这么原始粗暴的方法！）</p>
-<p><img src="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/3.png" alt="Alt text"></p>
-<p>所以说在使用动态数组插入数据的过程中，做了很多次动态扩容以及拷贝操作，如果使用链表将会好很多。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/09/leecode%EF%BC%9A%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">展开全文 >></a>
         </p>
       
 
