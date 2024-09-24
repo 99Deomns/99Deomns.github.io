@@ -47,8 +47,11 @@
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/30.png">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/31.png">
 <meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/32.png">
+<meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/33.png">
+<meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/34.png">
+<meta property="og:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/35.png">
 <meta property="article:published_time" content="2024-07-25T08:00:02.000Z">
-<meta property="article:modified_time" content="2024-09-21T04:48:54.335Z">
+<meta property="article:modified_time" content="2024-09-24T08:37:22.269Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/5.png">
@@ -283,11 +286,10 @@
 <p>14.关于i++与++i</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">10</span>,b=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> m=(i++)+(i++)+(i++);<span class="comment">//i=13,m=39没什么好争论的</span></span><br><span class="line"><span class="type">int</span> n=(++i)+(++i)+(++i);<span class="comment">//VC编译器中n=39,GCC编译器中n=37</span></span><br><span class="line"><span class="comment">//这是因为VC编译器中要等三次自增完成之后,才进行相加操作,而在GCC中只要有两个完整的操作数就会执行加法运算,自然也会进行自增操作所以是12+12+13=37</span></span><br></pre></td></tr></table></figure>
 
-<p>15.简述静态全局变量的概念<br>答:全局变量前加static,不能使用extern将静态变量导出,其作用域仅限于静态全局变量所在的文件内部.普通全局变量就可以使用extern关键字在别的文件中打开了，同时不用再额外申请内存；</p>
 <p>16.简述内联函数和宏定义的区别<br>答:两者都可以节省频繁的函数调用过程中产生的时间和空间的开销,提高程序的执行效率.都是通过将函数调用替换为 完整的函数体.但是两者还是存在一些区别:</p>
 <ul>
 <li>宏定义仅仅只是字符串的替换,内联函数是个函数,可以像普通函数一样调试.</li>
-<li>二者代码展开发生在不同的阶段,宏定义的展开发生在预处理阶段,内联函数的宅开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动类型转换.</li>
+<li>宏定义的展开发生在预处理阶段,内联函数的展开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动.</li>
 <li>宏定义存在缺陷所以就有了内联函数.<ul>
 <li><p>宏的优势：</p>
 <ol>
@@ -320,9 +322,16 @@
 <p><font color="red">注:内联函数一定要和函数定义在一起.</font></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>;   </span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>   <span class="comment">// inline 与函数定义体放在一起</span></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<p>关于内联函数的一些说法:<br>    - 可以重载<br>    - 构造函数可以是内联函数<br>    - 减少函数调用开销<br>    - 在函数声明时使用 <font color="red">× </font>  </p>
+<p>关于内联函数的一些说法:</p>
+<ul>
+<li>可以重载</li>
+<li>构造函数可以是内联函数</li>
+<li>减少函数调用开销</li>
+<li>在函数声明时使用 <font color="red">× </font></li>
+</ul>
 <p>内联函数和普通函数的区别:</p>
 <ul>
+<li>省去了函数调用的开销来提高执行效率,如果函数执行时间很长,也就没什么效果了,这也是为什么要求代码量很少;但是每一次处调用都会复制代码,消耗更多的内存空间;</li>
 <li>不能递归</li>
 <li>不能有复杂的控制语句</li>
 <li>普通函数只有一个复制,内联函数调用多少次就会有多少处复制</li>
@@ -568,6 +577,13 @@
 <li>栈：使用栈空间存储函数的返回地址、参数、局部变量、返回值</li>
 </ul>
 <h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><p>简单地说就是申请了一块内存空间，使用完毕后没有释放掉,它的一般表现方式是程序运行时间越长，占用内存越多，最终用尽全部内存，整个系统崩溃由程序申请的一块内存，且没有任何一个指针指向它，那么这块内存就泄露了;</p>
+<p>避免方法:</p>
+<ul>
+<li>计数法,开辟一次计数器加1,反之-1,最终看是否存在内存泄漏</li>
+<li>基类的析构函数声明为虚函数</li>
+<li>delete[]</li>
+<li>成对出现</li>
+</ul>
 <h2 id="数组与链表的区别"><a href="#数组与链表的区别" class="headerlink" title="数组与链表的区别"></a>数组与链表的区别</h2><ul>
 <li><p>数组的地址的连续的空间，而链表不是</p>
 </li>
@@ -595,7 +611,7 @@
 <li>公有私有</li>
 <li>protected，只能在类内部或者子类中进行访问</li>
 </ul>
-<h2 id="什么是交叉编译"><a href="#什么是交叉编译" class="headerlink" title="什么是交叉编译"></a>什么是交叉编译</h2><p>在一个平台上编译出另外一个平台的可执行程序，如arm开发板没有交叉编译工具链，要想执行.c文件需要借助ubuntu使用交叉编译工具链，将.c文件编译成可执行文件.</p>
+<h2 id="什么是交叉编译"><a href="#什么是交叉编译" class="headerlink" title="什么是交叉编译"></a>什么是交叉编译</h2><p>在一个平台上编译出另外一个平台的可执行程序，如arm开发板没有交叉编译工具链，要想执行.c文件需要借助ubuntu使用交叉编译工具链，将.c文件编译成可执行文件.因为有的平台上不支持安装需要的编译器，甚至操作系统都没有。</p>
 <h2 id="UART、IIC、SPI"><a href="#UART、IIC、SPI" class="headerlink" title="UART、IIC、SPI"></a>UART、IIC、SPI</h2><ul>
 <li>uart异步通信没有时钟线，另外两个有时钟线，同步通信</li>
 <li>接线的区别：<ul>
@@ -1024,6 +1040,7 @@
 <ul>
 <li>每个包含了虚函数的类都包含了虚表</li>
 <li>一个类继承了包含虚函数的基类,那么这个类也有自己的虚表</li>
+<li>全局共享的元素，编译时就完成，存放在只读数据段；</li>
 </ul>
 <p>虚表指针:</p>
 <ul>
@@ -1153,7 +1170,16 @@
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/29.png"><br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/30.png"><br>类A也是上面那样,如果使用shared_ptr,最终无法释放,但是使用weak_ptr则不会影响计数,就算在对象A中有一个weak_ptr指向对象B,shared_ptr的计数仍然为1;</p>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/31.png"></p>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/32.png"></p>
-
+<h2 id="哈佛结构、冯诺依曼结构"><a href="#哈佛结构、冯诺依曼结构" class="headerlink" title="哈佛结构、冯诺依曼结构"></a>哈佛结构、冯诺依曼结构</h2><p>冯诺依曼结构釆用指令和数据统一编址，使用同条总线传输，CPU读取指令和数据的操作无法重叠。用于通用计算机领域，需要对存储器中的代码和数据频繁修改，有利于节约资源；<br>哈佛结构釆用指令和数据独立编址，使用两条独立的总线传输，CPU读取指令和数据的操作可以重叠。主要用于嵌入式计算机，较高的可靠性、运算速度和较大的吞吐；</p>
+<h2 id="锁相环"><a href="#锁相环" class="headerlink" title="锁相环"></a>锁相环</h2><p>输入时钟的存在是作为“参考源”。锁相环不是为了单纯产生同频同相信号，而是一般集成进某种“频率综合电路”，产生一个不同频，但锁相的信号。打个比方：某参考晶振10Mhz，频率综合器A使用该参考源产生了900Mhz时钟，而频率综合器<br>B产生了1Ghz时钟。虽然两路频率不同，但由于使用的通一个参考源，他们俩仍然是同源信号。相反，<br>如果不同源，那么即便同频他们也不可能一致，因为世界上没有两个钟能做到完全一样，总有微弱的频<br>差，导致相位飘移。 </p>
+<h2 id="函数模板与类模板"><a href="#函数模板与类模板" class="headerlink" title="函数模板与类模板"></a>函数模板与类模板</h2><ul>
+<li><p>函数模板<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/33.png"><br>此时再去调用max函数,就会根据实参的类型确定使用哪一种模板函数;</p>
+</li>
+<li><p>类模板<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/34.png"><br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/35.png"><br>与函数模板不同的是,需要在&lt;&gt;中显式的写出模板类型,而不是根据实参直接判断;</p>
+</li>
+</ul>
+<h2 id="解释一下什么是trivial-destructor"><a href="#解释一下什么是trivial-destructor" class="headerlink" title="解释一下什么是trivial destructor"></a>解释一下什么是trivial destructor</h2><p>用户没有自定义析构函数,系统自动生成的析构函数;</p>
+<h2 id="所有函数都放在代码区-静态函数也不例外"><a href="#所有函数都放在代码区-静态函数也不例外" class="headerlink" title="所有函数都放在代码区,静态函数也不例外"></a>所有函数都放在代码区,静态函数也不例外</h2>
       
 
       

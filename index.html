@@ -673,7 +673,8 @@
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//必须提前声明class B不然编译会报错</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">B</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">A</span>()&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;类A被构造&quot;</span> &lt;&lt; endl;</span><br><span class="line">        a = <span class="number">20</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">A</span>()&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;类A被析构&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(B &amp; b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">A</span>;</span><br><span class="line">    <span class="built_in">B</span>()&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;类B的构造&quot;</span> &lt;&lt; endl;</span><br><span class="line">        b = <span class="number">12</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">B</span>()&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;类B被析构&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(A &amp;a)</span></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;a=&quot;</span>&lt;&lt;a.a ;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot; b=&quot;</span> &lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//函数不能放在class A 中，不然会编译报错</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">A::show</span><span class="params">(B &amp;b)</span></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;a=&quot;</span>&lt;&lt;a ;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot; b=&quot;</span>&lt;&lt;b.b&lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    A a;</span><br><span class="line">    B b;</span><br><span class="line">    a.<span class="built_in">show</span>(b);</span><br><span class="line">    b.<span class="built_in">show</span>(a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="C-中有哪些情况只能初始化列表-而不能用来赋值"><a href="#C-中有哪些情况只能初始化列表-而不能用来赋值" class="headerlink" title="C++中有哪些情况只能初始化列表,而不能用来赋值"></a>C++中有哪些情况只能初始化列表,而不能用来赋值</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Example::<span class="built_in">Example</span>() : <span class="built_in">ival</span>(<span class="number">0</span>), <span class="built_in">dval</span>(<span class="number">0.0</span>) &#123;&#125; <span class="comment">//ival 和dval是类的两个数据成员</span></span><br><span class="line">Example::<span class="built_in">Example</span>()  </span><br><span class="line">&#123;      </span><br><span class="line">ival = <span class="number">0</span>;      </span><br><span class="line">dval = <span class="number">0.0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="C-中有哪些情况只能初始化列表-而不能用来赋值"><a href="#C-中有哪些情况只能初始化列表-而不能用来赋值" class="headerlink" title="C++中有哪些情况只能初始化列表,而不能用来赋值"></a>C++中有哪些情况只能初始化列表,而不能用来赋值</h2><p>列表初始化是给数据成员分配内存空间时就初始化,而函数体中初始化是在所有的数据成员被分配空间后才进行的;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Example::<span class="built_in">Example</span>() : <span class="built_in">ival</span>(<span class="number">0</span>), <span class="built_in">dval</span>(<span class="number">0.0</span>) &#123;&#125; <span class="comment">//ival 和dval是类的两个数据成员</span></span><br><span class="line">Example::<span class="built_in">Example</span>()  </span><br><span class="line">&#123;      </span><br><span class="line">ival = <span class="number">0</span>;      </span><br><span class="line">dval = <span class="number">0.0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>上述两种方式,第一种是初始化列表;第二种是构造函数赋值,两种初始化原理不一样,赋值是删除原值,赋予新值,初始化列表开辟空间和初始化是同时完成的,直接给予一个值;<br>以下三种只能使用初始化列表:</p>
@@ -708,7 +709,43 @@
 <li>4．为什么C++不支持静态成员函数为虚函数？<br>这也很简单，静态成员函数对于每个类来说只有一份代码，所有的对象都共享这一份代码，他也没有要<br>动态邦定的必要性。</li>
 <li>5．为什么C++不支持友元函数为虚函数？<br>因为C++不支持友元函数的继承，对于没有继承特性的函数没有虚函数的说法。</li>
 </ul>
-<h2 id="阻止类被实例化-纯虚函数"><a href="#阻止类被实例化-纯虚函数" class="headerlink" title="阻止类被实例化-&gt;纯虚函数"></a>阻止类被实例化-&gt;纯虚函数</h2>
+<p><img src="/2024/09/08/Cpp%E5%85%AB%E8%82%A1/4.png"></p>
+<h2 id="阻止类被实例化-纯虚函数"><a href="#阻止类被实例化-纯虚函数" class="headerlink" title="阻止类被实例化-&gt;纯虚函数"></a>阻止类被实例化-&gt;纯虚函数</h2><h2 id="public，protected和private访问和继承权限-public-protected-private的区别？"><a href="#public，protected和private访问和继承权限-public-protected-private的区别？" class="headerlink" title="public，protected和private访问和继承权限&#x2F;public&#x2F;protected&#x2F;private的区别？"></a>public，protected和private访问和继承权限&#x2F;public&#x2F;protected&#x2F;private的区别？</h2><p><img src="/2024/09/08/Cpp%E5%85%AB%E8%82%A1/5.png"></p>
+<p>派生类对基类成员的访问形象有如下两种：  </p>
+<ul>
+<li>内部访问：由派生类中新增的成员函数对从基类继承来的成员的访问</li>
+<li>外部访问：在派生类外部，通过派生类的对象对从基类继承来的成员的访问</li>
+</ul>
+<h2 id="什么时候会调用拷贝构造函数"><a href="#什么时候会调用拷贝构造函数" class="headerlink" title="什么时候会调用拷贝构造函数"></a>什么时候会调用拷贝构造函数</h2><ul>
+<li>一个对象初始化另外一个对象</li>
+<li>函数参数为值传递,即传递一个对象,而非他的引用</li>
+<li>返回一个对象</li>
+</ul>
+<h2 id="寻找重复数"><a href="#寻找重复数" class="headerlink" title="寻找重复数"></a>寻找重复数</h2><ul>
+<li>如果每个数字都有,可以求和</li>
+<li>如果不是每个数字都有,可以哈希表,快慢指针,二分查找</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findDuplicate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> min = <span class="number">1</span>; <span class="comment">// 所查找数字范围的最小值</span></span><br><span class="line">        <span class="type">int</span> max = nums.<span class="built_in">size</span>(); <span class="comment">// 所查找数字范围的最大值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (min &lt; max) &#123;</span><br><span class="line">            <span class="type">int</span> mid = (min + max) / <span class="number">2</span>;</span><br><span class="line">            <span class="comment">// 计数</span></span><br><span class="line">            <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> v : nums) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v &gt;= min &amp;&amp; v &lt;= mid) &#123;</span><br><span class="line">                    cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (cnt &gt; mid - min + <span class="number">1</span>) <span class="comment">// 个数超出范围长度，即存在重复数</span></span><br><span class="line">                max = mid;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                min = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="malloc申请的存储空间能用delete释放吗"><a href="#malloc申请的存储空间能用delete释放吗" class="headerlink" title="malloc申请的存储空间能用delete释放吗"></a>malloc申请的存储空间能用delete释放吗</h2><p>不能，malloc &#x2F;free主要为了兼容C，new和delete 完全可以取代malloc &#x2F;free的。<br>malloc &#x2F;free的操作对象都是必须明确大小的，而且不能用在动态类上。<br>new 和delete会自动进行类型检查和大小，malloc&#x2F;free不能执行构造函数与析构函数，所以动态对象它是不行的。<br>当然从理论上说使用malloc申请的内存是可以通过delete释放的。不过一般不这样写的。而且也不能保证每个C++的运行时都能正常。</p>
+<h2 id="派生类构造函数执行顺序"><a href="#派生类构造函数执行顺序" class="headerlink" title="派生类构造函数执行顺序"></a>派生类构造函数执行顺序</h2><ul>
+<li>虚拟基类构造函数,为了避免菱形继承,这样会导致一个D调用两次A的构造函数<br><img src="/2024/09/08/Cpp%E5%85%AB%E8%82%A1/6.png"></li>
+<li>基类构造函数</li>
+<li>类中成员的构造函数</li>
+<li>派生类自己的构造函数</li>
+</ul>
+<h2 id="派生类析构顺序"><a href="#派生类析构顺序" class="headerlink" title="派生类析构顺序"></a>派生类析构顺序</h2><ul>
+<li>派生类本身析构</li>
+<li>派生类成员析构</li>
+<li>基类析构</li>
+</ul>
+<p>刚好与构造函数相反</p>
+<h2 id="C-11新特性"><a href="#C-11新特性" class="headerlink" title="C++11新特性"></a>C++11新特性</h2><ul>
+<li>nullptr</li>
+<li>auto和的decltype</li>
+<li>基于范围的for循环for(auto&amp; i : res){}</li>
+</ul>
+
       
 
       
@@ -1320,11 +1357,10 @@
 <p>14.关于i++与++i</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">10</span>,b=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> m=(i++)+(i++)+(i++);<span class="comment">//i=13,m=39没什么好争论的</span></span><br><span class="line"><span class="type">int</span> n=(++i)+(++i)+(++i);<span class="comment">//VC编译器中n=39,GCC编译器中n=37</span></span><br><span class="line"><span class="comment">//这是因为VC编译器中要等三次自增完成之后,才进行相加操作,而在GCC中只要有两个完整的操作数就会执行加法运算,自然也会进行自增操作所以是12+12+13=37</span></span><br></pre></td></tr></table></figure>
 
-<p>15.简述静态全局变量的概念<br>答:全局变量前加static,不能使用extern将静态变量导出,其作用域仅限于静态全局变量所在的文件内部.普通全局变量就可以使用extern关键字在别的文件中打开了，同时不用再额外申请内存；</p>
 <p>16.简述内联函数和宏定义的区别<br>答:两者都可以节省频繁的函数调用过程中产生的时间和空间的开销,提高程序的执行效率.都是通过将函数调用替换为 完整的函数体.但是两者还是存在一些区别:</p>
 <ul>
 <li>宏定义仅仅只是字符串的替换,内联函数是个函数,可以像普通函数一样调试.</li>
-<li>二者代码展开发生在不同的阶段,宏定义的展开发生在预处理阶段,内联函数的宅开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动类型转换.</li>
+<li>宏定义的展开发生在预处理阶段,内联函数的展开发生在编译阶段.因此一些编译阶段的工作只对内联函数有用,如类型安全检查,自动.</li>
 <li>宏定义存在缺陷所以就有了内联函数.<ul>
 <li><p>宏的优势：</p>
 <ol>
@@ -1357,9 +1393,16 @@
 <p><font color="red">注:内联函数一定要和函数定义在一起.</font></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>;   </span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">Foo</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>   <span class="comment">// inline 与函数定义体放在一起</span></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<p>关于内联函数的一些说法:<br>    - 可以重载<br>    - 构造函数可以是内联函数<br>    - 减少函数调用开销<br>    - 在函数声明时使用 <font color="red">× </font>  </p>
+<p>关于内联函数的一些说法:</p>
+<ul>
+<li>可以重载</li>
+<li>构造函数可以是内联函数</li>
+<li>减少函数调用开销</li>
+<li>在函数声明时使用 <font color="red">× </font></li>
+</ul>
 <p>内联函数和普通函数的区别:</p>
 <ul>
+<li>省去了函数调用的开销来提高执行效率,如果函数执行时间很长,也就没什么效果了,这也是为什么要求代码量很少;但是每一次处调用都会复制代码,消耗更多的内存空间;</li>
 <li>不能递归</li>
 <li>不能有复杂的控制语句</li>
 <li>普通函数只有一个复制,内联函数调用多少次就会有多少处复制</li>
@@ -1605,6 +1648,13 @@
 <li>栈：使用栈空间存储函数的返回地址、参数、局部变量、返回值</li>
 </ul>
 <h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><p>简单地说就是申请了一块内存空间，使用完毕后没有释放掉,它的一般表现方式是程序运行时间越长，占用内存越多，最终用尽全部内存，整个系统崩溃由程序申请的一块内存，且没有任何一个指针指向它，那么这块内存就泄露了;</p>
+<p>避免方法:</p>
+<ul>
+<li>计数法,开辟一次计数器加1,反之-1,最终看是否存在内存泄漏</li>
+<li>基类的析构函数声明为虚函数</li>
+<li>delete[]</li>
+<li>成对出现</li>
+</ul>
 <h2 id="数组与链表的区别"><a href="#数组与链表的区别" class="headerlink" title="数组与链表的区别"></a>数组与链表的区别</h2><ul>
 <li><p>数组的地址的连续的空间，而链表不是</p>
 </li>
@@ -1632,7 +1682,7 @@
 <li>公有私有</li>
 <li>protected，只能在类内部或者子类中进行访问</li>
 </ul>
-<h2 id="什么是交叉编译"><a href="#什么是交叉编译" class="headerlink" title="什么是交叉编译"></a>什么是交叉编译</h2><p>在一个平台上编译出另外一个平台的可执行程序，如arm开发板没有交叉编译工具链，要想执行.c文件需要借助ubuntu使用交叉编译工具链，将.c文件编译成可执行文件.</p>
+<h2 id="什么是交叉编译"><a href="#什么是交叉编译" class="headerlink" title="什么是交叉编译"></a>什么是交叉编译</h2><p>在一个平台上编译出另外一个平台的可执行程序，如arm开发板没有交叉编译工具链，要想执行.c文件需要借助ubuntu使用交叉编译工具链，将.c文件编译成可执行文件.因为有的平台上不支持安装需要的编译器，甚至操作系统都没有。</p>
 <h2 id="UART、IIC、SPI"><a href="#UART、IIC、SPI" class="headerlink" title="UART、IIC、SPI"></a>UART、IIC、SPI</h2><ul>
 <li>uart异步通信没有时钟线，另外两个有时钟线，同步通信</li>
 <li>接线的区别：<ul>
@@ -2061,6 +2111,7 @@
 <ul>
 <li>每个包含了虚函数的类都包含了虚表</li>
 <li>一个类继承了包含虚函数的基类,那么这个类也有自己的虚表</li>
+<li>全局共享的元素，编译时就完成，存放在只读数据段；</li>
 </ul>
 <p>虚表指针:</p>
 <ul>
@@ -2190,7 +2241,16 @@
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/29.png"><br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/30.png"><br>类A也是上面那样,如果使用shared_ptr,最终无法释放,但是使用weak_ptr则不会影响计数,就算在对象A中有一个weak_ptr指向对象B,shared_ptr的计数仍然为1;</p>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/31.png"></p>
 <p><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/32.png"></p>
-
+<h2 id="哈佛结构、冯诺依曼结构"><a href="#哈佛结构、冯诺依曼结构" class="headerlink" title="哈佛结构、冯诺依曼结构"></a>哈佛结构、冯诺依曼结构</h2><p>冯诺依曼结构釆用指令和数据统一编址，使用同条总线传输，CPU读取指令和数据的操作无法重叠。用于通用计算机领域，需要对存储器中的代码和数据频繁修改，有利于节约资源；<br>哈佛结构釆用指令和数据独立编址，使用两条独立的总线传输，CPU读取指令和数据的操作可以重叠。主要用于嵌入式计算机，较高的可靠性、运算速度和较大的吞吐；</p>
+<h2 id="锁相环"><a href="#锁相环" class="headerlink" title="锁相环"></a>锁相环</h2><p>输入时钟的存在是作为“参考源”。锁相环不是为了单纯产生同频同相信号，而是一般集成进某种“频率综合电路”，产生一个不同频，但锁相的信号。打个比方：某参考晶振10Mhz，频率综合器A使用该参考源产生了900Mhz时钟，而频率综合器<br>B产生了1Ghz时钟。虽然两路频率不同，但由于使用的通一个参考源，他们俩仍然是同源信号。相反，<br>如果不同源，那么即便同频他们也不可能一致，因为世界上没有两个钟能做到完全一样，总有微弱的频<br>差，导致相位飘移。 </p>
+<h2 id="函数模板与类模板"><a href="#函数模板与类模板" class="headerlink" title="函数模板与类模板"></a>函数模板与类模板</h2><ul>
+<li><p>函数模板<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/33.png"><br>此时再去调用max函数,就会根据实参的类型确定使用哪一种模板函数;</p>
+</li>
+<li><p>类模板<br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/34.png"><br><img src="/2024/07/25/%E8%AE%B0%E5%BD%95%E9%9D%A2%E7%BB%8F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/35.png"><br>与函数模板不同的是,需要在&lt;&gt;中显式的写出模板类型,而不是根据实参直接判断;</p>
+</li>
+</ul>
+<h2 id="解释一下什么是trivial-destructor"><a href="#解释一下什么是trivial-destructor" class="headerlink" title="解释一下什么是trivial destructor"></a>解释一下什么是trivial destructor</h2><p>用户没有自定义析构函数,系统自动生成的析构函数;</p>
+<h2 id="所有函数都放在代码区-静态函数也不例外"><a href="#所有函数都放在代码区-静态函数也不例外" class="headerlink" title="所有函数都放在代码区,静态函数也不例外"></a>所有函数都放在代码区,静态函数也不例外</h2>
       
 
       
